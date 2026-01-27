@@ -13,10 +13,7 @@ export function RoutesTable({ routes }: TableProps) {
         {
           header: "Label",
           getValue: (route) => (
-            <Link
-              to={route.href}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
+            <Link to={route.href} className="link-unstyled">
               {route.label}
             </Link>
           ),
@@ -24,10 +21,7 @@ export function RoutesTable({ routes }: TableProps) {
         {
           header: "Href",
           getValue: (route) => (
-            <Link
-              to={route.href}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
+            <Link to={route.href} className="link-unstyled">
               {route.href}
             </Link>
           ),

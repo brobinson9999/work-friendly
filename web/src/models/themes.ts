@@ -1,3 +1,4 @@
+import { cssDeclarationsToString, type CssDeclaration } from "../utils/css";
 import type { Color } from "./colors";
 import * as colors from "./colors";
 import * as palettes from "./palettes";
@@ -5,32 +6,8 @@ import * as palettes from "./palettes";
 export type Theme = {
   name: string;
 
-  // https://m2.material.io/design/color/the-color-system.html
-  primaryColor: Color;
-  primaryVariantColor: Color;
-  onPrimaryColor: Color;
-  secondaryColor: Color;
-  secondaryVariantColor: Color;
-  onSecondaryColor: Color;
-  backgroundColor: Color;
-  onBackgroundColor: Color;
-  surfaceColor: Color;
-  onSurfaceColor: Color;
-  errorColor: Color;
-  onErrorColor: Color;
-
-  // Added stuff :)
-  logo?: string;
-  backgroundImage?: string;
-  linkColor?: Color;
-  linkHoverColor?: Color;
-
-  warningColor: Color;
-  onWarningColor: Color;
-  successColor: Color;
-  onSuccessColor: Color;
-
   cssFiles: string[];
+  inlineCss: string;
 };
 
 export const themes: Theme[] = [];
@@ -72,6 +49,59 @@ export type MaterialTheme = {
 };
 
 function createMaterialTheme(materialTheme: MaterialTheme): Theme {
+  const cssDeclarations: CssDeclaration[] = [
+    {
+      selector: ":root",
+      content: {
+        "--primary-color": materialTheme.primaryColor.rgbaString,
+        "--primary-variant-color": materialTheme.primaryVariantColor.rgbaString,
+        "--secondary-color": materialTheme.secondaryColor.rgbaString,
+        "--secondary-variant-color":
+          materialTheme.secondaryVariantColor.rgbaString,
+        "--background-color": materialTheme.backgroundColor.rgbaString,
+        "--surface-color": materialTheme.surfaceColor.rgbaString,
+        "--error-color": materialTheme.errorColor.rgbaString,
+        "--on-primary-color": materialTheme.onPrimaryColor.rgbaString,
+        "--on-secondary-color": materialTheme.onSecondaryColor.rgbaString,
+        "--on-background-color": materialTheme.onBackgroundColor.rgbaString,
+        "--on-surface-color": materialTheme.onSurfaceColor.rgbaString,
+        "--on-error-color": materialTheme.onErrorColor.rgbaString,
+        "--warning-color": materialTheme.warningColor.rgbaString,
+        "--on-warning-color": materialTheme.onWarningColor.rgbaString,
+        "--success-color": materialTheme.successColor.rgbaString,
+        "--on-success-color": materialTheme.onSuccessColor.rgbaString,
+      } as React.CSSProperties,
+    },
+  ];
+
+  if (materialTheme.logo) {
+    cssDeclarations.push({
+      selector: ".logo",
+      content: {
+        content: `url(${materialTheme.logo})`,
+      },
+    });
+  }
+
+  if (materialTheme.backgroundImage) {
+    cssDeclarations.push({
+      selector: "body::before",
+      content: {
+        content: '""',
+        position: "fixed",
+        top: "0",
+        left: "0",
+        width: "100%",
+        height: "100%",
+        backgroundImage: `url(${materialTheme.backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        // opacity: "0.1",
+        zIndex: "-1",
+      },
+    });
+  }
+
   const newTheme: Theme = {
     ...materialTheme,
     cssFiles: [
@@ -79,9 +109,23 @@ function createMaterialTheme(materialTheme: MaterialTheme): Theme {
       "css/material.css",
       ...(materialTheme.cssFiles || []),
     ],
+    inlineCss: cssDeclarationsToString(cssDeclarations),
   };
   return createTheme(newTheme);
 }
+
+export const bones = createTheme({
+  name: "Bones",
+
+  cssFiles: [],
+  inlineCss: "",
+});
+
+export const common = createTheme({
+  name: "Common",
+  cssFiles: ["css/common.css"],
+  inlineCss: "",
+});
 
 export type AricsTheme = {
   name: string;

@@ -6,15 +6,17 @@ interface Props {
 
 export function PaletteSwatch({ colors }: Props) {
   return (
-    <div style={{ display: "flex", height: "20px", border: "1px solid #ccc" }}>
+    <div className="palette-swatch">
       {colors.map((color, index) => (
         <div
           key={index}
-          style={{
-            width: `${100 / colors.length}%`,
-            backgroundColor: color.rgbaString,
-            flex: 1,
-          }}
+          className="palette-swatch-item"
+          style={
+            {
+              "--swatch-item-width": `${100 / colors.length}%`,
+              "--swatch-item-color": color.rgbaString,
+            } as React.CSSProperties
+          }
         ></div>
       ))}
     </div>

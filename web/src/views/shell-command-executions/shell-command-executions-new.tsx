@@ -1,23 +1,26 @@
-import { useState } from 'react';
-import './shell-command-executions-new.css';
+import { useState } from "react";
 
 interface ShellCommandExecutionsNewProps {
   submitCommand: (command: string) => void;
 }
 
-export function ShellCommandExecutionsNew({ submitCommand }: ShellCommandExecutionsNewProps) {
-  const [command, setCommand] = useState('');
+export function ShellCommandExecutionsNew({
+  submitCommand,
+}: ShellCommandExecutionsNewProps) {
+  const [command, setCommand] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     submitCommand(command);
-    setCommand('');
+    setCommand("");
   };
 
   return (
     <form onSubmit={handleSubmit} className="shell-command-form">
       <div className="form-group">
-        <label htmlFor="command" className="form-label">Command</label>
+        <label htmlFor="command" className="form-label">
+          Command
+        </label>
         <input
           type="text"
           id="command"
@@ -27,7 +30,9 @@ export function ShellCommandExecutionsNew({ submitCommand }: ShellCommandExecuti
           className="form-input"
         />
       </div>
-      <button type="submit" className="form-button">Run</button>
+      <button type="submit" className="form-button">
+        Run
+      </button>
     </form>
   );
 }

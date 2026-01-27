@@ -1,26 +1,20 @@
-import "./row-table.css";
-
 interface TableProps<T> {
   columns: string[];
   rows: T[];
   renderRow: (row: T, index: number) => React.ReactNode;
-  tableClass?: string;
-  rowClass?: (row: T, index: number) => string;
+  tableClasses?: string[];
+  rowClasses?: (row: T, index: number) => string[];
 }
 
 export function RowTable<T>({
   columns,
   rows,
   renderRow,
-  tableClass,
-  rowClass,
+  tableClasses,
+  rowClasses,
 }: TableProps<T>) {
   return (
-    <table
-      className={tableClass || ""}
-      border={1}
-      style={{ marginTop: "20px", width: "100%", borderCollapse: "collapse" }}
-    >
+    <table className={["data-table", ...(tableClasses || [])].join(" ")}>
       <thead>
         <tr>
           {columns.map((column, index) => (
@@ -31,13 +25,16 @@ export function RowTable<T>({
       <tbody>
         {rows.length === 0 ? (
           <tr>
-            <td colSpan={columns.length} style={{ textAlign: "center" }}>
+            <td colSpan={columns.length} className="table-no-data-cell">
               No Data
             </td>
           </tr>
         ) : (
           rows.map((row, index) => (
-            <tr key={index} className={rowClass ? rowClass(row, index) : ""}>
+            <tr
+              key={index}
+              className={(rowClasses ? rowClasses(row, index) : []).join(" ")}
+            >
               {renderRow(row, index)}
             </tr>
           ))

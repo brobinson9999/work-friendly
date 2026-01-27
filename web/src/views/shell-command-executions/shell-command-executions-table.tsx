@@ -1,6 +1,5 @@
 import { ColumnTable, loadingSpan } from "../../components/column-table";
 import { type ShellCommandExecution } from "../../models/shell-command-executions";
-import "./shell-command-executions-table.css";
 
 interface TableProps {
   shellCommandExecutions: ShellCommandExecution[];
@@ -40,7 +39,7 @@ export function ShellCommandExecutionsTable({
                 value={row.stdout}
                 readOnly
                 rows={5}
-                style={{ width: "95%" }}
+                className="textarea-full-width"
               />
             ),
         },
@@ -54,7 +53,7 @@ export function ShellCommandExecutionsTable({
                 value={row.stderr}
                 readOnly
                 rows={5}
-                style={{ width: "95%" }}
+                className="textarea-full-width"
               />
             ),
         },

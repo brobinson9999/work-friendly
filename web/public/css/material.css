@@ -96,10 +96,28 @@ body {
   color: var(--current-on-color);
 }
 
+a {
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: var(--primary-variant-color);
+}
+
 button {
   background-color: var(--current-color);
 }
 button:hover {
   border-color: var(--current-on-color);
   background-color: var(--current-variant-color);
+}
+
+th {
+  background-color: var(--secondary-color);
+  color: var(--on-secondary-color);
+}
+
+tr {
+  background-color: var(--surface-color);
+  color: var(--on-surface-color);
 }

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./code-listing.css";
 import { SurfaceContainer } from "./surface-container";
 import { ClipboardIcon } from "../icons/clipboard-icon";
 

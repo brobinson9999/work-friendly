@@ -22,10 +22,7 @@ export function Index({ title, newElement, views }: IndexProps) {
       <h1>{title}</h1>
       {newElement}
       {views.length > 1 && (
-        <div
-          className="view-selector"
-          style={{ display: "flex", justifyContent: "flex-end", gap: "0px" }}
-        >
+        <div className="view-selector">
           <ButtonBar
             selectedButton={mode}
             setSelectedButton={setMode}

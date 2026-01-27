@@ -94,59 +94,93 @@ export function ComponentsIndex() {
       <div className="success">Success</div>
 
       <h2>Gradients</h2>
-      <div
-        style={{
-          background: 'linear-gradient(to right, var(--current-color), var(--current-variant-color))',
-          height: '50px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'var(--current-on-color)',
-          marginBottom: '10px'
-        }}
-      >
-        Linear Gradient: current-color to current-variant-color
+      <style>{`
+        .gradient-examples {
+          display: grid;
+          gap: 1rem;
+          grid-template-rows: repeat(5, 1fr);
+          margin: auto;
+          max-height: 250px;
+          max-width: 800px;
+          padding: 1rem;
+        }
+
+        @media (min-width: 600px) {
+          .gradient-examples {
+            grid-template-columns: repeat(5, 1fr);
+          }
+        }
+
+        .gradient-example {
+          align-items: center;
+          border-radius: 16px;
+          box-shadow: 0 0 15px hsla(0deg, 0%, 0%, 0.5);
+          color: var(--current-on-color);
+          font-size: 1.25rem;
+          font-weight: 900;
+          display: flex;
+          height: 250px;
+          justify-content: center;
+          text-shadow: 0 2px 3px hsla(0deg, 0%, 0%, 0.25);
+        }
+
+        .linear-gradient-current {
+          background-image: linear-gradient(var(--current-color), var(--current-variant-color));
+        }
+
+        .linear-gradient-current-on-bottom {
+          background-image: linear-gradient(var(--current-color), var(--current-variant-color), var(--current-on-color));
+        }
+
+        .linear-gradient-current-on-center {
+          background-image: linear-gradient(var(--current-on-color), var(--current-color), var(--current-variant-color), var(--current-on-color));
+        }
+
+        .radial-gradient-current {
+          background-image: radial-gradient(var(--current-color), var(--current-variant-color));
+        }
+
+        .conic-gradient-current {
+          background-image: conic-gradient(var(--current-color), var(--current-variant-color), var(--current-on-color), var(--current-color));
+        }
+      `}</style>
+      <div className="gradient-examples">
+        <div className="gradient-example linear-gradient-current">Linear</div>
+        <div className="gradient-example linear-gradient-current-on-bottom">
+          Linear
+        </div>
+        <div className="gradient-example linear-gradient-current-on-center">
+          Linear
+        </div>
+        <div className="gradient-example radial-gradient-current">Radial</div>
+        <div className="gradient-example conic-gradient-current">Conic</div>
       </div>
-      <div
-        style={{
-          background: 'linear-gradient(to bottom, var(--current-color), var(--current-on-color))',
-          height: '50px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'var(--current-variant-color)',
-          marginBottom: '10px'
-        }}
-      >
-        Linear Gradient: current-color to current-on-color
-      </div>
-      <div
-        style={{
-          background: 'radial-gradient(circle, var(--current-color), var(--current-variant-color), var(--current-on-color))',
-          height: '50px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'var(--current-color)',
-          marginBottom: '10px'
-        }}
-      >
-        Radial Gradient: current-color, current-variant-color, current-on-color
-      </div>
-      <div
-        style={{
-          background: 'conic-gradient(var(--current-color), var(--current-variant-color), var(--current-on-color))',
-          height: '50px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'var(--current-on-color)',
-          marginBottom: '10px'
-        }}
-      >
-        Conic Gradient: current-color, current-variant-color, current-on-color
-      </div>
-      
+      <PrimaryContainer>
+        <div className="gradient-examples">
+          <div className="gradient-example linear-gradient-current">Linear</div>
+          <div className="gradient-example linear-gradient-current-on-bottom">
+            Linear
+          </div>
+          <div className="gradient-example linear-gradient-current-on-center">
+            Linear
+          </div>
+          <div className="gradient-example radial-gradient-current">Radial</div>
+          <div className="gradient-example conic-gradient-current">Conic</div>
+        </div>
+      </PrimaryContainer>
+      <SecondaryContainer>
+        <div className="gradient-examples">
+          <div className="gradient-example linear-gradient-current">Linear</div>
+          <div className="gradient-example linear-gradient-current-on-bottom">
+            Linear
+          </div>
+          <div className="gradient-example linear-gradient-current-on-center">
+            Linear
+          </div>
+          <div className="gradient-example radial-gradient-current">Radial</div>
+          <div className="gradient-example conic-gradient-current">Conic</div>
+        </div>
+      </SecondaryContainer>
     </div>
   );
 }

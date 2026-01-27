@@ -29,6 +29,8 @@ export type Theme = {
   onWarningColor: Color;
   successColor: Color;
   onSuccessColor: Color;
+
+  cssFiles: string[];
 };
 
 export const themes: Theme[] = [];
@@ -68,7 +70,7 @@ export type MaterialTheme = {
 };
 
 function createMaterialTheme(materialTheme: MaterialTheme): Theme {
-  const newTheme: Theme = { ...materialTheme };
+  const newTheme: Theme = { ...materialTheme, cssFiles: ['css/common.css', 'css/material.css'] };
   return createTheme(newTheme);
 }
 
@@ -87,7 +89,7 @@ export type AricsTheme = {
 };
 
 function createAricsTheme(aricsTheme: AricsTheme): Theme {
-  const newTheme: Theme = {
+  const newTheme: MaterialTheme = {
     ...aricsTheme,
     primaryColor: aricsTheme.sectionBackgroundColors[2],
     primaryVariantColor: aricsTheme.sectionBackgroundColors[3],
@@ -109,7 +111,7 @@ function createAricsTheme(aricsTheme: AricsTheme): Theme {
       aricsTheme.sectionForegroundColors[6] ||
       aricsTheme.sectionForegroundColors[0],
   };
-  return createTheme(newTheme);
+  return createMaterialTheme(newTheme);
 }
 
 export const vite = createMaterialTheme({
@@ -305,34 +307,69 @@ export const subtleContrasts = createAricsTheme({
   warningColor: colors.BuffedBeige,
 });
 
-export const powderedPastels = createAricsTheme({
+export const powderedPastels = createMaterialTheme({
   name: "Powdered Pastels",
-  tableHeaderForegroundColor: colors.NimbusCloud,
-  tableHeaderBackgroundColor: colors.IceMelt,
-  tableForegroundColors: palettes.powderedPastels.colors,
-  tableBackgroundColors: palettes.powderedPastels.dim("Dark", 0.2).colors,
-  sectionForegroundColors: palettes.powderedPastels.colors,
-  sectionBackgroundColors: palettes.powderedPastels.dim("Dark", 0.2).colors,
+  primaryColor: colors.LemonIcing,
+  primaryVariantColor: colors.PeachDust,
+  onPrimaryColor: colors.NimbusCloud,
+  secondaryColor: colors.IceMelt,
+  secondaryVariantColor: colors.AlmostAqua,
+  onSecondaryColor: colors.NimbusCloud,
+  backgroundColor: colors.transparent,
+  onBackgroundColor: colors.OrchidTint,
+  surfaceColor: colors.NimbusCloud,
+  onErrorColor: colors.CloudDancer,
   errorColor: colors.RaindropsOnRoses,
-  successColor: colors.AlmostAqua,
+  onSurfaceColor: colors.CloudDancer,
   warningColor: colors.LemonIcing,
+  onWarningColor: colors.NimbusCloud,
+  successColor: colors.AlmostAqua,
+  onSuccessColor: colors.NimbusCloud,
+
+  backgroundImage: "powdered-pastels-background.png",
 });
 
-export const takeABreak = createAricsTheme({
+export const takeABreak = createMaterialTheme({
   name: "Take A Break",
-  tableHeaderForegroundColor: colors.CocoaCreme,
-  tableHeaderBackgroundColor: colors.CloudDancer,
-  tableForegroundColors: palettes.takeABreak.colors,
-  tableBackgroundColors: palettes.takeABreak.dim("Dark", 0.2).colors,
-  sectionForegroundColors: palettes.takeABreak.colors,
-  sectionBackgroundColors: palettes.takeABreak.dim("Dark", 0.2).colors,
+
+  primaryColor: colors.Papaya,
+  primaryVariantColor: colors.IcedCoffee,
+  onPrimaryColor: colors.CloudDancer,
+  secondaryColor: colors.MangoMojito,
+  secondaryVariantColor: colors.Caramel,
+  onSecondaryColor: colors.CloudDancer,
+  backgroundColor: colors.Tea,
+  onBackgroundColor: colors.CocoaCreme,
+  surfaceColor: colors.CocoaCreme,
+  onErrorColor: colors.CloudDancer,
   errorColor: colors.PinkLemonade,
-  successColor: colors.Tea,
+  onSurfaceColor: colors.CloudDancer,
   warningColor: colors.MangoMojito,
+  onWarningColor: colors.CloudDancer,
+  successColor: colors.Tea,
+  onSuccessColor: colors.CloudDancer,
 });
 
 export const atmospheric = createAricsTheme({
   name: "Atmospheric",
+
+  //   primaryColor: colors.,
+  // primaryVariantColor: colors.,
+  // onPrimaryColor: colors.,
+  // secondaryColor: colors.,
+  // secondaryVariantColor: colors.,
+  // onSecondaryColor: colors.,
+  // backgroundColor: colors.,
+  // onBackgroundColor: colors.,
+  // surfaceColor: colors.,
+  // onErrorColor: colors.,
+  // errorColor: colors.,
+  // onSurfaceColor: colors.,
+  // warningColor: colors.,
+  // onWarningColor: colors.,
+  // successColor: colors.,
+  // onSuccessColor: colors.,
+
   tableHeaderForegroundColor: colors.AlaskanBlue,
   tableHeaderBackgroundColor: colors.CloudDancer,
   tableForegroundColors: palettes.atmospheric.colors,

@@ -4,7 +4,6 @@ import { reactRoutes } from "./routes";
 import { getThemeNames, themes } from "./models/themes";
 import { useState } from "react";
 import { cssDeclarationsToString, type CssDeclaration } from "./utils/css";
-import type { Color } from "./models/colors";
 import { SurfaceContainer } from "./components/surface-container";
 
 function App() {
@@ -104,6 +103,9 @@ function App() {
   return (
     <>
       <style>{cssDeclarationsToString(cssDeclarations)}</style>
+      {theme.cssFiles.map((cssFile) => (
+        <link key={cssFile} rel="stylesheet" href={cssFile} />
+      ))}
       <HashRouter>
         <header>
           <SurfaceContainer style={{ height: "100%", width: "100%" }}>

@@ -67,10 +67,19 @@ export type MaterialTheme = {
   onWarningColor: Color;
   successColor: Color;
   onSuccessColor: Color;
+
+  cssFiles?: string[];
 };
 
 function createMaterialTheme(materialTheme: MaterialTheme): Theme {
-  const newTheme: Theme = { ...materialTheme, cssFiles: ['css/common.css', 'css/material.css'] };
+  const newTheme: Theme = {
+    ...materialTheme,
+    cssFiles: [
+      "css/common.css",
+      "css/material.css",
+      ...(materialTheme.cssFiles || []),
+    ],
+  };
   return createTheme(newTheme);
 }
 
@@ -162,6 +171,8 @@ export const react = createMaterialTheme({
   onSuccessColor: colors.ReactSurface,
 
   logo: "/public/react-logo.svg",
+
+  cssFiles: ["css/react.css"],
 });
 
 export const libations = createAricsTheme({

@@ -144,7 +144,7 @@ export const vite = createMaterialTheme({
   successColor: colors.ViteBackground,
   onSuccessColor: colors.ViteForeground,
 
-  logo: "/public/vite-logo.svg",
+  logo: "/vite-logo.svg",
   linkColor: colors.ViteLinkColor,
   linkHoverColor: colors.ViteLinkHoverColor,
 });
@@ -170,7 +170,7 @@ export const react = createMaterialTheme({
   successColor: colors.JavaScriptYellow,
   onSuccessColor: colors.ReactSurface,
 
-  logo: "/public/react-logo.svg",
+  logo: "/react-logo.svg",
 
   cssFiles: ["css/react.css"],
 });

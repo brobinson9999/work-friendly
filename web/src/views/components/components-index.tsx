@@ -92,6 +92,61 @@ export function ComponentsIndex() {
       <div className="error">Error</div>
       <div className="warning">Warning</div>
       <div className="success">Success</div>
+
+      <h2>Gradients</h2>
+      <div
+        style={{
+          background: 'linear-gradient(to right, var(--current-color), var(--current-variant-color))',
+          height: '50px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'var(--current-on-color)',
+          marginBottom: '10px'
+        }}
+      >
+        Linear Gradient: current-color to current-variant-color
+      </div>
+      <div
+        style={{
+          background: 'linear-gradient(to bottom, var(--current-color), var(--current-on-color))',
+          height: '50px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'var(--current-variant-color)',
+          marginBottom: '10px'
+        }}
+      >
+        Linear Gradient: current-color to current-on-color
+      </div>
+      <div
+        style={{
+          background: 'radial-gradient(circle, var(--current-color), var(--current-variant-color), var(--current-on-color))',
+          height: '50px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'var(--current-color)',
+          marginBottom: '10px'
+        }}
+      >
+        Radial Gradient: current-color, current-variant-color, current-on-color
+      </div>
+      <div
+        style={{
+          background: 'conic-gradient(var(--current-color), var(--current-variant-color), var(--current-on-color))',
+          height: '50px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'var(--current-on-color)',
+          marginBottom: '10px'
+        }}
+      >
+        Conic Gradient: current-color, current-variant-color, current-on-color
+      </div>
+      
     </div>
   );
 }

@@ -15,20 +15,8 @@ export function ColorsTable({ colors }: TableProps) {
           getValue: (color) => color.name,
         },
         {
-          header: "R",
-          getValue: (color) => color.r,
-        },
-        {
-          header: "G",
-          getValue: (color) => color.g,
-        },
-        {
-          header: "B",
-          getValue: (color) => color.b,
-        },
-        {
-          header: "A",
-          getValue: (color) => color.a,
+          header: "CSS Value",
+          getValue: (color) => color.cssValue,
         },
         {
           header: "Swatch",

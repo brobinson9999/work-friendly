@@ -1,25 +1,25 @@
 export type Color = {
   name: string;
-  r: number;
-  g: number;
-  b: number;
-  a: number;
-  rgbaString: string;
+  cssValue: string;
 };
 
 export const colors: Color[] = [];
 
+function createColor(color: Color): Color {
+  colors.push(color);
+  return color;
+}
+
+function fromCss(name: string, cssValue: string): Color {
+  return createColor({ name, cssValue });
+}
+
 function fromHex(name: string, hex: string): Color {
-  return fromRgb(
-    name,
-    parseInt(hex.slice(1, 3), 16),
-    parseInt(hex.slice(3, 5), 16),
-    parseInt(hex.slice(5, 7), 16),
-  );
+  return createColor({ name, cssValue: hex });
 }
 
 function fromRgb(name: string, r: number, g: number, b: number): Color {
-  return fromRgba(name, r, g, b, 1);
+  return createColor({ name, cssValue: `rgb(${r}, ${g}, ${b})` });
 }
 
 function fromRgba(
@@ -29,13 +29,16 @@ function fromRgba(
   b: number,
   a: number,
 ): Color {
-  const rgbaString = `rgba(${r}, ${g}, ${b}, ${a})`;
-  const newColor: Color = { name, r, g, b, a, rgbaString };
-  colors.push(newColor);
-  return newColor;
+  return createColor({ name, cssValue: `rgba(${r}, ${g}, ${b}, ${a})` });
 }
 
 export const transparent = fromRgba("Transparent", 0, 0, 0, 0);
+
+export const oklchWhite = fromCss("OKLCH White", "oklch(100% 0 0 / 1)");
+export const oklchBlack = fromCss("OKLCH Black", "oklch(0% 0 0 / 1)");
+export const oklchRed = fromCss("OKLCH Red", "oklch(53% 0.23 29 / 1)");
+export const oklchGreen = fromCss("OKLCH Green", "oklch(71% 0.22 136 / 1)");
+export const oklchBlue = fromCss("OKLCH Blue", "oklch(44% 0.23 306 / 1)");
 
 export const sampleColor1: Color = fromHex("Red", "#FF0000");
 export const sampleColor2: Color = fromHex("Green", "#00FF00");

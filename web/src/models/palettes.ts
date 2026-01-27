@@ -24,7 +24,7 @@ function newPalette(name: string, colors: colors.Color[]): Palette {
           g,
           b,
           a: color.a,
-          rgbaString: `rgba(${r}, ${g}, ${b}, ${color.a})`,
+          cssValue: `rgba(${r}, ${g}, ${b}, ${color.a})`,
         };
       });
       return newPalette(`${prefix} ${name}`, dimmedColors);

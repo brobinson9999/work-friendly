@@ -14,7 +14,7 @@ export function PaletteSwatch({ colors }: Props) {
           style={
             {
               "--swatch-item-width": `${100 / colors.length}%`,
-              "--swatch-item-color": color.rgbaString,
+              "--swatch-item-color": color.cssValue,
             } as React.CSSProperties
           }
         ></div>

@@ -8,7 +8,7 @@ export function ColorSwatch({ color }: Props) {
   return (
     <div
       className="color-swatch-container"
-      style={{ "--swatch-color": color.rgbaString } as React.CSSProperties}
+      style={{ "--swatch-color": color.cssValue } as React.CSSProperties}
     >
       <div className="color-swatch-inner"></div>
     </div>

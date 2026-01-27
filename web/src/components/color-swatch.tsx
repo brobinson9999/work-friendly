@@ -14,28 +14,9 @@ export function ColorSwatch({ color }: Props) {
         position: "relative",
         width: "80px",
         height: "30px",
+        background: "linear-gradient(to right, black, white)",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "50%",
-          height: "100%",
-          backgroundColor: "white",
-        }}
-      ></div>
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: "50%",
-          height: "100%",
-          backgroundColor: "black",
-        }}
-      ></div>
       <div
         style={{
           backgroundColor: color.rgbaString,

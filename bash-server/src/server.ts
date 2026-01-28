@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { timeLog, timeLogAsync } from './performance.js';
 import { registerShellRoutes } from './controllers/shell-controller.js';
+import { registerHealthRoutes } from './controllers/health-controller.js';
 // import { addItem } from './models/items.js';
 
 async function startup() {
@@ -16,6 +17,7 @@ async function startup() {
       app.use(express.urlencoded({ extended: true }));
       app.use(cors());
 
+      registerHealthRoutes(app);
       registerShellRoutes(app);
     });
 

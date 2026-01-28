@@ -8,7 +8,6 @@
     "start": "node dist/server.js",
     "start-ts": "ts-node src/server.ts",
     "start-dev": "nodemon --exec 'npm run build && npm run start' --watch src -e ts",
-    "start-electron": "electron src/electron-main.ts --disable-gpu",
     "lint": "eslint src --ext ts",
     "format": "prettier --write src",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
@@ -35,7 +34,7 @@
     "jiti": "2.6.1",
     "nodemon": "3.1.11",
     "prettier": "3.7.4",
-    "ts-jest": "^29.4.6",
+    "ts-jest": "29.4.6",
     "ts-node": "10.9.2",
     "typescript": "5.9.3",
     "typescript-eslint": "8.51.0"

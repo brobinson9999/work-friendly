@@ -6,6 +6,7 @@ import { ColorsIndex } from "./views/colors/colors-index";
 import { PalettesIndex } from "./views/palettes/palettes-index";
 import { ThemesIndex } from "./views/themes/themes-index";
 import { ComponentsIndex } from "./views/components/components-index";
+import { ServersIndex } from "./views/servers/servers-index";
 
 export type ReactRoute = Route & {
   element: JSX.Element;
@@ -31,6 +32,11 @@ export const reactRoutes: ReactRoute[] = [
     label: "Routes",
     href: "/routes",
     element: <RoutesIndex />,
+  },
+  {
+    label: "Servers",
+    href: "/servers",
+    element: <ServersIndex />,
   },
   {
     label: "Shell Commands",

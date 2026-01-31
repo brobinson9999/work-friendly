@@ -4,6 +4,8 @@ export type Server = {
   port: number;
   ping?: number;
   status: "unknown" | "pending" | "online" | "offline";
+  requestTimestamps: number[];
+  responseTimestamps: number[];
 };
 
 export const servers: Server[] = [];
@@ -18,4 +20,6 @@ export const localhostServer = createServer({
   hostname: "localhost",
   port: 3000,
   status: "unknown",
+  requestTimestamps: [],
+  responseTimestamps: [],
 });

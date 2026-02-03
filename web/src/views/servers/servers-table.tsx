@@ -1,3 +1,4 @@
+import { useRef, type JSX } from "react";
 import { ColumnTable } from "../../components/column-table";
 import { useRedraw } from "../../hooks/use-redraw";
 import type { Server } from "../../models/servers";
@@ -7,8 +8,6 @@ interface Props {
 }
 
 const TIME_WINDOW_MS = 10000; // 10 seconds
-
-let i = 0;
 
 const styles = `
   @keyframes slideLeft {
@@ -35,18 +34,53 @@ function TimingVisualization({
   const maxTime = performance.now();
   const minTime = maxTime - TIME_WINDOW_MS;
 
-  const visibleRequests = requestTimestamps.filter((t) => t >= minTime);
-  const visibleResponses = responseTimestamps.filter((t) => t >= minTime);
+  const timeRange = TIME_WINDOW_MS;
 
-  if (visibleRequests.length === 0 && visibleResponses.length === 0) {
-    return (
-      <div style={{ width: "300px", height: "60px", color: "#999" }}>
-        No data
-      </div>
-    );
+  const requestBars = useRef<JSX.Element[]>([]);
+  const responseBars = useRef<JSX.Element[]>([]);
+
+  console.log({ requestTimestamps, requestBars });
+  for (let i = 0; i < requestTimestamps.length; i++) {
+    if (!requestBars.current[i]) {
+      const timestamp = requestTimestamps[i];
+      const positionPercent = ((timestamp - minTime) / timeRange) * 100;
+      requestBars.current[i] = (
+        <div
+          key={`req-${i++}`}
+          className="timing-bar"
+          style={{
+            position: "absolute",
+            left: `${positionPercent}%`,
+            top: "0%",
+            width: "2px",
+            height: "50%",
+            backgroundColor: "#4CAF50",
+          }}
+        />
+      );
+    }
   }
 
-  const timeRange = TIME_WINDOW_MS;
+  for (let i = 0; i < responseTimestamps.length; i++) {
+    if (!responseBars.current[i]) {
+      const timestamp = responseTimestamps[i];
+      const positionPercent = ((timestamp - minTime) / timeRange) * 100;
+      responseBars.current[i] = (
+        <div
+          key={`res-${i++}`}
+          className="timing-bar"
+          style={{
+            position: "absolute",
+            left: `${positionPercent}%`,
+            top: "50%",
+            width: "2px",
+            height: "50%",
+            backgroundColor: "#2196F3",
+          }}
+        />
+      );
+    }
+  }
 
   return (
     <>
@@ -74,42 +108,10 @@ function TimingVisualization({
         />
 
         {/* Request bars (going up) */}
-        {visibleRequests.map((timestamp) => {
-          const positionPercent = ((timestamp - minTime) / timeRange) * 100;
-          return (
-            <div
-              key={`req-${i++}`}
-              className="timing-bar"
-              style={{
-                position: "absolute",
-                left: `${positionPercent}%`,
-                top: "0%",
-                width: "2px",
-                height: "50%",
-                backgroundColor: "#4CAF50",
-              }}
-            />
-          );
-        })}
+        {...requestBars.current}
 
         {/* Response bars (going down) */}
-        {visibleResponses.map((timestamp) => {
-          const positionPercent = ((timestamp - minTime) / timeRange) * 100;
-          return (
-            <div
-              key={`res-${i++}`}
-              className="timing-bar"
-              style={{
-                position: "absolute",
-                left: `${positionPercent}%`,
-                top: "50%",
-                width: "2px",
-                height: "50%",
-                backgroundColor: "#2196F3",
-              }}
-            />
-          );
-        })}
+        {...responseBars.current}
       </div>
     </>
   );

@@ -1,4 +1,7 @@
+import { servers } from "./servers";
+
 export type ShellCommandExecution = {
+  serverId: string;
   command: string;
   stdout: string;
   stderr: string;
@@ -8,18 +11,23 @@ export type ShellCommandExecution = {
 };
 
 export async function executeShellCommand(
-  command: string
+  serverId: string,
+  command: string,
 ): Promise<ShellCommandExecution> {
-  const shellCommandExecution: ShellCommandExecution =
-    getShellCommandExecution(command);
+  const shellCommandExecution: ShellCommandExecution = getShellCommandExecution(
+    serverId,
+    command,
+  );
   await runShellCommand(shellCommandExecution);
   return shellCommandExecution;
 }
 
 export function getShellCommandExecution(
-  command: string
+  serverId: string,
+  command: string,
 ): ShellCommandExecution {
   return {
+    serverId,
     command,
     stdout: "",
     stderr: "",
@@ -30,18 +38,27 @@ export function getShellCommandExecution(
 }
 
 export async function runShellCommand(
-  shellCommandExecution: ShellCommandExecution
+  shellCommandExecution: ShellCommandExecution,
 ): Promise<void> {
+  const server = servers.find((s) => s.id === shellCommandExecution.serverId);
+  if (!server) {
+    throw new Error(
+      `Server with ID ${shellCommandExecution.serverId} not found`,
+    );
+  }
   const startTime = new Date().toLocaleString();
   shellCommandExecution.startTime = startTime;
   try {
-    const response = await fetch("http://localhost:3000/shell", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `http://${server.hostname}:${server.port}/shell`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ command: shellCommandExecution.command }),
       },
-      body: JSON.stringify({ command: shellCommandExecution.command }),
-    });
+    );
 
     const json = await response.json();
     const endTime = new Date().toLocaleString();

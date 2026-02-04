@@ -297,8 +297,29 @@ export const pairings = createAricsTheme({
   warningColor: colors.BrandiedApricot,
 });
 
-export const relaxedElegance = createAricsTheme({
-  name: "Relaxed Elegance",
+export const relaxedEleganceMaterial = createMaterialTheme({
+  name: "Relaxed Elegance Material",
+
+  primaryColor: colors.MochaMousse,
+  primaryVariantColor: colors.BalticAmber,
+  onPrimaryColor: colors.CannoliCream,
+  secondaryColor: colors.Sirocco,
+  secondaryVariantColor: colors.CreamTan,
+  onSecondaryColor: colors.CannoliCream,
+  backgroundColor: colors.CannoliCream,
+  onBackgroundColor: colors.ChocolateMartini,
+  surfaceColor: colors.Safari,
+  onSurfaceColor: colors.ChocolateMartini,
+  errorColor: colors.BalticAmber,
+  onErrorColor: colors.CannoliCream,
+  warningColor: colors.Chanterelle,
+  onWarningColor: colors.CannoliCream,
+  successColor: colors.CreamTan,
+  onSuccessColor: colors.ChocolateMartini,
+});
+
+export const relaxedEleganceArics = createAricsTheme({
+  name: "Relaxed Elegance ARiCS",
   tableHeaderForegroundColor: colors.CreamTan,
   tableHeaderBackgroundColor: colors.MochaMousse,
   tableForegroundColors: palettes.relaxedElegance.colors,

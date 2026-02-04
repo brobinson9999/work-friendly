@@ -12,11 +12,11 @@ export function PalettesTable({ palettes }: TableProps) {
       columns={[
         {
           header: "Name",
-          getValue: (palette) => palette.name,
+          renderColumn: (palette) => palette.name,
         },
         {
           header: "Swatch",
-          getValue: (palette) => <PaletteSwatch colors={palette.colors} />,
+          renderColumn: (palette) => <PaletteSwatch colors={palette.colors} />,
         },
       ]}
       rows={palettes}

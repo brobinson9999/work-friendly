@@ -3,7 +3,6 @@ import * as colors from "./colors";
 export type Palette = {
   name: string;
   colors: colors.Color[];
-  dim: (prefix: string, amount: number) => Palette;
 };
 
 export const palettes: Palette[] = [];
@@ -12,23 +11,6 @@ function newPalette(name: string, colors: colors.Color[]): Palette {
   return {
     name,
     colors,
-    dim: (prefix: string, amount: number) => {
-      const dimmedColors = colors.map((color) => {
-        // Simple dimming logic: reduce each RGB component by the specified amount
-        const r = Math.floor(Math.max(0, color.r * amount));
-        const g = Math.floor(Math.max(0, color.g * amount));
-        const b = Math.floor(Math.max(0, color.b * amount));
-        return {
-          name: `${prefix} ${color.name}`,
-          r,
-          g,
-          b,
-          a: color.a,
-          cssValue: `rgba(${r}, ${g}, ${b}, ${color.a})`,
-        };
-      });
-      return newPalette(`${prefix} ${name}`, dimmedColors);
-    },
   };
 }
 

@@ -13,25 +13,25 @@ export function ShellCommandExecutionsTable({
       columns={[
         {
           header: "Start Time",
-          getValue: (row) => row.startTime,
+          renderColumn: (row) => row.startTime,
         },
         {
           header: "Command",
-          getValue: (row) => row.command,
+          renderColumn: (row) => row.command,
         },
         {
           header: "End Time",
-          getValue: (row) =>
+          renderColumn: (row) =>
             row.exitCode === null ? loadingSpan : row.endTime,
         },
         {
           header: "Exit Code",
-          getValue: (row) =>
+          renderColumn: (row) =>
             row.exitCode === null ? loadingSpan : row.exitCode.toString(),
         },
         {
           header: "Stdout",
-          getValue: (row) =>
+          renderColumn: (row) =>
             row.exitCode === null ? (
               loadingSpan
             ) : (
@@ -45,7 +45,7 @@ export function ShellCommandExecutionsTable({
         },
         {
           header: "Stderr",
-          getValue: (row) =>
+          renderColumn: (row) =>
             row.exitCode === null ? (
               loadingSpan
             ) : (

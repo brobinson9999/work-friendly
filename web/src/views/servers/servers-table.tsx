@@ -143,7 +143,7 @@ export function ServersTable({ servers }: Props) {
       } else {
         server.status = "offline";
       }
-    } catch (error) {
+    } catch (_error) {
       server.status = "offline";
       server.ping = undefined;
     }
@@ -153,14 +153,14 @@ export function ServersTable({ servers }: Props) {
   return (
     <ColumnTable
       columns={[
-        { header: "ID", getValue: (server) => server.id },
-        { header: "Hostname", getValue: (server) => server.hostname },
-        { header: "Port", getValue: (server) => server.port },
-        // { header: "Status", getValue: (server) => server.status },
-        // { header: "Ping", getValue: (server) => server.ping ?? "N/A" },
+        { header: "ID", renderColumn: (server) => server.id },
+        { header: "Hostname", renderColumn: (server) => server.hostname },
+        { header: "Port", renderColumn: (server) => server.port },
+        // { header: "Status", renderColumn: (server) => server.status },
+        // { header: "Ping", renderColumn: (server) => server.ping ?? "N/A" },
         {
           header: "Timing",
-          getValue: (server) => (
+          renderColumn: (server) => (
             <TimingVisualization
               requestTimestamps={server.requestTimestamps}
               responseTimestamps={server.responseTimestamps}
@@ -169,7 +169,7 @@ export function ServersTable({ servers }: Props) {
         },
         {
           header: "Actions",
-          getValue: (server) => (
+          renderColumn: (server) => (
             <button onClick={() => testServerConnection(server)}>
               Test Connection
             </button>

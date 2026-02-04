@@ -1,11 +1,13 @@
 import { Routes, Route, HashRouter, Navigate, Link } from "react-router-dom";
 import { reactRoutes } from "./routes";
-import { getThemeNames, themes } from "./models/themes";
+import { themes } from "./models/themes";
 import { useState } from "react";
 import { SurfaceContainer } from "./components/surface-container";
 
 function App() {
-  const [selectedTheme, setSelectedTheme] = useState(getThemeNames()[0]);
+  const themeNames = themes.map((theme) => theme.name);
+
+  const [selectedTheme, setSelectedTheme] = useState(themeNames[0]);
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedTheme(event.target.value);
@@ -30,7 +32,7 @@ function App() {
             </nav>
             <nav className="top-right-nav">
               <select value={selectedTheme} onChange={handleThemeChange}>
-                {getThemeNames().map((themeName) => (
+                {themeNames.map((themeName) => (
                   <option key={themeName} value={themeName}>
                     {themeName}
                   </option>

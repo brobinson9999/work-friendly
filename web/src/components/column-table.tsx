@@ -25,7 +25,7 @@ export function ColumnTable<T>({
       rows={rows}
       tableClasses={tableClasses}
       rowClasses={rowClasses}
-      renderRow={(row, _index) => (
+      renderRow={(row) => (
         <>
           {(() => {
             const cells: React.ReactNode[] = [];

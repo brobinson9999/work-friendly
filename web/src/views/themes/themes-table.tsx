@@ -11,10 +11,10 @@ export function ThemesTable({ themes }: Props) {
   return (
     <ColumnTable
       columns={[
-        { header: "Name", getValue: (theme) => theme.name },
+        { header: "Name", renderColumn: (theme) => theme.name },
         {
           header: "CSS Files",
-          getValue: (theme) => (
+          renderColumn: (theme) => (
             <>
               <ul>
                 {theme.cssFiles.map((file) => (
@@ -26,7 +26,7 @@ export function ThemesTable({ themes }: Props) {
         },
         {
           header: "Inline CSS",
-          getValue: (theme) => <CodeListing content={theme.inlineCss} />,
+          renderColumn: (theme) => <CodeListing content={theme.inlineCss} />,
         },
       ]}
       rows={themes}

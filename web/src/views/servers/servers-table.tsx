@@ -39,7 +39,6 @@ function TimingVisualization({
   const requestBars = useRef<JSX.Element[]>([]);
   const responseBars = useRef<JSX.Element[]>([]);
 
-  console.log({ requestTimestamps, requestBars });
   for (let i = 0; i < requestTimestamps.length; i++) {
     if (!requestBars.current[i]) {
       const timestamp = requestTimestamps[i];

@@ -1,12 +1,11 @@
-import { RowTable } from "./row-table";
+import { RowTable, type RowTableColumn } from "./row-table";
 
-interface Column<T> {
-  header: string;
-  getValue: (row: T) => React.ReactNode;
+export interface ColumnTableColumn<T> extends RowTableColumn {
+  renderColumn: (row: T) => React.ReactNode;
 }
 
-interface ColumnTableProps<T> {
-  columns: Column<T>[];
+export interface ColumnTableProps<T> {
+  columns: ColumnTableColumn<T>[];
   rows: T[];
   tableClasses?: string[];
   rowClasses?: (row: T, index: number) => string[];
@@ -22,7 +21,7 @@ export function ColumnTable<T>({
 }: ColumnTableProps<T>) {
   return (
     <RowTable
-      columns={columns.map((col) => col.header)}
+      columns={columns}
       rows={rows}
       tableClasses={tableClasses}
       rowClasses={rowClasses}
@@ -33,7 +32,7 @@ export function ColumnTable<T>({
             let colSpan = 0;
 
             columns.forEach((column, colIndex) => {
-              const value = column.getValue(row);
+              const value = column.renderColumn(row);
 
               if (value === loadingSpan) {
                 colSpan++;

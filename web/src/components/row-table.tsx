@@ -1,5 +1,10 @@
-interface TableProps<T> {
-  columns: string[];
+export interface RowTableColumn {
+  header: string;
+  onClick?: () => void;
+}
+
+export interface RowTableProps<T> {
+  columns: RowTableColumn[];
   rows: T[];
   renderRow: (row: T, index: number) => React.ReactNode;
   tableClasses?: string[];
@@ -12,13 +17,15 @@ export function RowTable<T>({
   renderRow,
   tableClasses,
   rowClasses,
-}: TableProps<T>) {
+}: RowTableProps<T>) {
   return (
     <table className={["data-table", ...(tableClasses || [])].join(" ")}>
       <thead>
         <tr>
           {columns.map((column, index) => (
-            <th key={index}>{column}</th>
+            <th key={index} onClick={column.onClick}>
+              {column.header}
+            </th>
           ))}
         </tr>
       </thead>

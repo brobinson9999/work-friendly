@@ -33,14 +33,15 @@ export function ComponentsIndex() {
       <h2>Column Table</h2>
       <ColumnTable
         columns={[
-          { header: "Name", getValue: (row) => row.name },
+          { header: "Name", renderColumn: (row) => row.name },
           {
             header: "Age",
-            getValue: (row) => (row.age === 30 ? loadingSpan : row.age),
+            renderColumn: (row) => (row.age === 30 ? loadingSpan : row.age),
           },
           {
             header: "Occupation",
-            getValue: (row) => (row.age === 30 ? loadingSpan : row.occupation),
+            renderColumn: (row) =>
+              row.age === 30 ? loadingSpan : row.occupation,
           },
         ]}
         rows={[
@@ -55,7 +56,11 @@ export function ComponentsIndex() {
 
       <h2>Table</h2>
       <RowTable
-        columns={["Column 1", "Column 2", "Column 3"]}
+        columns={[
+          { header: "Column 1" },
+          { header: "Column 2" },
+          { header: "Column 3" },
+        ]}
         rows={[
           { col1: "Row 1 Col 1", col2: "Row 1 Col 2", col3: "Row 1 Col 3" },
           { col1: "Row 2 Col 1", col2: "Row 2 Col 2", col3: "Row 2 Col 3" },

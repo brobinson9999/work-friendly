@@ -2,6 +2,7 @@ import { useRef, type JSX } from "react";
 import { ColumnTable } from "../../components/column-table";
 import { useRedraw } from "../../hooks/use-redraw";
 import type { Server } from "../../models/servers";
+import { PrimaryContainer } from "../../components/primary-container";
 
 interface Props {
   servers: Server[];
@@ -53,7 +54,7 @@ function TimingVisualization({
             top: "0%",
             width: "2px",
             height: "50%",
-            backgroundColor: "#4CAF50",
+            backgroundColor: "var(--current-on-color)",
           }}
         />
       );
@@ -74,7 +75,7 @@ function TimingVisualization({
             top: "50%",
             width: "2px",
             height: "50%",
-            backgroundColor: "#2196F3",
+            backgroundColor: "var(--current-on-color)",
           }}
         />
       );
@@ -84,34 +85,37 @@ function TimingVisualization({
   return (
     <>
       <style>{styles}</style>
-      <div
-        style={{
-          position: "relative",
-          width: "300px",
-          height: "60px",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-          overflow: "hidden",
-        }}
-      >
-        {/* Horizon line */}
+      <PrimaryContainer>
         <div
           style={{
-            position: "absolute",
-            top: "50%",
-            left: 0,
-            right: 0,
-            height: "1px",
-            backgroundColor: "#ccc",
+            position: "relative",
+            width: "300px",
+            height: "60px",
+            border: "1px solid var(--current-on-color)",
+            borderRadius: "4px",
+            backgroundColor: "var(--current-color)",
+            overflow: "hidden",
           }}
-        />
+        >
+          {/* Horizon line */}
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: 0,
+              right: 0,
+              height: "50%",
+              backgroundColor: "var(--current-variant-color)",
+            }}
+          />
 
-        {/* Request bars (going up) */}
-        {...requestBars.current}
+          {/* Request bars (going up) */}
+          {...requestBars.current}
 
-        {/* Response bars (going down) */}
-        {...responseBars.current}
-      </div>
+          {/* Response bars (going down) */}
+          {...responseBars.current}
+        </div>
+      </PrimaryContainer>
     </>
   );
 }

@@ -75,7 +75,7 @@ function createMaterialTheme(materialTheme: MaterialTheme): Theme {
 
   if (materialTheme.logo) {
     cssDeclarations.push({
-      selector: ".logo",
+      selector: ".logo::before",
       content: {
         content: `url(${materialTheme.logo})`,
       },
@@ -179,7 +179,7 @@ export const react = createMaterialTheme({
 });
 
 export const relaxedEleganceMaterial = createMaterialTheme({
-  name: "Relaxed Elegance Material",
+  name: "Relaxed Elegance",
 
   primaryColor: colors.MochaMousse,
   primaryVariantColor: colors.BalticAmber,
@@ -187,9 +187,9 @@ export const relaxedEleganceMaterial = createMaterialTheme({
   secondaryColor: colors.Sirocco,
   secondaryVariantColor: colors.CreamTan,
   onSecondaryColor: colors.CannoliCream,
-  backgroundColor: colors.CannoliCream,
+  backgroundColor: colors.transparent,
   onBackgroundColor: colors.ChocolateMartini,
-  surfaceColor: colors.Safari,
+  surfaceColor: colors.oklchWhite,
   onSurfaceColor: colors.ChocolateMartini,
   errorColor: colors.BalticAmber,
   onErrorColor: colors.CannoliCream,
@@ -197,6 +197,9 @@ export const relaxedEleganceMaterial = createMaterialTheme({
   onWarningColor: colors.CannoliCream,
   successColor: colors.CreamTan,
   onSuccessColor: colors.ChocolateMartini,
+
+  logo: "/pantone-logo.png",
+  cssFiles: ["css/relaxed-elegance.css"],
 });
 
 export const powderedPastels = createMaterialTheme({

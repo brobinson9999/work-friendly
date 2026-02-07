@@ -1,0 +1,10 @@
+body {
+    background-image: conic-gradient(
+        rgb(216, 178, 138) 45deg,
+        rgb(233, 208, 166) 135deg,
+        rgb(194, 165, 147) 225deg,
+        rgb(178, 151, 135) 315deg,
+        rgb(216, 178, 138)
+        );
+}
+

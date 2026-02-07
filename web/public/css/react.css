@@ -10,3 +10,29 @@
 .logo {
   animation: logo-spin infinite 20s linear;
 }
+
+@property --button-gradient-start {
+  syntax: '<color>';
+  initial-value: #5adaff;
+  inherits: false;
+}
+
+@property --button-gradient-end {
+  syntax: '<color>';
+  initial-value: #5468ff;
+  inherits: false;
+}
+
+button {
+  --button-gradient-start: #5adaff;
+  --button-gradient-end: #5468ff;
+  transition: var(--button-gradient-start) 3.5s ease-in-out, var(--button-gradient-end) 0.5s ease-in-out;
+  background-image: radial-gradient( 100% 100% at 100% 0, var(--button-gradient-start) 0, var(--button-gradient-end) 100% );
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+}
+
+button:hover {
+  --button-gradient-start: red;
+  transition: var(--button-gradient-start) 3.5s ease-in-out, var(--button-gradient-end) 0.5s ease-in-out;
+}

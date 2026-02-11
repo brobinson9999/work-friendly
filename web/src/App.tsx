@@ -7,10 +7,15 @@ import { SurfaceContainer } from "./components/surface-container";
 function App() {
   const themeNames = themes.map((theme) => theme.name);
 
-  const [selectedTheme, setSelectedTheme] = useState(themeNames[0]);
+  const [selectedTheme, setSelectedTheme] = useState(() => {
+    const savedTheme = localStorage.getItem("selectedTheme");
+    return savedTheme || themeNames[0];
+  });
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedTheme(event.target.value);
+    const newTheme = event.target.value;
+    setSelectedTheme(newTheme);
+    localStorage.setItem("selectedTheme", newTheme);
   };
 
   const theme = themes.find((t) => t.name === selectedTheme)!;

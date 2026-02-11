@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "start-ts": "ts-node src/server.ts",
-    "start-dev": "nodemon --exec 'npm run build && npm run start' --watch src -e ts",
+    "start-dev": "nodemon --exec \"npm run build && npm run start\" --watch src -e ts",
     "lint": "eslint src --ext ts",
     "format": "prettier --write src",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"

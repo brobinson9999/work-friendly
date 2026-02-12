@@ -7,6 +7,7 @@ import { PalettesIndex } from "./views/palettes/palettes-index";
 import { ThemesIndex } from "./views/themes/themes-index";
 import { ComponentsIndex } from "./views/components/components-index";
 import { ServersIndex } from "./views/servers/servers-index";
+import { LogsIndex } from "./views/logs/logs-index";
 
 export type ReactRoute = Route & {
   element: JSX.Element;
@@ -22,6 +23,11 @@ export const reactRoutes: ReactRoute[] = [
     label: "Components",
     href: "/components",
     element: <ComponentsIndex />,
+  },
+  {
+    label: "Logs",
+    href: "/logs",
+    element: <LogsIndex />,
   },
   {
     label: "Palettes",

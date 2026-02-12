@@ -1,4 +1,5 @@
 import { performance } from 'perf_hooks';
+import { log } from './models/logs.js';
 
 const amortizeRuns = 1;
 
@@ -12,7 +13,7 @@ export function timeLog<TResult>(
     result = func();
   }
   const endTime = performance.now();
-  console.log(`${description} took ${(endTime - startTime) / amortizeRuns}ms`);
+  log(`${description} took ${(endTime - startTime) / amortizeRuns}ms`);
   return result!;
 }
 

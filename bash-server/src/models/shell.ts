@@ -1,5 +1,6 @@
 import { exec, type ExecException } from 'child_process';
 import { promisify } from 'util';
+import { log } from './logs.js';
 
 const execPromise = promisify(exec);
 
@@ -13,6 +14,8 @@ export async function runShellCommand(
   command: string,
 ): Promise<ShellCommandResponse> {
   try {
+    log(`runShellCommand(${command})`);
+
     const { stdout, stderr } = await execPromise(command, {
       maxBuffer: 1024 * 1024 * 50,
     });

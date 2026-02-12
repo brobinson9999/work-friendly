@@ -1,48 +1,48 @@
 import express from 'express';
 import cors from 'cors';
-import { timeLog, timeLogAsync } from './performance.js';
+import { log } from './models/logs.js';
 import { registerShellRoutes } from './controllers/shell-controller.js';
+import { registerLogsRoutes } from './controllers/logs-controller.js';
 import { registerHealthRoutes } from './controllers/health-controller.js';
 // import { addItem } from './models/items.js';
 
 async function startup() {
-  timeLogAsync('startup()', async () => {
-    const port = 3000;
+  log('startup()');
 
-    let app: express.Express;
-    timeLog('Initializing Express app', () => {
-      app = express();
+  const port = 3000;
 
-      app.use(express.json());
-      app.use(express.urlencoded({ extended: true }));
-      app.use(cors());
+  let app: express.Express;
+  app = express();
 
-      registerHealthRoutes(app);
-      registerShellRoutes(app);
-    });
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(cors());
 
-    await timeLogAsync('Starting server', async () => {
-      await startServer(app, port);
-    });
-  });
-}
+  registerHealthRoutes(app);
+  registerShellRoutes(app);
+  registerLogsRoutes(app);
 
-async function startServer(app: express.Express, port: number) {
   try {
-    await new Promise((resolve, reject) => {
-      const server = app.listen(port, () => {
-        console.log(`Server listening on port ${port}`);
-        resolve(server); // Resolve when server starts
-      });
-
-      server.on('error', (err) => {
-        reject(err); // Reject if there's an error
-      });
-    });
+    await listen(app, port);
   } catch (err) {
-    console.error('Failed to start server:', err);
+    console.error('failed to start listening:', err);
     process.exit(1);
   }
 }
 
+async function listen(app: express.Express, port: number) {
+  log(`listen(${port})`);
+
+  return new Promise((resolve, reject) => {
+    const server = app.listen(port, () => {
+      resolve(server); // Resolve when server starts
+    });
+
+    server.on('error', (err) => {
+      reject(err); // Reject if there's an error
+    });
+  });
+}
+
 await startup();
+log('ready');

@@ -3,12 +3,14 @@ import { TableIcon } from "../../icons/table-icon";
 import { BashIcon } from "../../icons/bash-icon";
 import { LogsTable } from "./logs-table";
 import { LogsPre } from "./logs-pre";
-import { logs } from "../../models/logs";
+import { log, logs } from "../../models/logs";
+import { LogsNew } from "./logs-new";
 
 export function LogsIndex() {
   return (
     <Index
       title="Logs"
+      newElement={<LogsNew submitCommand={(message) => log(message)} />}
       views={[
         {
           id: "Table",

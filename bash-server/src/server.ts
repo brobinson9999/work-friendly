@@ -16,6 +16,20 @@ async function startup() {
   let app: express.Express;
   app = express();
 
+  // Custom logging middleware
+  app.use((req, res, next) => {
+    const start = Date.now();
+
+    res.on('finish', () => {
+      const duration = Date.now() - start;
+      log({
+        message: `[${res.statusCode}] ${req.method} ${req.originalUrl} (${duration}ms)`,
+      });
+    });
+
+    next();
+  });
+
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());

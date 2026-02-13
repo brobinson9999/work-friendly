@@ -14,6 +14,7 @@ export function LoginsTable({ logins }: Props) {
           header: "Created At",
           renderColumn: (login) => login.createdAt.toISOString(),
         },
+        { header: "Result", renderColumn: (login) => login.result },
       ]}
       rows={logins}
     />

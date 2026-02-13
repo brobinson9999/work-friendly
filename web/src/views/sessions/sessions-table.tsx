@@ -14,6 +14,7 @@ export function SessionsTable({ sessions }: Props) {
           header: "Created At",
           renderColumn: (session) => session.createdAt.toISOString(),
         },
+        { header: "Login ID", renderColumn: (session) => session.loginId },
       ]}
       rows={sessions}
     />

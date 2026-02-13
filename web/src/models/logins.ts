@@ -5,6 +5,7 @@ export type LoginParams = {
 export type Login = {
   id: string;
   createdAt: Date;
+  result: "success" | "failure";
 };
 
 export const logins: Login[] = [];

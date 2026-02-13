@@ -1,3 +1,4 @@
+import { InvalidLoginError } from '../errors/invalid-login-error.js';
 import { logins } from './logins.js';
 
 export type SessionParams = {
@@ -14,10 +15,10 @@ export const sessions: Session[] = [];
 export function createSession(params: SessionParams): Session {
   const login = logins.find((login) => login.id === params.loginId);
   if (!login) {
-    throw new Error('Invalid login ID');
+    throw new InvalidLoginError('Invalid login ID');
   }
   if (login.result !== 'success') {
-    throw new Error('Login was not successful');
+    throw new InvalidLoginError('Login was not successful');
   }
 
   const newSession: Session = {

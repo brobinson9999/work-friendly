@@ -1,9 +1,10 @@
-export type LogParams = {
-  message: string;
-};
+import type { JsonObject } from '../utils/json-value.js';
 
-export type Log = LogParams & {
+export type LogParams = JsonObject;
+
+export type Log = {
   timestamp: Date;
+  payload: JsonObject;
 };
 
 export const logs: Log[] = [];
@@ -14,9 +15,9 @@ export function log(params: LogParams | string): void {
     return;
   }
 
-  const newLog = {
-    ...params,
+  const newLog: Log = {
     timestamp: new Date(),
+    payload: params,
   };
 
   logs.push(newLog);
@@ -25,7 +26,8 @@ export function log(params: LogParams | string): void {
 }
 
 function consoleLog(newLog: Log): void {
-  const { message, timestamp, ...rest } = newLog;
+  const { timestamp, payload } = newLog;
+  const { message, ...rest } = payload;
   const now = timestamp.getTime();
   const lastLogTime =
     logs.length > 1 ? logs[logs.length - 2]?.timestamp.getTime() : null;

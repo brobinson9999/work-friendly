@@ -19,8 +19,8 @@ export function LogsIndex() {
           component: <LogsTable logs={logs} />,
         },
         {
-          id: "bash",
-          name: "bash",
+          id: "console",
+          name: "Console Output",
           icon: <BashIcon />,
           component: <LogsPre logs={logs} />,
         },

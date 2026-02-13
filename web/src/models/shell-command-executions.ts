@@ -10,19 +10,18 @@ export type ShellCommandExecution = {
   endTime: string;
 };
 
-export async function executeShellCommand(
+export const shellCommandExecutions: ShellCommandExecution[] = [];
+
+export function createShellCommandExecution(
   serverId: string,
   command: string,
-): Promise<ShellCommandExecution> {
-  const shellCommandExecution: ShellCommandExecution = getShellCommandExecution(
-    serverId,
-    command,
-  );
-  await runShellCommand(shellCommandExecution);
+): ShellCommandExecution {
+  const shellCommandExecution = newShellCommandExecution(serverId, command);
+  shellCommandExecutions.push(shellCommandExecution);
   return shellCommandExecution;
 }
 
-export function getShellCommandExecution(
+export function newShellCommandExecution(
   serverId: string,
   command: string,
 ): ShellCommandExecution {

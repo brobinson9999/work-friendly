@@ -8,6 +8,8 @@ import { ThemesIndex } from "./views/themes/themes-index";
 import { ComponentsIndex } from "./views/components/components-index";
 import { ServersIndex } from "./views/servers/servers-index";
 import { LogsIndex } from "./views/logs/logs-index";
+import { SessionsIndex } from "./views/sessions/sessions-index";
+import { LoginsIndex } from "./views/logins/logins-index";
 
 export type ReactRoute = Route & {
   element: JSX.Element;
@@ -23,6 +25,11 @@ export const reactRoutes: ReactRoute[] = [
     label: "Components",
     href: "/components",
     element: <ComponentsIndex />,
+  },
+  {
+    label: "Logins",
+    href: "/logins",
+    element: <LoginsIndex />,
   },
   {
     label: "Logs",
@@ -43,6 +50,11 @@ export const reactRoutes: ReactRoute[] = [
     label: "Servers",
     href: "/servers",
     element: <ServersIndex />,
+  },
+  {
+    label: "Sessions",
+    href: "/sessions",
+    element: <SessionsIndex />,
   },
   {
     label: "Shell Commands",

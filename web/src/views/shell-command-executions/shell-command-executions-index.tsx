@@ -1,8 +1,9 @@
 import { useState } from "react";
 import {
   type ShellCommandExecution,
-  getShellCommandExecution,
+  createShellCommandExecution,
   runShellCommand,
+  shellCommandExecutions,
 } from "../../models/shell-command-executions";
 import { ShellCommandExecutionsTable } from "./shell-command-executions-table";
 import { ShellCommandExecutionsNew } from "./shell-command-executions-new";
@@ -11,20 +12,13 @@ import { useRedraw } from "../../hooks/use-redraw";
 import { TableIcon } from "../../icons/table-icon";
 
 export function ShellCommandExecutionsIndex() {
-  const [shellCommandExecutions, setShellCommandExecutions] = useState<
-    ShellCommandExecution[]
-  >([]);
   const redraw = useRedraw();
 
   const submitCommand = async (serverId: string, command: string) => {
-    const newShellCommandExecution = getShellCommandExecution(
+    const newShellCommandExecution = createShellCommandExecution(
       serverId,
       command,
     );
-    setShellCommandExecutions((prevExecutions) => [
-      ...prevExecutions,
-      newShellCommandExecution,
-    ]);
     redraw();
     await runShellCommand(newShellCommandExecution);
     redraw();

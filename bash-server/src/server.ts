@@ -4,6 +4,8 @@ import { log } from './models/logs.js';
 import { registerShellRoutes } from './controllers/shell-controller.js';
 import { registerLogsRoutes } from './controllers/logs-controller.js';
 import { registerHealthRoutes } from './controllers/health-controller.js';
+import { registerSessionRoutes } from './controllers/sessions-controller.js';
+import { registerLoginRoutes } from './controllers/logins-controller.js';
 // import { addItem } from './models/items.js';
 
 async function startup() {
@@ -19,8 +21,10 @@ async function startup() {
   app.use(cors());
 
   registerHealthRoutes(app);
-  registerShellRoutes(app);
+  registerLoginRoutes(app);
   registerLogsRoutes(app);
+  registerSessionRoutes(app);
+  registerShellRoutes(app);
 
   try {
     await listen(app, port);

@@ -3,14 +3,14 @@ import { TableIcon } from "../../icons/table-icon";
 import { SessionsTable } from "./sessions-table";
 import { SessionsNew } from "./sessions-new";
 import { createSession, sessions } from "../../models/sessions";
-import { useRedraw } from "../../hooks/use-redraw";
+import { redrawAll, useRedrawAll } from "../../hooks/use-redraw-all";
 
 export function SessionsIndex() {
-  const redraw = useRedraw();
+  useRedrawAll();
 
   const submitCommand = async (loginId: string) => {
     await createSession({ loginId });
-    redraw();
+    redrawAll();
   };
 
   return (

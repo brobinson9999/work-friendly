@@ -1,8 +1,8 @@
 import { useRef, type JSX } from "react";
 import { ColumnTable } from "../../components/column-table";
-import { useRedraw } from "../../hooks/use-redraw";
 import type { Server } from "../../models/servers";
 import { PrimaryContainer } from "../../components/primary-container";
+import { redrawAll, useRedrawAll } from "../../hooks/use-redraw-all";
 
 interface Props {
   servers: Server[];
@@ -121,12 +121,12 @@ function TimingVisualization({
 }
 
 export function ServersTable({ servers }: Props) {
-  const redraw = useRedraw();
+  useRedrawAll();
 
   const testServerConnection = async (server: Server) => {
     server.status = "pending";
     server.ping = undefined;
-    redraw();
+    redrawAll();
     try {
       const startTime = performance.now();
       server.requestTimestamps.push(startTime);
@@ -147,7 +147,7 @@ export function ServersTable({ servers }: Props) {
       server.status = "offline";
       server.ping = undefined;
     }
-    redraw();
+    redrawAll();
   };
 
   return (

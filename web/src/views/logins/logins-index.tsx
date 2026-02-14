@@ -3,14 +3,14 @@ import { TableIcon } from "../../icons/table-icon";
 import { LoginsTable } from "./logins-table";
 import { LoginsNew } from "./logins-new";
 import { createLogin, logins } from "../../models/logins";
-import { useRedraw } from "../../hooks/use-redraw";
+import { redrawAll, useRedrawAll } from "../../hooks/use-redraw-all";
 
 export function LoginsIndex() {
-  const redraw = useRedraw();
+  useRedrawAll();
 
   const submitCommand = async (password: string) => {
     await createLogin({ password });
-    redraw();
+    redrawAll();
   };
 
   return (

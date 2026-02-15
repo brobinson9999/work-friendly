@@ -17,6 +17,13 @@ export function LogsTable({ logs }: Props) {
           header: "Message",
           renderColumn: (log) => log.payload.message as string,
         },
+        {
+          header: "Data",
+          renderColumn: (log) => {
+            const { message, ...rest } = log.payload;
+            return JSON.stringify(rest);
+          },
+        },
       ]}
       rows={logs}
     />

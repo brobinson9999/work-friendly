@@ -3,6 +3,16 @@ import { ColumnTable } from "../../components/column-table";
 import type { Server } from "../../models/servers";
 import { PrimaryContainer } from "../../components/primary-container";
 import { redrawAll, useRedrawAll } from "../../hooks/use-redraw-all";
+import {
+  completeRequest,
+  createRequest,
+  requests,
+  type Request,
+} from "../../models/requests";
+import {
+  executeShellCommand,
+  runShellCommand,
+} from "../../models/shell-command-executions";
 
 interface Props {
   servers: Server[];
@@ -25,14 +35,8 @@ const styles = `
   }
 `;
 
-function TimingVisualization({
-  requestTimestamps,
-  responseTimestamps,
-}: {
-  requestTimestamps: number[];
-  responseTimestamps: number[];
-}) {
-  const maxTime = performance.now();
+function TimingVisualization({ requests }: { requests: Request[] }) {
+  const maxTime = new Date().getTime();
   const minTime = maxTime - TIME_WINDOW_MS;
 
   const timeRange = TIME_WINDOW_MS;
@@ -40,9 +44,10 @@ function TimingVisualization({
   const requestBars = useRef<JSX.Element[]>([]);
   const responseBars = useRef<JSX.Element[]>([]);
 
-  for (let i = 0; i < requestTimestamps.length; i++) {
+  for (let i = 0; i < requests.length; i++) {
+    const request = requests[i];
     if (!requestBars.current[i]) {
-      const timestamp = requestTimestamps[i];
+      const timestamp = request.requestTimestamp.getTime();
       const positionPercent = ((timestamp - minTime) / timeRange) * 100;
       requestBars.current[i] = (
         <div
@@ -61,9 +66,10 @@ function TimingVisualization({
     }
   }
 
-  for (let i = 0; i < responseTimestamps.length; i++) {
-    if (!responseBars.current[i]) {
-      const timestamp = responseTimestamps[i];
+  for (let i = 0; i < requests.length; i++) {
+    const request = requests[i];
+    if (!responseBars.current[i] && request.responseTimestamp) {
+      const timestamp = request.responseTimestamp.getTime();
       const positionPercent = ((timestamp - minTime) / timeRange) * 100;
       responseBars.current[i] = (
         <div
@@ -123,19 +129,53 @@ function TimingVisualization({
 export function ServersTable({ servers }: Props) {
   useRedrawAll();
 
+  const measureCpuUsage = async (server: Server) => {
+    // For Windows servers.
+    const shellCommandExecution = await executeShellCommand(
+      server.id,
+      `powershell -Command "Get-CimInstance Win32_Processor | Select-Object -ExpandProperty LoadPercentage"`,
+    );
+    const cpuUsageMatch = shellCommandExecution.stdout.match(/(\d+)\s*$/m);
+    if (cpuUsageMatch) {
+      server.cpu = parseInt(cpuUsageMatch[1], 10);
+    } else {
+      server.cpu = undefined;
+    }
+
+    // // For linux servers.
+    // const shellCommandExecution = await executeShellCommand(
+    //   server.id,
+    //   `top -bn1 | grep 'Cpu(s)'`,
+    // );
+    // const cpuUsageMatch = shellCommandExecution.stdout.match(/(\d+\.\d+)\s*id/);
+    // if (cpuUsageMatch) {
+    //   const idleCpu = parseFloat(cpuUsageMatch[1]);
+    //   server.cpu = Math.round(100 - idleCpu);
+    // } else {
+    //   server.cpu = undefined;
+    // }
+
+    redrawAll();
+  };
+
   const testServerConnection = async (server: Server) => {
     server.status = "pending";
     server.ping = undefined;
-    redrawAll();
     try {
-      const startTime = performance.now();
-      server.requestTimestamps.push(startTime);
+      const newRequest = createRequest(
+        server.id,
+        "GET",
+        `http://${server.hostname}:${server.port}/health`,
+      );
+      redrawAll();
       const response = await fetch(
         `http://${server.hostname}:${server.port}/health`,
       );
-      const endTime = performance.now();
-      server.responseTimestamps.push(endTime);
-      const roundTripTime = Math.round(endTime - startTime);
+      completeRequest(newRequest);
+      const roundTripTime = Math.round(
+        (newRequest.responseTimestamp?.getTime() ?? 0) -
+          newRequest.requestTimestamp.getTime(),
+      );
 
       if (response.ok) {
         server.status = "online";
@@ -156,23 +196,28 @@ export function ServersTable({ servers }: Props) {
         { header: "ID", renderColumn: (server) => server.id },
         { header: "Hostname", renderColumn: (server) => server.hostname },
         { header: "Port", renderColumn: (server) => server.port },
-        // { header: "Status", renderColumn: (server) => server.status },
-        // { header: "Ping", renderColumn: (server) => server.ping ?? "N/A" },
+        { header: "Status", renderColumn: (server) => server.status },
+        { header: "Ping", renderColumn: (server) => server.ping ?? "N/A" },
+        { header: "CPU %", renderColumn: (server) => server.cpu ?? "N/A" },
         {
           header: "Timing",
           renderColumn: (server) => (
             <TimingVisualization
-              requestTimestamps={server.requestTimestamps}
-              responseTimestamps={server.responseTimestamps}
+              requests={requests.filter((r) => r.serverId === server.id)}
             />
           ),
         },
         {
           header: "Actions",
           renderColumn: (server) => (
-            <button onClick={() => testServerConnection(server)}>
-              Test Connection
-            </button>
+            <>
+              <button onClick={() => testServerConnection(server)}>
+                Test Connection
+              </button>
+              <button onClick={() => measureCpuUsage(server)}>
+                Measure CPU Usage
+              </button>
+            </>
           ),
         },
       ]}

@@ -3,6 +3,7 @@ export type Server = {
   hostname: string;
   port: number;
   ping?: number;
+  cpu?: number;
   status: "unknown" | "pending" | "online" | "offline";
   requestTimestamps: number[];
   responseTimestamps: number[];

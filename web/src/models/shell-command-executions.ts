@@ -36,6 +36,15 @@ export function newShellCommandExecution(
   };
 }
 
+export async function executeShellCommand(
+  serverId: string,
+  command: string,
+): Promise<ShellCommandExecution> {
+  const shellCommandExecution = createShellCommandExecution(serverId, command);
+  await runShellCommand(shellCommandExecution);
+  return shellCommandExecution;
+}
+
 export async function runShellCommand(
   shellCommandExecution: ShellCommandExecution,
 ): Promise<void> {

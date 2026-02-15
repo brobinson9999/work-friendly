@@ -5,12 +5,20 @@ import { LogsTable } from "./logs-table";
 import { LogsPre } from "./logs-pre";
 import { log, logs } from "../../models/logs";
 import { LogsNew } from "./logs-new";
+import { redrawAll, useRedrawAll } from "../../hooks/use-redraw-all";
 
 export function LogsIndex() {
+  useRedrawAll();
+
+  const submitCommand = async (message: string) => {
+    log(message);
+    redrawAll();
+  };
+
   return (
     <Index
       title="Logs"
-      newElement={<LogsNew submitCommand={(message) => log(message)} />}
+      newElement={<LogsNew submitCommand={submitCommand} />}
       views={[
         {
           id: "Table",

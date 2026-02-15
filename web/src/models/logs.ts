@@ -1,3 +1,5 @@
+import { redrawAll } from "../hooks/use-redraw-all";
+
 export type LogParams = {
   message: string;
 };
@@ -8,13 +10,17 @@ export type Log = LogParams & {
 
 export const logs: Log[] = [];
 
-fetch("http://localhost:3000/logs")
-  .then((res) => res.json())
-  .then((data) => {
-    data.forEach((log: Log) =>
-      logs.push({ ...log, timestamp: new Date(log.timestamp) }),
-    );
-  });
+export function invalidateLogCache(): void {
+  fetch("http://localhost:3000/logs")
+    .then((res) => res.json())
+    .then((data) => {
+      logs.length = 0;
+      data.forEach((log: Log) =>
+        logs.push({ ...log, timestamp: new Date(log.timestamp) }),
+      );
+      redrawAll();
+    });
+}
 
 export function log(params: LogParams | string): void {
   if (typeof params === "string") {

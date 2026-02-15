@@ -7,7 +7,6 @@ export function registerLogsRoutes(app: Express): void {
   const HTTP_OK = 200;
   router.get('/logs', (req: Request, res: Response) => {
     res.status(HTTP_OK).send(logs);
-    log(`${HTTP_OK} GET /logs`);
   });
 
   const HTTP_NO_CONTENT = 204;
@@ -17,7 +16,6 @@ export function registerLogsRoutes(app: Express): void {
     if (message && typeof message === 'string') {
       log(message);
       res.status(HTTP_NO_CONTENT).send();
-      log(`${HTTP_NO_CONTENT} POST /logs`);
       return;
     }
 
@@ -25,12 +23,10 @@ export function registerLogsRoutes(app: Express): void {
     if (payload && typeof payload === 'object' && payload.message) {
       log(payload);
       res.status(HTTP_NO_CONTENT).send();
-      log(`${HTTP_NO_CONTENT} POST /logs`);
       return;
     }
 
     res.status(HTTP_BAD_REQUEST).send();
-    log(`${HTTP_BAD_REQUEST} POST /logs - invalid message`);
   });
 
   app.use(router);

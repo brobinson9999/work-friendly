@@ -1,3 +1,5 @@
+import { invalidateCache } from './websockets.js';
+
 export type LoginParams = {
   password: string;
 };
@@ -22,6 +24,7 @@ export function createLogin(params: LoginParams): Login {
   };
 
   logins.push(newLogin);
+  invalidateCache();
 
   return newLogin;
 }

@@ -1,4 +1,5 @@
 import type { JsonObject } from '../utils/json-value.js';
+import { invalidateCache } from './websockets.js';
 
 export type LogParams = JsonObject;
 
@@ -21,6 +22,7 @@ export function log(params: LogParams | string): void {
   };
 
   logs.push(newLog);
+  invalidateCache();
 
   consoleLog(newLog);
 }

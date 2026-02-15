@@ -1,10 +1,30 @@
 import { Routes, Route, HashRouter, Navigate, Link } from "react-router-dom";
 import { reactRoutes } from "./routes";
 import { themes } from "./models/themes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { io, Socket } from "socket.io-client";
 import { SurfaceContainer } from "./components/surface-container";
+import { invalidateLogCache } from "./models/logs";
 
 function App() {
+  useEffect(() => {
+    // Connect to the server (adjust URL/port if needed)
+    const socket: Socket = io("http://localhost:3000");
+    socket.on("connect", () => {
+      console.log("WebSocket connected", socket.id);
+    });
+    socket.on("disconnect", () => {
+      console.log("WebSocket disconnected");
+    });
+    socket.on("invalidate-cache", (data) => {
+      invalidateLogCache();
+      console.log("Received invalidate-cache:", data);
+    });
+    // Clean up on unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   const themeNames = themes.map((theme) => theme.name);
 
   const [selectedTheme, setSelectedTheme] = useState(() => {

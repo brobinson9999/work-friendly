@@ -1,5 +1,6 @@
 import { InvalidLoginError } from '../errors/invalid-login-error.js';
 import { logins } from './logins.js';
+import { invalidateCache } from './websockets.js';
 
 export type SessionParams = {
   loginId: string;
@@ -28,6 +29,7 @@ export function createSession(params: SessionParams): Session {
   };
 
   sessions.push(newSession);
+  invalidateCache();
 
   return newSession;
 }

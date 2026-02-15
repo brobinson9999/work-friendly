@@ -13,7 +13,10 @@ export function LogsTable({ logs }: Props) {
           header: "Timestamp",
           renderColumn: (log) => log.timestamp.toISOString(),
         },
-        { header: "Message", renderColumn: (log) => log.message },
+        {
+          header: "Message",
+          renderColumn: (log) => log.payload.message as string,
+        },
       ]}
       rows={logs}
     />

@@ -1,11 +1,11 @@
 import { redrawAll } from "../hooks/use-redraw-all";
+import type { JsonObject } from "../utils/json-value";
 
-export type LogParams = {
-  message: string;
-};
+export type LogPayload = JsonObject;
 
-export type Log = LogParams & {
+export type Log = {
   timestamp: Date;
+  payload: LogPayload;
 };
 
 export const logs: Log[] = [];
@@ -22,14 +22,14 @@ export function invalidateLogCache(): void {
     });
 }
 
-export function log(params: LogParams | string): void {
-  if (typeof params === "string") {
-    log({ message: params });
+export function log(payload: LogPayload | string): void {
+  if (typeof payload === "string") {
+    log({ message: payload });
     return;
   }
 
   const newLog = {
-    ...params,
+    payload: payload,
     timestamp: new Date(),
   };
 
@@ -44,7 +44,8 @@ function consoleLog(newLog: Log): void {
 }
 
 export function formatLog(newLog: Log): string {
-  const { message, timestamp, ...rest } = newLog;
+  const { payload, timestamp, ...rest } = newLog;
+  const { message } = payload;
   const now = timestamp.getTime();
   const lastLogTime = logs[logs.length - 2]?.timestamp.getTime();
   const delta = now - (lastLogTime || now);

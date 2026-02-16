@@ -3,7 +3,11 @@ import { Index } from "../../components";
 import { TableIcon } from "../../icons/table-icon";
 import { getPokemonSpecies } from "../../models/pokemon-species";
 import { useRedrawAll } from "../../hooks/use-redraw-all";
-import type { QueryableColumn } from "../../utils/queryable";
+import {
+  executeQuery,
+  type OrderByClause,
+  type QueryableColumn,
+} from "../../utils/queryable";
 import type { PokemonSpecies } from "../../models/pokemon-species";
 import { useState } from "react";
 
@@ -11,10 +15,6 @@ export function PokemonSpeciesIndex() {
   useRedrawAll();
 
   const pokemonSpecies = getPokemonSpecies();
-
-  if (!pokemonSpecies) {
-    return <div>Loading...</div>;
-  }
 
   let sortBy: string;
   let setSortBy: React.Dispatch<React.SetStateAction<string>>;
@@ -53,17 +53,30 @@ export function PokemonSpeciesIndex() {
   const [searchText, setSearchText] = useState("");
   [sortBy, setSortBy] = useState<string>(sortableColumns[0].id);
 
-  const filteredPokemonSpecies = pokemonSpecies
-    .filter((pokemonSpecies) =>
-      pokemonSpecies.name.toLowerCase().includes(searchText.toLowerCase()),
-    )
-    .sort((a, b) => {
-      const col = sortableColumns.find((col) => col.id === sortBy);
-      if (col && col.compare) {
-        return col.compare(a, b);
-      }
-      return 0;
-    });
+  if (!pokemonSpecies) {
+    return <div>Loading...</div>;
+  }
+
+  const orderByCol = sortableColumns.find((col) => col.id === sortBy);
+  const orderBy = orderByCol ? [{ column: sortBy, direction: "asc" }] : [];
+  const filteredPokemonSpecies = executeQuery(
+    pokemonSpecies,
+    {
+      orderBy: orderBy as OrderByClause<PokemonSpecies>[],
+    },
+    (item) => item.name.toLowerCase().includes(searchText.toLowerCase()),
+  );
+  // const filteredPokemonSpecies = pokemonSpecies
+  //   .filter((pokemonSpecies) =>
+  //     pokemonSpecies.name.toLowerCase().includes(searchText.toLowerCase()),
+  //   )
+  //   .sort((a, b) => {
+  //     const col = sortableColumns.find((col) => col.id === sortBy);
+  //     if (col && col.compare) {
+  //       return col.compare(a, b);
+  //     }
+  //     return 0;
+  //   });
 
   return (
     <>

@@ -12,7 +12,7 @@ let pokemonSpecies: PokemonSpecies[] | undefined = undefined;
 
 export function getPokemonSpecies(): PokemonSpecies[] | undefined {
   if (!pokemonSpecies) {
-    fetch("https://pokeapi.co/api/v2/pokemon-species?limit=10")
+    fetch("https://pokeapi.co/api/v2/pokemon-species?limit=100")
       .then((response) => response.json())
       .then((data) => {
         const fetchedPokemonSpecies: PokemonSpecies[] = data.results.map(

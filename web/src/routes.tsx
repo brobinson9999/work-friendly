@@ -10,6 +10,7 @@ import { ServersIndex } from "./views/servers/servers-index";
 import { LogsIndex } from "./views/logs/logs-index";
 import { SessionsIndex } from "./views/sessions/sessions-index";
 import { LoginsIndex } from "./views/logins/logins-index";
+import { PokemonSpeciesIndex } from "./views/pokemon-species/pokemon-species-index";
 
 export type ReactRoute = Route & {
   element: JSX.Element;
@@ -40,6 +41,11 @@ export const reactRoutes: ReactRoute[] = [
     label: "Palettes",
     href: "/palettes",
     element: <PalettesIndex />,
+  },
+  {
+    label: "Pokemon Species",
+    href: "/pokemon-species",
+    element: <PokemonSpeciesIndex />,
   },
   {
     label: "Routes",

@@ -9,10 +9,7 @@ import {
   requests,
   type Request,
 } from "../../models/requests";
-import {
-  executeShellCommand,
-  runShellCommand,
-} from "../../models/shell-command-executions";
+import { executeShellCommand } from "../../models/shell-command-executions";
 
 interface Props {
   servers: Server[];

@@ -3,12 +3,7 @@ import { ColumnTable } from "../../components/column-table";
 import type { Server } from "../../models/servers";
 import { PrimaryContainer } from "../../components/primary-container";
 import { redrawAll, useRedrawAll } from "../../hooks/use-redraw-all";
-import {
-  completeRequest,
-  createRequest,
-  requests,
-  type Request,
-} from "../../models/requests";
+import { executeRequest, requests, type Request } from "../../models/requests";
 import { executeShellCommand } from "../../models/shell-command-executions";
 
 interface Props {
@@ -159,22 +154,16 @@ export function ServersTable({ servers }: Props) {
     server.status = "pending";
     server.ping = undefined;
     try {
-      const newRequest = createRequest(
+      const newRequest = await executeRequest(
         server.id,
-        "GET",
         `http://${server.hostname}:${server.port}/health`,
       );
-      redrawAll();
-      const response = await fetch(
-        `http://${server.hostname}:${server.port}/health`,
-      );
-      completeRequest(newRequest);
       const roundTripTime = Math.round(
         (newRequest.responseTimestamp?.getTime() ?? 0) -
           newRequest.requestTimestamp.getTime(),
       );
 
-      if (response.ok) {
+      if (newRequest.response!.ok) {
         server.status = "online";
         server.ping = roundTripTime;
       } else {

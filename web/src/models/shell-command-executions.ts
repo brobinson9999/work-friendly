@@ -1,3 +1,5 @@
+import { redrawAll } from "../hooks/use-redraw-all";
+import { executeRequest } from "./requests";
 import { servers } from "./servers";
 
 export type ShellCommandExecution = {
@@ -57,18 +59,15 @@ export async function runShellCommand(
   const startTime = new Date().toLocaleString();
   shellCommandExecution.startTime = startTime;
   try {
-    const response = await fetch(
-      `http://${server.hostname}:${server.port}/shell`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ command: shellCommandExecution.command }),
+    const request = await executeRequest(server.id, "/shell", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({ command: shellCommandExecution.command }),
+    });
 
-    const json = await response.json();
+    const json = await request.response!.json();
     const endTime = new Date().toLocaleString();
     shellCommandExecution.stdout = json.stdout || "";
     shellCommandExecution.stderr = json.stderr || "";
@@ -81,4 +80,6 @@ export async function runShellCommand(
     shellCommandExecution.exitCode = null;
     shellCommandExecution.endTime = endTime;
   }
+
+  redrawAll();
 }

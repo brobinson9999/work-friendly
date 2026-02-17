@@ -10,7 +10,6 @@ export function LoginsIndex() {
 
   const submitCommand = async (password: string) => {
     await createLogin({ password });
-    redrawAll();
   };
 
   return (

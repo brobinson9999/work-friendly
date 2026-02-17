@@ -1,4 +1,8 @@
+import { redrawAll } from "../hooks/use-redraw-all";
+import { executeRequest } from "./requests";
+
 export type LoginParams = {
+  serverId: string;
   password: string;
 };
 
@@ -11,7 +15,7 @@ export type Login = {
 export const logins: Login[] = [];
 
 export async function createLogin(params: LoginParams): Promise<Login> {
-  const response = await fetch("http://localhost:3000/logins", {
+  const request = await executeRequest(params.serverId, "/logins", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,9 +23,10 @@ export async function createLogin(params: LoginParams): Promise<Login> {
     body: JSON.stringify({ password: params.password }),
   });
 
-  const newLogin = await response.json();
+  const newLogin = await request.response!.json();
 
   logins.push({ ...newLogin, createdAt: new Date(newLogin.createdAt) });
+  redrawAll();
 
   return newLogin;
 }

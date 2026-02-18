@@ -12,6 +12,9 @@ import { SurfaceContainer } from "../../components/surface-container";
 import { ViteForeground } from "../../models/colors";
 import { libations } from "../../models/palettes";
 
+import { BarChart } from "../../components/bar-chart";
+import { ScatterPlot } from "../../components/scatter-plot";
+
 export function ComponentsIndex() {
   const [selectedButton, setSelectedButton] = useState("button1");
 
@@ -97,6 +100,44 @@ export function ComponentsIndex() {
       <div className="error">Error</div>
       <div className="warning">Warning</div>
       <div className="success">Success</div>
+
+      <h2>Bar Chart</h2>
+      <BarChart
+        data={[
+          { fruit: "Apples", qty: 120, color: "#e74c3c" },
+          { fruit: "Bananas", qty: 90, color: "#f1c40f" },
+          { fruit: "Cherries", qty: 60, color: "#c0392b" },
+          { fruit: "Dates", qty: 30, color: "#8d5524" },
+          { fruit: "Elderberries", qty: 75, color: "#6c3483" },
+          { fruit: "Figs", qty: 45, color: "#a569bd" },
+          { fruit: "Grapes", qty: 110, color: "#5b2c6f" },
+        ]}
+        labelAxis={{ label: "Fruit", getValue: (d) => d.fruit }}
+        valueAxis={{ label: "Quantity", getValue: (d) => d.qty }}
+        colorAxis={{ label: "Color", getValue: (d) => d.color }}
+        barHeightAxis={{ label: "Bar Height", getValue: (d) => d.qty }}
+      />
+
+      <h2>Scatter Plot</h2>
+      <ScatterPlot
+        data={[
+          { name: "A", x: 1, y: 2, color: "#e74c3c" },
+          { name: "B", x: 2, y: 3, color: "#f1c40f" },
+          { name: "C", x: 3, y: 7, color: "#c0392b" },
+          { name: "D", x: 4, y: 4, color: "#8d5524" },
+          { name: "E", x: 5, y: 9, color: "#6c3483" },
+          { name: "F", x: 6, y: 5, color: "#a569bd" },
+          { name: "G", x: 7, y: 8, color: "#5b2c6f" },
+          { name: "H", x: 8, y: 6, color: "#27ae60" },
+          { name: "I", x: 9, y: 10, color: "#2980b9" },
+          { name: "J", x: 10, y: 3, color: "#34495e" },
+        ]}
+        labelAxis={{ label: "Label", getValue: (d) => d.name }}
+        xAxis={{ label: "X Value", getValue: (d) => d.x }}
+        yAxis={{ label: "Y Value", getValue: (d) => d.y }}
+        colorAxis={{ label: "Color", getValue: (d) => d.color }}
+        radiusAxis={{ label: "Radius", getValue: (d) => d.x }}
+      />
 
       <h2>Gradients</h2>
       <style>{`

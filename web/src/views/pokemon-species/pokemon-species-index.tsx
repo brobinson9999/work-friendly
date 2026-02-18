@@ -10,6 +10,9 @@ import {
 } from "../../utils/queryable";
 import type { PokemonSpecies } from "../../models/pokemon-species";
 import { useState } from "react";
+import { PokemonSpeciesChart } from "./pokemon-species-bar-chart";
+import { ChartIcon } from "../../icons/chart-icon";
+import { PokemonSpeciesScatterPlot } from "./pokemon-species-scatter-plot";
 
 export function PokemonSpeciesIndex() {
   useRedrawAll();
@@ -107,6 +110,24 @@ export function PokemonSpeciesIndex() {
             icon: <TableIcon />,
             component: (
               <PokemonSpeciesTable pokemonSpecies={filteredPokemonSpecies} />
+            ),
+          },
+          {
+            id: "Chart",
+            name: "Chart",
+            icon: <ChartIcon />,
+            component: (
+              <PokemonSpeciesChart pokemonSpecies={filteredPokemonSpecies} />
+            ),
+          },
+          {
+            id: "Scatter Plot",
+            name: "Scatter Plot",
+            icon: <ChartIcon />,
+            component: (
+              <PokemonSpeciesScatterPlot
+                pokemonSpecies={filteredPokemonSpecies}
+              />
             ),
           },
         ]}

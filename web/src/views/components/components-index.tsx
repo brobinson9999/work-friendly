@@ -12,11 +12,92 @@ import { SurfaceContainer } from "../../components/surface-container";
 import { ViteForeground } from "../../models/colors";
 import { libations } from "../../models/palettes";
 
-import { BarChart } from "../../components/bar-chart";
+import {
+  BarChart,
+  dateAxis,
+  numberAxis,
+  textAxis,
+} from "../../components/bar-chart";
 import { ScatterPlot } from "../../components/scatter-plot";
+
+type ChartSampleData = {
+  fruit: string;
+  qty: number;
+  color: string;
+  price: number;
+  weight: number;
+  radius: number;
+  bestBefore: Date;
+};
 
 export function ComponentsIndex() {
   const [selectedButton, setSelectedButton] = useState("button1");
+
+  const chartData: ChartSampleData[] = [
+    {
+      fruit: "Apples",
+      qty: 120,
+      color: "#e74c3c",
+      price: 1.2,
+      weight: 0.5,
+      radius: 10,
+      bestBefore: new Date("2024-12-31"),
+    },
+    {
+      fruit: "Bananas",
+      qty: 90,
+      color: "#f1c40f",
+      price: 0.8,
+      weight: 0.3,
+      radius: 8,
+      bestBefore: new Date("2024-11-30"),
+    },
+    {
+      fruit: "Cherries",
+      qty: 60,
+      color: "#c0392b",
+      price: 2.5,
+      weight: 0.2,
+      radius: 5,
+      bestBefore: new Date("2024-10-15"),
+    },
+    {
+      fruit: "Dates",
+      qty: 30,
+      color: "#8d5524",
+      price: 3.0,
+      weight: 0.4,
+      radius: 6,
+      bestBefore: new Date("2024-09-30"),
+    },
+    {
+      fruit: "Elderberries",
+      qty: 75,
+      color: "#6c3483",
+      price: 1.8,
+      weight: 0.3,
+      radius: 7,
+      bestBefore: new Date("2024-08-31"),
+    },
+    {
+      fruit: "Figs",
+      qty: 45,
+      color: "#a569bd",
+      price: 2.2,
+      weight: 0.4,
+      radius: 9,
+      bestBefore: new Date("2024-07-31"),
+    },
+    {
+      fruit: "Grapes",
+      qty: 110,
+      color: "#5b2c6f",
+      price: 2.0,
+      weight: 0.5,
+      radius: 8,
+      bestBefore: new Date("2024-06-30"),
+    },
+  ];
 
   return (
     <div>
@@ -103,40 +184,31 @@ export function ComponentsIndex() {
 
       <h2>Bar Chart</h2>
       <BarChart
-        data={[
-          { fruit: "Apples", qty: 120, color: "#e74c3c" },
-          { fruit: "Bananas", qty: 90, color: "#f1c40f" },
-          { fruit: "Cherries", qty: 60, color: "#c0392b" },
-          { fruit: "Dates", qty: 30, color: "#8d5524" },
-          { fruit: "Elderberries", qty: 75, color: "#6c3483" },
-          { fruit: "Figs", qty: 45, color: "#a569bd" },
-          { fruit: "Grapes", qty: 110, color: "#5b2c6f" },
-        ]}
-        labelAxis={{ label: "Fruit", getValue: (d) => d.fruit }}
-        valueAxis={{ label: "Quantity", getValue: (d) => d.qty }}
-        colorAxis={{ label: "Color", getValue: (d) => d.color }}
-        barHeightAxis={{ label: "Bar Height", getValue: (d) => d.qty }}
+        data={chartData}
+        labelAxis={textAxis<ChartSampleData>("Fruit", (d) => d.fruit)}
+        valueAxis={numberAxis<ChartSampleData>("Quantity", (d) => d.qty, {
+          min: 0,
+        })}
+        colorAxis={textAxis<ChartSampleData>("Color", (d) => d.color)}
+        barHeightAxis={numberAxis<ChartSampleData>(
+          "Bar Height",
+          (d) => d.radius,
+          {
+            min: 0,
+          },
+        )}
       />
 
       <h2>Scatter Plot</h2>
       <ScatterPlot
-        data={[
-          { name: "A", x: 1, y: 2, color: "#e74c3c" },
-          { name: "B", x: 2, y: 3, color: "#f1c40f" },
-          { name: "C", x: 3, y: 7, color: "#c0392b" },
-          { name: "D", x: 4, y: 4, color: "#8d5524" },
-          { name: "E", x: 5, y: 9, color: "#6c3483" },
-          { name: "F", x: 6, y: 5, color: "#a569bd" },
-          { name: "G", x: 7, y: 8, color: "#5b2c6f" },
-          { name: "H", x: 8, y: 6, color: "#27ae60" },
-          { name: "I", x: 9, y: 10, color: "#2980b9" },
-          { name: "J", x: 10, y: 3, color: "#34495e" },
-        ]}
-        labelAxis={{ label: "Label", getValue: (d) => d.name }}
-        xAxis={{ label: "X Value", getValue: (d) => d.x }}
-        yAxis={{ label: "Y Value", getValue: (d) => d.y }}
-        colorAxis={{ label: "Color", getValue: (d) => d.color }}
-        radiusAxis={{ label: "Radius", getValue: (d) => d.x }}
+        data={chartData}
+        labelAxis={textAxis<ChartSampleData>("Label", (d) => d.fruit)}
+        xAxis={numberAxis<ChartSampleData>("Price", (d) => d.price, { min: 0 })}
+        yAxis={dateAxis<ChartSampleData>("Best Before", (d) => d.bestBefore)}
+        colorAxis={textAxis<ChartSampleData>("Color", (d) => d.color)}
+        radiusAxis={numberAxis<ChartSampleData>("Radius", (d) => d.radius, {
+          min: 0,
+        })}
       />
 
       <h2>Gradients</h2>

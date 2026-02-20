@@ -2,19 +2,12 @@ import type { ChartAxis } from "./bar-chart";
 
 export type ScatterPlotProps<TData> = {
   data: TData[];
-  labelAxis?: ChartAxis<TData, string>;
-  xAxis: ChartAxis<TData, number>;
-  yAxis: ChartAxis<TData, number>;
-  radiusAxis?: ChartAxis<TData, number>;
-  colorAxis?: ChartAxis<TData, string>;
+  labelAxis?: ChartAxis<TData>;
+  xAxis: ChartAxis<TData>;
+  yAxis: ChartAxis<TData>;
+  radiusAxis?: ChartAxis<TData>;
+  colorAxis?: ChartAxis<TData>;
 };
-
-// Helper to generate ticks
-function getTicks(min: number, max: number, count: number) {
-  if (max === min) return [min];
-  const step = (max - min) / (count - 1);
-  return Array.from({ length: count }, (_, i) => min + i * step);
-}
 
 export function ScatterPlot<TData>({
   data,
@@ -33,21 +26,12 @@ export function ScatterPlot<TData>({
   const height = 400;
   const padding = 48;
 
-  // Find min/max for scaling
-  const xValues = data.map(xAxis.getValue);
-  const yValues = data.map(yAxis.getValue);
-  const xMin = Math.min(...xValues);
-  const xMax = Math.max(...xValues);
-  const yMin = Math.min(...yValues);
-  const yMax = Math.max(...yValues);
-
   // Scale functions
-  const xScale = (x: number) =>
-    padding + ((x - xMin) / (xMax - xMin || 1)) * (width - 2 * padding);
-  const yScale = (y: number) =>
-    height -
-    padding -
-    ((y - yMin) / (yMax - yMin || 1)) * (height - 2 * padding);
+  const availableWidth = width - 2 * padding;
+  const availableHeight = height - 2 * padding;
+  const xScale = (position: number) => position * availableWidth + padding;
+  const yScale = (position: number) =>
+    (1 - position) * availableHeight + padding;
 
   return (
     <div>
@@ -57,8 +41,8 @@ export function ScatterPlot<TData>({
         style={{ background: "#f9f9f9", border: "1px solid #ddd" }}
       >
         {/* Grid lines: vertical (X ticks) */}
-        {getTicks(xMin, xMax, 6).map((tick, i) => {
-          const x = xScale(tick);
+        {xAxis.ticks(data).map((tick, i) => {
+          const x = xScale(tick.position);
           return (
             <line
               key={"x-grid-" + i}
@@ -73,8 +57,8 @@ export function ScatterPlot<TData>({
           );
         })}
         {/* Grid lines: horizontal (Y ticks) */}
-        {getTicks(yMin, yMax, 6).map((tick, i) => {
-          const y = yScale(tick);
+        {yAxis.ticks(data).map((tick, i) => {
+          const y = yScale(tick.position);
           return (
             <line
               key={"y-grid-" + i}
@@ -107,8 +91,8 @@ export function ScatterPlot<TData>({
         />
 
         {/* X axis ticks and labels */}
-        {getTicks(xMin, xMax, 6).map((tick, i) => {
-          const x = xScale(tick);
+        {xAxis.ticks(data).map((tick, i) => {
+          const x = xScale(tick.position);
           return (
             <g key={"x-tick-" + i}>
               <line
@@ -125,15 +109,15 @@ export function ScatterPlot<TData>({
                 fontSize={12}
                 fill="#444"
               >
-                {Number.isInteger(tick) ? tick : tick.toFixed(2)}
+                {tick.label}
               </text>
             </g>
           );
         })}
 
         {/* Y axis ticks and labels */}
-        {getTicks(yMin, yMax, 6).map((tick, i) => {
-          const y = yScale(tick);
+        {yAxis.ticks(data).map((tick, i) => {
+          const y = yScale(tick.position);
           return (
             <g key={"y-tick-" + i}>
               <line x1={padding - 8} y1={y} x2={padding} y2={y} stroke="#888" />
@@ -144,7 +128,7 @@ export function ScatterPlot<TData>({
                 fontSize={12}
                 fill="#444"
               >
-                {Number.isInteger(tick) ? tick : tick.toFixed(2)}
+                {tick.label}
               </text>
             </g>
           );
@@ -173,17 +157,17 @@ export function ScatterPlot<TData>({
         </text>
 
         {/* Points */}
-        {data.map((datum, i) => {
-          const x = xScale(xAxis.getValue(datum));
-          const y = yScale(yAxis.getValue(datum));
-          const label = labelAxis ? labelAxis.getValue(datum) : "";
+        {data.map((_datum, i) => {
+          const x = xScale(xAxis.position(data, i));
+          const y = yScale(yAxis.position(data, i));
+          const label = labelAxis ? labelAxis.stringValue(data, i) : "";
           return (
             <g key={i}>
               <circle
                 cx={x}
                 cy={y}
-                r={radiusAxis ? radiusAxis.getValue(datum) : 6}
-                fill={colorAxis ? colorAxis.getValue(datum) : "#4f8ef7"}
+                r={radiusAxis ? radiusAxis.position(data, i) * 6 : 6}
+                fill={colorAxis ? colorAxis.stringValue(data, i) : "#4f8ef7"}
                 opacity={0.85}
               />
               {/* Visible label next to point */}

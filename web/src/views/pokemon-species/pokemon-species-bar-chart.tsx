@@ -1,6 +1,13 @@
 import { useState } from "react";
 import type { PokemonSpecies } from "../../models/pokemon-species";
-import { BarChart, type ChartAxis } from "../../components/bar-chart";
+import {
+  BarChart,
+  numberAxis,
+  textAxis,
+  type ChartAxis,
+} from "../../components/bar-chart";
+import { pokemonSpeciesChartAxes } from "./pokemon-species-chart";
+import { ChartAxisSelector } from "../../components/chart-axis-selector";
 
 export type GraphProps = {
   pokemonSpecies: PokemonSpecies[];
@@ -10,68 +17,57 @@ export type GraphProps = {
 export function PokemonSpeciesChart({ pokemonSpecies }: GraphProps) {
   const [labelAxisIndex, setLabelAxisIndex] = useState<number>(0);
   const [valueAxisIndex, setValueAxisIndex] = useState<number>(0);
+  const [barHeightAxisIndex, setBarHeightAxisIndex] = useState<number>(0);
+  const [colorAxisIndex, setColorAxisIndex] = useState<number>(0);
 
   if (!pokemonSpecies || pokemonSpecies.length === 0) {
     return <div>No data available.</div>;
   }
 
-  const labelAxes: ChartAxis<PokemonSpecies, string>[] = [
-    {
-      label: "Name",
-      getValue: (species) => species.name,
-    },
-  ];
+  const axes = pokemonSpeciesChartAxes;
 
-  const valueAxes: ChartAxis<PokemonSpecies, number>[] = [
-    {
-      label: "Capture Rate",
-      getValue: (species) => species.capture_rate!,
-    },
-    {
-      label: "Base Happiness",
-      getValue: (species) => species.base_happiness!,
-    },
-  ];
-
-  const labelAxis = labelAxes[labelAxisIndex];
-  const valueAxis = valueAxes[valueAxisIndex];
+  const labelAxis = axes[labelAxisIndex];
+  const valueAxis = axes[valueAxisIndex];
+  const barHeightAxis = axes[barHeightAxisIndex];
+  const colorAxis = axes[colorAxisIndex];
 
   return (
     <div>
-      <div style={{ marginBottom: "1em" }}>
-        <label htmlFor="label-select">Label Axis: </label>
-        <select
-          id="label-select"
-          value={labelAxisIndex}
-          onChange={(e) => setLabelAxisIndex(parseInt(e.target.value))}
-        >
-          {labelAxes.map((axis, index) => (
-            <option key={index} value={index}>
-              {axis.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div style={{ marginBottom: "1em" }}>
-        <label htmlFor="value-select">Value Axis: </label>
-        <select
-          id="value-select"
-          value={valueAxisIndex}
-          onChange={(e) => setValueAxisIndex(parseInt(e.target.value))}
-        >
-          {valueAxes.map((axis, index) => (
-            <option key={index} value={index}>
-              {axis.label}
-            </option>
-          ))}
-        </select>
-      </div>
+      <ChartAxisSelector
+        id="label"
+        label="Label Axis"
+        axes={axes}
+        state={labelAxisIndex}
+        setState={setLabelAxisIndex}
+      />
+      <ChartAxisSelector
+        id="value"
+        label="Value Axis"
+        axes={axes}
+        state={valueAxisIndex}
+        setState={setValueAxisIndex}
+      />
+      <ChartAxisSelector
+        id="bar-height"
+        label="Bar Height Axis"
+        axes={axes}
+        state={barHeightAxisIndex}
+        setState={setBarHeightAxisIndex}
+      />
+      <ChartAxisSelector
+        id="color"
+        label="Color Axis"
+        axes={axes}
+        state={colorAxisIndex}
+        setState={setColorAxisIndex}
+      />
 
       <BarChart
         data={pokemonSpecies}
         labelAxis={labelAxis}
         valueAxis={valueAxis}
+        barHeightAxis={barHeightAxis}
+        colorAxis={colorAxis}
       />
     </div>
   );

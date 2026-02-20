@@ -1,24 +1,26 @@
 import { useState } from "react";
-import type { PokemonSpecies } from "../../models/pokemon-species";
-import { BarChart } from "../../components/bar-chart";
-import { pokemonSpeciesChartAxes } from "./pokemon-species-chart";
-import { ChartAxisSelector } from "../../components/chart-axis-selector";
+import { BarChart, type ChartAxis } from "./bar-chart";
+import { ChartAxisSelector } from "./chart-axis-selector";
 
-export type GraphProps = {
-  pokemonSpecies: PokemonSpecies[];
+export type DataBarChartProps<TData> = {
+  data: TData[];
+  columns: ChartAxis<TData>[];
 };
 
-export function PokemonSpeciesBarChart({ pokemonSpecies }: GraphProps) {
+export function DataBarChart<TData>({
+  data,
+  columns,
+}: DataBarChartProps<TData>) {
   const [labelAxisIndex, setLabelAxisIndex] = useState<number>(0);
   const [valueAxisIndex, setValueAxisIndex] = useState<number>(0);
   const [barHeightAxisIndex, setBarHeightAxisIndex] = useState<number>(0);
   const [colorAxisIndex, setColorAxisIndex] = useState<number>(0);
 
-  if (!pokemonSpecies || pokemonSpecies.length === 0) {
+  if (!data || data.length === 0) {
     return <div>No data available.</div>;
   }
 
-  const axes = pokemonSpeciesChartAxes;
+  const axes = columns;
 
   const labelAxis = axes[labelAxisIndex];
   const valueAxis = axes[valueAxisIndex];
@@ -57,7 +59,7 @@ export function PokemonSpeciesBarChart({ pokemonSpecies }: GraphProps) {
       />
 
       <BarChart
-        data={pokemonSpecies}
+        data={data}
         labelAxis={labelAxis}
         valueAxis={valueAxis}
         barHeightAxis={barHeightAxis}

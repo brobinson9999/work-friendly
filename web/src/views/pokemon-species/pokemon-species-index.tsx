@@ -1,4 +1,4 @@
-import { PokemonSpeciesTable } from "./pokemon-species-table";
+import { DataTable } from "../../components/data-table";
 import { Index } from "../../components";
 import { TableIcon } from "../../icons/table-icon";
 import { getPokemonSpecies } from "../../models/pokemon-species";
@@ -10,12 +10,35 @@ import {
 } from "../../utils/queryable";
 import type { PokemonSpecies } from "../../models/pokemon-species";
 import { useState } from "react";
-import { PokemonSpeciesBarChart } from "./pokemon-species-bar-chart";
+import { DataBarChart } from "../../components/data-bar-chart";
 import { ScatterPlotIcon } from "../../icons/scatter-plot-icon";
-import { PokemonSpeciesScatterPlot } from "./pokemon-species-scatter-plot";
-import { PokemonSpeciesTsv } from "./pokemon-species-tsv";
+import { DataScatterPlot } from "../../components/data-scatter-plot";
 import { TsvIcon } from "../../icons/tsv-icon";
 import { BarChartIcon } from "../../icons/bar-chart-icon";
+import { TsvListing } from "../../components/tsv-listing";
+import {
+  colorAxis,
+  nullAxis,
+  numberAxis,
+  textAxis,
+  type ChartAxis,
+} from "../../components/bar-chart";
+
+const pokemonSpeciesChartAxes: ChartAxis<PokemonSpecies>[] = [
+  nullAxis<PokemonSpecies>("None"),
+  textAxis<PokemonSpecies>("Name", (species) => species.name),
+  numberAxis<PokemonSpecies>(
+    "Capture Rate",
+    (species) => species.capture_rate!,
+    { min: 0, max: 255 },
+  ),
+  numberAxis<PokemonSpecies>(
+    "Base Happiness",
+    (species) => species.base_happiness!,
+    { min: 0, max: 255 },
+  ),
+  colorAxis<PokemonSpecies>("Color", (species) => species.color?.name ?? ""),
+];
 
 export function PokemonSpeciesIndex() {
   useRedrawAll();
@@ -112,7 +135,10 @@ export function PokemonSpeciesIndex() {
             name: "Table",
             icon: <TableIcon />,
             component: (
-              <PokemonSpeciesTable pokemonSpecies={filteredPokemonSpecies} />
+              <DataTable
+                data={filteredPokemonSpecies}
+                columns={pokemonSpeciesChartAxes}
+              />
             ),
           },
           {
@@ -120,7 +146,10 @@ export function PokemonSpeciesIndex() {
             name: "TSV",
             icon: <TsvIcon />,
             component: (
-              <PokemonSpeciesTsv pokemonSpecies={filteredPokemonSpecies} />
+              <TsvListing
+                data={filteredPokemonSpecies}
+                columns={pokemonSpeciesChartAxes}
+              />
             ),
           },
           {
@@ -128,7 +157,10 @@ export function PokemonSpeciesIndex() {
             name: "Bar Chart",
             icon: <BarChartIcon />,
             component: (
-              <PokemonSpeciesBarChart pokemonSpecies={filteredPokemonSpecies} />
+              <DataBarChart
+                data={filteredPokemonSpecies}
+                columns={pokemonSpeciesChartAxes}
+              />
             ),
           },
           {
@@ -136,8 +168,9 @@ export function PokemonSpeciesIndex() {
             name: "Scatter Plot",
             icon: <ScatterPlotIcon />,
             component: (
-              <PokemonSpeciesScatterPlot
-                pokemonSpecies={filteredPokemonSpecies}
+              <DataScatterPlot
+                data={filteredPokemonSpecies}
+                columns={pokemonSpeciesChartAxes}
               />
             ),
           },

@@ -1,25 +1,28 @@
 import { useState } from "react";
-import type { PokemonSpecies } from "../../models/pokemon-species";
-import { ScatterPlot } from "../../components/scatter-plot";
-import { pokemonSpeciesChartAxes } from "./pokemon-species-chart";
-import { ChartAxisSelector } from "../../components/chart-axis-selector";
+import { ScatterPlot } from "./scatter-plot";
+import { ChartAxisSelector } from "./chart-axis-selector";
+import type { ChartAxis } from "./bar-chart";
 
-export type GraphProps = {
-  pokemonSpecies: PokemonSpecies[];
+export type DataScatterPlotProps<TData> = {
+  data: TData[];
+  columns: ChartAxis<TData>[];
 };
 
-export function PokemonSpeciesScatterPlot({ pokemonSpecies }: GraphProps) {
+export function DataScatterPlot<TData>({
+  data,
+  columns,
+}: DataScatterPlotProps<TData>) {
   const [labelAxisIndex, setLabelAxisIndex] = useState<number>(0);
   const [xAxisIndex, setXAxisIndex] = useState<number>(0);
   const [yAxisIndex, setYAxisIndex] = useState<number>(0);
   const [radiusAxisIndex, setRadiusAxisIndex] = useState<number>(0);
   const [colorAxisIndex, setColorAxisIndex] = useState<number>(0);
 
-  if (!pokemonSpecies || pokemonSpecies.length === 0) {
+  if (!data || data.length === 0) {
     return <div>No data available.</div>;
   }
 
-  const axes = pokemonSpeciesChartAxes;
+  const axes = columns;
 
   const labelAxis = axes[labelAxisIndex];
   const xAxis = axes[xAxisIndex];
@@ -70,7 +73,7 @@ export function PokemonSpeciesScatterPlot({ pokemonSpecies }: GraphProps) {
       />
 
       <ScatterPlot
-        data={pokemonSpecies}
+        data={data}
         labelAxis={labelAxis}
         xAxis={xAxis}
         yAxis={yAxis}

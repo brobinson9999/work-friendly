@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { ChartAxis } from "../../components/bar-chart";
 import {
   ColumnTable,
   type ColumnTableColumn,
@@ -16,8 +15,9 @@ export function PokemonSpeciesTable({ pokemonSpecies }: TableProps) {
   const [foreColorAxisIndex, setForeColorAxisIndex] = useState<number>(0);
   const [backColorAxisIndex, setBackColorAxisIndex] = useState<number>(0);
 
-  const columns: ColumnTableColumn<PokemonSpecies>[] =
-    pokemonSpeciesChartAxes.map((axis) => ({
+  const columns: ColumnTableColumn<PokemonSpecies>[] = pokemonSpeciesChartAxes
+    .filter((axis) => axis.visible)
+    .map((axis) => ({
       header: axis.label,
       renderColumn: (_element, index) => axis.jsxValue(pokemonSpecies, index),
     }));

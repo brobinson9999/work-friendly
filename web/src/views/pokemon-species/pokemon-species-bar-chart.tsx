@@ -1,11 +1,6 @@
 import { useState } from "react";
 import type { PokemonSpecies } from "../../models/pokemon-species";
-import {
-  BarChart,
-  numberAxis,
-  textAxis,
-  type ChartAxis,
-} from "../../components/bar-chart";
+import { BarChart } from "../../components/bar-chart";
 import { pokemonSpeciesChartAxes } from "./pokemon-species-chart";
 import { ChartAxisSelector } from "../../components/chart-axis-selector";
 

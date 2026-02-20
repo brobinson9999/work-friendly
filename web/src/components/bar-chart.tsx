@@ -15,6 +15,7 @@ export type ChartTick = {
 
 export type ChartAxis<TData> = {
   label: string;
+  visible: boolean;
   colorValue(data: TData[], index: number): string;
   stringValue(data: TData[], index: number): string;
   jsxValue(data: TData[], index: number): React.ReactNode;
@@ -25,6 +26,7 @@ export type ChartAxis<TData> = {
 export function nullAxis<TData>(label: string): ChartAxis<TData> {
   return {
     label,
+    visible: false,
     colorValue() {
       return "";
     },
@@ -58,6 +60,7 @@ export function numberAxis<TData>(
 
   return {
     label,
+    visible: true,
     colorValue(data: TData[], index: number) {
       return `oklch(70% 0.15 ${position(data, index) * 360} / 0.75)`;
     },
@@ -104,6 +107,7 @@ export function dateAxis<TData>(
 
   return {
     label,
+    visible: true,
     colorValue(data: TData[], index: number) {
       return `oklch(70% 0.15 ${position(data, index) * 360} / 0.75)`;
     },
@@ -137,6 +141,7 @@ export function textAxis<TData>(
 ): ChartAxis<TData> {
   return {
     label,
+    visible: true,
     colorValue(data: TData[], index: number) {
       return getValue(data[index]);
     },
@@ -165,6 +170,7 @@ export function colorAxis<TData>(
 ): ChartAxis<TData> {
   return {
     label,
+    visible: true,
     colorValue(data: TData[], index: number) {
       return getValue(data[index]);
     },

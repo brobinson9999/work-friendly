@@ -1,9 +1,3 @@
-export type QueryableColumn<T> = {
-  id: string;
-  header: string;
-  compare?: (a: T, b: T) => number;
-};
-
 export type Query<T> = {
   select?: (keyof T)[];
   where?: WhereClause<T>;
@@ -53,7 +47,6 @@ export function executeQuery<T>(
 }
 
 function checkWhereClause<T>(item: T, where?: WhereClause<T>): boolean {
-  console.log("Checking where clause:", where, "for item:", item);
   if (!where) {
     return true;
   }

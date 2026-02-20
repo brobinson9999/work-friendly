@@ -1,29 +1,31 @@
-import { Index } from "../../components";
-import { TableIcon } from "../../icons/table-icon";
-import { LoginsTable } from "./logins-table";
 import { LoginsNew } from "./logins-new";
-import { createLogin, logins } from "../../models/logins";
-import { redrawAll, useRedrawAll } from "../../hooks/use-redraw-all";
+import { createLogin, logins, type Login } from "../../models/logins";
+import { DataIndex } from "../../components/data-index";
+import {
+  dateAxis,
+  nullAxis,
+  textAxis,
+  type ChartAxis,
+} from "../../components/bar-chart";
 
 export function LoginsIndex() {
-  useRedrawAll();
-
-  const submitCommand = async (password: string) => {
-    await createLogin({ password });
+  const submitCommand = async (serverId: string, password: string) => {
+    await createLogin({ serverId, password });
   };
 
+  const axes: ChartAxis<Login>[] = [
+    nullAxis<Login>("None"),
+    textAxis<Login>("id", "ID", (login) => login.id),
+    dateAxis<Login>("createdAt", "Created At", (login) => login.createdAt),
+    textAxis<Login>("result", "Result", (login) => login.result),
+  ];
+
   return (
-    <Index
+    <DataIndex
       title="Logins"
       newElement={<LoginsNew submitCommand={submitCommand} />}
-      views={[
-        {
-          id: "Table",
-          name: "Table",
-          icon: <TableIcon />,
-          component: <LoginsTable logins={logins} />,
-        },
-      ]}
+      data={logins}
+      axes={axes}
     />
   );
 }

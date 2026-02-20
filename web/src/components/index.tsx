@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { ButtonBar } from "./button-bar";
 
-interface IndexProps {
+export interface IndexProps {
   title: string;
   newElement?: React.ReactNode;
   views: View[];
 }
 
-type View = {
+export type View = {
   id: string;
   name: string;
   icon: React.ReactNode;

@@ -185,12 +185,18 @@ export function ComponentsIndex() {
       <h2>Bar Chart</h2>
       <BarChart
         data={chartData}
-        labelAxis={textAxis<ChartSampleData>("Fruit", (d) => d.fruit)}
-        valueAxis={numberAxis<ChartSampleData>("Quantity", (d) => d.qty, {
-          min: 0,
-        })}
-        colorAxis={textAxis<ChartSampleData>("Color", (d) => d.color)}
+        labelAxis={textAxis<ChartSampleData>("fruit", "Fruit", (d) => d.fruit)}
+        valueAxis={numberAxis<ChartSampleData>(
+          "qty",
+          "Quantity",
+          (d) => d.qty,
+          {
+            min: 0,
+          },
+        )}
+        colorAxis={textAxis<ChartSampleData>("color", "Color", (d) => d.color)}
         barHeightAxis={numberAxis<ChartSampleData>(
+          "radius",
           "Bar Height",
           (d) => d.radius,
           {
@@ -202,13 +208,24 @@ export function ComponentsIndex() {
       <h2>Scatter Plot</h2>
       <ScatterPlot
         data={chartData}
-        labelAxis={textAxis<ChartSampleData>("Label", (d) => d.fruit)}
-        xAxis={numberAxis<ChartSampleData>("Price", (d) => d.price, { min: 0 })}
-        yAxis={dateAxis<ChartSampleData>("Best Before", (d) => d.bestBefore)}
-        colorAxis={textAxis<ChartSampleData>("Color", (d) => d.color)}
-        radiusAxis={numberAxis<ChartSampleData>("Radius", (d) => d.radius, {
+        labelAxis={textAxis<ChartSampleData>("fruit", "Fruit", (d) => d.fruit)}
+        xAxis={numberAxis<ChartSampleData>("price", "Price", (d) => d.price, {
           min: 0,
         })}
+        yAxis={dateAxis<ChartSampleData>(
+          "bestBefore",
+          "Best Before",
+          (d) => d.bestBefore,
+        )}
+        colorAxis={textAxis<ChartSampleData>("color", "Color", (d) => d.color)}
+        radiusAxis={numberAxis<ChartSampleData>(
+          "radius",
+          "Radius",
+          (d) => d.radius,
+          {
+            min: 0,
+          },
+        )}
       />
 
       <h2>Gradients</h2>

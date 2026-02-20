@@ -1,3 +1,4 @@
+import { type JSX } from "react";
 import { ColorSwatch } from "./color-swatch";
 
 export type BarChartProps<TData> = {
@@ -14,6 +15,7 @@ export type ChartTick = {
 };
 
 export type ChartAxis<TData> = {
+  id: string;
   label: string;
   visible: boolean;
   colorValue(data: TData[], index: number): string;
@@ -21,10 +23,13 @@ export type ChartAxis<TData> = {
   jsxValue(data: TData[], index: number): React.ReactNode;
   position(data: TData[], index: number): number; // 0 to 1 for position along the axis
   ticks(data: TData[]): ChartTick[]; // Optional: for axes that need ticks (like scatter plot)
+  compare?(data: TData[], aIndex: number, bIndex: number): number; // Optional: for sortable columns
+  search?(data: TData[], index: number, searchText: string): boolean; // Optional: for searchable columns
 };
 
 export function nullAxis<TData>(label: string): ChartAxis<TData> {
   return {
+    id: "",
     label,
     visible: false,
     colorValue() {
@@ -46,6 +51,7 @@ export function nullAxis<TData>(label: string): ChartAxis<TData> {
 }
 
 export function numberAxis<TData>(
+  id: string,
   label: string,
   getValue: (data: TData) => number,
   opts?: { min?: number; max?: number },
@@ -59,6 +65,7 @@ export function numberAxis<TData>(
   };
 
   return {
+    id: id,
     label,
     visible: true,
     colorValue(data: TData[], index: number) {
@@ -84,10 +91,20 @@ export function numberAxis<TData>(
         position: i / 5,
       }));
     },
+    compare(data: TData[], aIndex: number, bIndex: number) {
+      const aValue = getValue(data[aIndex]);
+      const bValue = getValue(data[bIndex]);
+      return aValue - bValue;
+    },
+    search(data: TData[], index: number, searchText: string) {
+      const value = getValue(data[index]);
+      return value.toString().toLowerCase().includes(searchText.toLowerCase());
+    },
   };
 }
 
 export function dateAxis<TData>(
+  id: string,
   label: string,
   getValue: (data: TData) => Date,
   opts?: { min?: Date; max?: Date },
@@ -106,6 +123,7 @@ export function dateAxis<TData>(
   };
 
   return {
+    id,
     label,
     visible: true,
     colorValue(data: TData[], index: number) {
@@ -132,14 +150,28 @@ export function dateAxis<TData>(
         position: i / 5,
       }));
     },
+    compare(data: TData[], aIndex: number, bIndex: number) {
+      const aValue = getValue(data[aIndex]);
+      const bValue = getValue(data[bIndex]);
+      return aValue.getTime() - bValue.getTime();
+    },
+    search(data: TData[], index: number, searchText: string) {
+      const value = getValue(data[index]);
+      return value
+        .toISOString()
+        .toLowerCase()
+        .includes(searchText.toLowerCase());
+    },
   };
 }
 
 export function textAxis<TData>(
+  id: string,
   label: string,
   getValue: (data: TData) => string,
 ): ChartAxis<TData> {
   return {
+    id,
     label,
     visible: true,
     colorValue(data: TData[], index: number) {
@@ -161,14 +193,25 @@ export function textAxis<TData>(
         position: index / (values.length - 1),
       }));
     },
+    compare(data: TData[], aIndex: number, bIndex: number) {
+      const aValue = getValue(data[aIndex]);
+      const bValue = getValue(data[bIndex]);
+      return aValue.localeCompare(bValue);
+    },
+    search(data: TData[], index: number, searchText: string) {
+      const value = getValue(data[index]);
+      return value.toLowerCase().includes(searchText.toLowerCase());
+    },
   };
 }
 
 export function colorAxis<TData>(
+  id: string,
   label: string,
   getValue: (data: TData) => string,
 ): ChartAxis<TData> {
   return {
+    id,
     label,
     visible: true,
     colorValue(data: TData[], index: number) {
@@ -191,6 +234,30 @@ export function colorAxis<TData>(
         label: value,
         position: index / (values.length - 1),
       }));
+    },
+  };
+}
+
+export function widgetAxis<TData>(
+  label: string,
+  jsxValue: (data: TData[], index: number) => JSX.Element,
+): ChartAxis<TData> {
+  return {
+    id: "",
+    label,
+    visible: true,
+    colorValue() {
+      return "";
+    },
+    stringValue() {
+      return "";
+    },
+    jsxValue,
+    position() {
+      return 1;
+    },
+    ticks() {
+      return [];
     },
   };
 }

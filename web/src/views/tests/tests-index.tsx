@@ -1,23 +1,13 @@
-import { Index } from "../../components";
-import { TableIcon } from "../../icons/table-icon";
-import { useRedrawAll } from "../../hooks/use-redraw-all";
-import { getTests } from "../../models/tests";
-import { TestsTable } from "./tests-table";
+import { nullAxis, textAxis, type ChartAxis } from "../../components/bar-chart";
+import { DataIndex } from "../../components/data-index";
+import { getTests, type Test } from "../../models/tests";
 
 export function TestsIndex() {
-  useRedrawAll();
+  const axes: ChartAxis<Test>[] = [
+    nullAxis<Test>("None"),
+    textAxis<Test>("id", "ID", (test) => test.id),
+    textAxis<Test>("result", "Result", (test) => test.result),
+  ];
 
-  return (
-    <Index
-      title="Tests"
-      views={[
-        {
-          id: "Table",
-          name: "Table",
-          icon: <TableIcon />,
-          component: <TestsTable tests={getTests()} />,
-        },
-      ]}
-    />
-  );
+  return <DataIndex title="Tests" data={getTests()} axes={axes} />;
 }

@@ -8,8 +8,8 @@ export type ShellCommandExecution = {
   stdout: string;
   stderr: string;
   exitCode: number | null;
-  startTime: string;
-  endTime: string;
+  startTime?: Date;
+  endTime?: Date;
 };
 
 export const shellCommandExecutions: ShellCommandExecution[] = [];
@@ -33,8 +33,6 @@ export function newShellCommandExecution(
     stdout: "",
     stderr: "",
     exitCode: null,
-    startTime: "",
-    endTime: "",
   };
 }
 
@@ -56,7 +54,7 @@ export async function runShellCommand(
       `Server with ID ${shellCommandExecution.serverId} not found`,
     );
   }
-  const startTime = new Date().toLocaleString();
+  const startTime = new Date();
   shellCommandExecution.startTime = startTime;
   try {
     const request = await executeRequest(server.id, "/shell", {
@@ -68,13 +66,13 @@ export async function runShellCommand(
     });
 
     const json = await request.response!.json();
-    const endTime = new Date().toLocaleString();
+    const endTime = new Date();
     shellCommandExecution.stdout = json.stdout || "";
     shellCommandExecution.stderr = json.stderr || "";
     shellCommandExecution.exitCode = json.exitCode || 0;
     shellCommandExecution.endTime = endTime;
   } catch (error) {
-    const endTime = new Date().toLocaleString();
+    const endTime = new Date();
     shellCommandExecution.stdout = "";
     shellCommandExecution.stderr = "Error: " + (error as Error).message;
     shellCommandExecution.exitCode = null;

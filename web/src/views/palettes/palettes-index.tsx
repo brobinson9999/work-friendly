@@ -1,10 +1,21 @@
-import { PalettesTable } from './palettes-table';
-import { palettes } from '../../models/palettes';
-import { Index } from '../../components';
-import { TableIcon } from '../../icons/table-icon';
+import { palettes, type Palette } from "../../models/palettes";
+import {
+  nullAxis,
+  textAxis,
+  widgetAxis,
+  type ChartAxis,
+} from "../../components/bar-chart";
+import { PaletteSwatch } from "../../components/palette-swatch";
+import { DataIndex } from "../../components/data-index";
 
 export function PalettesIndex() {
-  return <Index title="Palettes" views={[
-    { id: 'Table', name: 'Table', icon: <TableIcon />, component: <PalettesTable palettes={palettes} /> },
-  ]} />;
+  const axes: ChartAxis<Palette>[] = [
+    nullAxis<Palette>("None"),
+    textAxis<Palette>("name", "Name", (palette) => palette.name),
+    widgetAxis<Palette>("Swatch", (data, index) => (
+      <PaletteSwatch colors={data[index].colors} />
+    )),
+  ];
+
+  return <DataIndex title="Palettes" data={palettes} axes={axes} />;
 }

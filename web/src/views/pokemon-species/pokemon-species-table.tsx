@@ -1,41 +1,58 @@
+import { useState } from "react";
+import type { ChartAxis } from "../../components/bar-chart";
 import {
   ColumnTable,
   type ColumnTableColumn,
 } from "../../components/column-table";
 import type { PokemonSpecies } from "../../models/pokemon-species";
+import { pokemonSpeciesChartAxes } from "./pokemon-species-chart";
+import { ChartAxisSelector } from "../../components/chart-axis-selector";
 
 export type TableProps = {
   pokemonSpecies: PokemonSpecies[];
 };
 
 export function PokemonSpeciesTable({ pokemonSpecies }: TableProps) {
-  const columns: ColumnTableColumn<PokemonSpecies>[] = [
-    {
-      header: "Name",
-      // onClick: () => setSortBy("name"),
-      renderColumn: (pokemonSpecies) => pokemonSpecies.name,
-    },
-    {
-      header: "Base Happiness",
-      // onClick: () => setSortBy("base_happiness"),
-      renderColumn: (pokemonSpecies) =>
-        pokemonSpecies.base_happiness !== undefined
-          ? pokemonSpecies.base_happiness
-          : "N/A",
-    },
-    {
-      header: "Capture Rate",
-      // onClick: () => setSortBy("capture_rate"),
-      renderColumn: (pokemonSpecies) =>
-        pokemonSpecies.capture_rate !== undefined
-          ? pokemonSpecies.capture_rate
-          : "N/A",
-    },
-    {
-      header: "Color",
-      renderColumn: (pokemonSpecies) => pokemonSpecies.color?.name || "N/A",
-    },
-  ];
+  const [foreColorAxisIndex, setForeColorAxisIndex] = useState<number>(0);
+  const [backColorAxisIndex, setBackColorAxisIndex] = useState<number>(0);
 
-  return <ColumnTable columns={columns} rows={pokemonSpecies} />;
+  const columns: ColumnTableColumn<PokemonSpecies>[] =
+    pokemonSpeciesChartAxes.map((axis) => ({
+      header: axis.label,
+      renderColumn: (_element, index) => axis.jsxValue(pokemonSpecies, index),
+    }));
+
+  const foreColorAxis = pokemonSpeciesChartAxes[foreColorAxisIndex];
+  const backColorAxis = pokemonSpeciesChartAxes[backColorAxisIndex];
+
+  return (
+    <>
+      <ChartAxisSelector
+        id="fore-color"
+        label="Foreground Color"
+        axes={pokemonSpeciesChartAxes}
+        state={foreColorAxisIndex}
+        setState={setForeColorAxisIndex}
+      />
+      <ChartAxisSelector
+        id="back-color"
+        label="Background Color"
+        axes={pokemonSpeciesChartAxes}
+        state={backColorAxisIndex}
+        setState={setBackColorAxisIndex}
+      />
+
+      <ColumnTable
+        columns={columns}
+        rows={pokemonSpecies}
+        rowStyle={(_row, index) => {
+          const foreColor =
+            foreColorAxis.colorValue(pokemonSpecies, index) || undefined;
+          const backColor =
+            backColorAxis.colorValue(pokemonSpecies, index) || undefined;
+          return { color: foreColor, backgroundColor: backColor };
+        }}
+      />
+    </>
+  );
 }

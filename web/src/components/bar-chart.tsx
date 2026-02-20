@@ -1,3 +1,5 @@
+import { ColorSwatch } from "./color-swatch";
+
 export type BarChartProps<TData> = {
   data: TData[];
   labelAxis?: ChartAxis<TData>;
@@ -15,6 +17,7 @@ export type ChartAxis<TData> = {
   label: string;
   colorValue(data: TData[], index: number): string;
   stringValue(data: TData[], index: number): string;
+  jsxValue(data: TData[], index: number): React.ReactNode;
   position(data: TData[], index: number): number; // 0 to 1 for position along the axis
   ticks(data: TData[]): ChartTick[]; // Optional: for axes that need ticks (like scatter plot)
 };
@@ -23,10 +26,13 @@ export function nullAxis<TData>(label: string): ChartAxis<TData> {
   return {
     label,
     colorValue() {
-      return "#1d1098";
+      return "";
     },
     stringValue() {
       return "";
+    },
+    jsxValue() {
+      return <span></span>;
     },
     position() {
       return 1;
@@ -58,6 +64,10 @@ export function numberAxis<TData>(
     stringValue(data: TData[], index: number) {
       const value = getValue(data[index]);
       return value.toString();
+    },
+    jsxValue(data: TData[], index: number) {
+      const value = getValue(data[index]);
+      return <span>{value}</span>;
     },
     position,
     ticks(data: TData[]) {
@@ -100,6 +110,9 @@ export function dateAxis<TData>(
     stringValue(data: TData[], index: number) {
       return getValue(data[index]).toISOString();
     },
+    jsxValue(data: TData[], index: number) {
+      return <span>{getValue(data[index]).toISOString()}</span>;
+    },
     position,
     ticks(data: TData[]) {
       const values = data.map(getValue);
@@ -129,6 +142,39 @@ export function textAxis<TData>(
     },
     stringValue(data: TData[], index: number) {
       return getValue(data[index]);
+    },
+    jsxValue(data: TData[], index: number) {
+      return <span>{getValue(data[index])}</span>;
+    },
+    position(data: TData[], index: number) {
+      return index / (data.length - 1);
+    },
+    ticks(data: TData[]) {
+      const values = data.map(getValue);
+      return values.map((value, index) => ({
+        label: value,
+        position: index / (values.length - 1),
+      }));
+    },
+  };
+}
+
+export function colorAxis<TData>(
+  label: string,
+  getValue: (data: TData) => string,
+): ChartAxis<TData> {
+  return {
+    label,
+    colorValue(data: TData[], index: number) {
+      return getValue(data[index]);
+    },
+    stringValue(data: TData[], index: number) {
+      return getValue(data[index]);
+    },
+    jsxValue(data: TData[], index: number) {
+      return (
+        <ColorSwatch color={{ name: "", cssValue: getValue(data[index]) }} />
+      );
     },
     position(data: TData[], index: number) {
       return index / (data.length - 1);

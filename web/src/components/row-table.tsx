@@ -9,6 +9,7 @@ export interface RowTableProps<T> {
   renderRow: (row: T, index: number) => React.ReactNode;
   tableClasses?: string[];
   rowClasses?: (row: T, index: number) => string[];
+  rowStyle?: (row: T, index: number) => React.CSSProperties;
 }
 
 export function RowTable<T>({
@@ -17,6 +18,7 @@ export function RowTable<T>({
   renderRow,
   tableClasses,
   rowClasses,
+  rowStyle,
 }: RowTableProps<T>) {
   return (
     <table className={["data-table", ...(tableClasses || [])].join(" ")}>
@@ -41,6 +43,7 @@ export function RowTable<T>({
             <tr
               key={index}
               className={(rowClasses ? rowClasses(row, index) : []).join(" ")}
+              style={rowStyle ? rowStyle(row, index) : undefined}
             >
               {renderRow(row, index)}
             </tr>

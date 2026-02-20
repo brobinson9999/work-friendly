@@ -1,5 +1,6 @@
 import type { PokemonSpecies } from "../../models/pokemon-species";
 import {
+  colorAxis,
   nullAxis,
   numberAxis,
   textAxis,
@@ -19,5 +20,5 @@ export const pokemonSpeciesChartAxes: ChartAxis<PokemonSpecies>[] = [
     (species) => species.base_happiness!,
     { min: 0, max: 255 },
   ),
-  textAxis<PokemonSpecies>("Color", (species) => species.color?.name ?? ""),
+  colorAxis<PokemonSpecies>("Color", (species) => species.color?.name ?? ""),
 ];

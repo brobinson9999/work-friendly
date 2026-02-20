@@ -1,7 +1,7 @@
 import { RowTable, type RowTableColumn } from "./row-table";
 
 export interface ColumnTableColumn<T> extends RowTableColumn {
-  renderColumn: (row: T) => React.ReactNode;
+  renderColumn: (row: T, index: number) => React.ReactNode;
 }
 
 export interface ColumnTableProps<T> {
@@ -9,6 +9,7 @@ export interface ColumnTableProps<T> {
   rows: T[];
   tableClasses?: string[];
   rowClasses?: (row: T, index: number) => string[];
+  rowStyle?: (row: T, index: number) => React.CSSProperties;
 }
 
 export const loadingSpan = <span className="loading">Loading...</span>;
@@ -18,6 +19,7 @@ export function ColumnTable<T>({
   rows,
   tableClasses,
   rowClasses,
+  rowStyle,
 }: ColumnTableProps<T>) {
   return (
     <RowTable
@@ -25,14 +27,15 @@ export function ColumnTable<T>({
       rows={rows}
       tableClasses={tableClasses}
       rowClasses={rowClasses}
-      renderRow={(row) => (
+      rowStyle={rowStyle}
+      renderRow={(row, index) => (
         <>
           {(() => {
             const cells: React.ReactNode[] = [];
             let colSpan = 0;
 
             columns.forEach((column, colIndex) => {
-              const value = column.renderColumn(row);
+              const value = column.renderColumn(row, index);
 
               if (value === loadingSpan) {
                 colSpan++;

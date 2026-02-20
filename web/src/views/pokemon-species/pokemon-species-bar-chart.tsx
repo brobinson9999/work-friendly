@@ -8,8 +8,7 @@ export type GraphProps = {
   pokemonSpecies: PokemonSpecies[];
 };
 
-// Simple bar chart using SVG
-export function PokemonSpeciesChart({ pokemonSpecies }: GraphProps) {
+export function PokemonSpeciesBarChart({ pokemonSpecies }: GraphProps) {
   const [labelAxisIndex, setLabelAxisIndex] = useState<number>(0);
   const [valueAxisIndex, setValueAxisIndex] = useState<number>(0);
   const [barHeightAxisIndex, setBarHeightAxisIndex] = useState<number>(0);

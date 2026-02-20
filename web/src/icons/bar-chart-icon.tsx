@@ -1,4 +1,4 @@
-export function ChartIcon() {
+export function BarChartIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -7,34 +7,35 @@ export function ChartIcon() {
       height="24"
       fill="none"
       stroke="var(--current-on-color)"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
       {/* Axes */}
       <line x1="4" y1="20" x2="20" y2="20" />
       <line x1="4" y1="20" x2="4" y2="4" />
-      {/* Chart function curve (e.g., y = x^2 scaled) */}
-      <path d="M4 20 Q8 8 12 12 Q16 16 20 4" />
-      {/* Dots on curve */}
-      <circle
-        cx="8"
-        cy="14"
-        r="1.2"
+      {/* Bars */}
+      <rect
+        x="6.5"
+        y="14"
+        width="2.5"
+        height="6"
         fill="var(--current-on-color)"
         stroke="none"
       />
-      <circle
-        cx="12"
-        cy="12"
-        r="1.2"
+      <rect
+        x="11"
+        y="10"
+        width="2.5"
+        height="10"
         fill="var(--current-on-color)"
         stroke="none"
       />
-      <circle
-        cx="16"
-        cy="8"
-        r="1.2"
+      <rect
+        x="15.5"
+        y="6"
+        width="2.5"
+        height="14"
         fill="var(--current-on-color)"
         stroke="none"
       />

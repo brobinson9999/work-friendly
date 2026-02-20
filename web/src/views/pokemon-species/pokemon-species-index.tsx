@@ -10,9 +10,12 @@ import {
 } from "../../utils/queryable";
 import type { PokemonSpecies } from "../../models/pokemon-species";
 import { useState } from "react";
-import { PokemonSpeciesChart } from "./pokemon-species-bar-chart";
-import { ChartIcon } from "../../icons/chart-icon";
+import { PokemonSpeciesBarChart } from "./pokemon-species-bar-chart";
+import { ScatterPlotIcon } from "../../icons/scatter-plot-icon";
 import { PokemonSpeciesScatterPlot } from "./pokemon-species-scatter-plot";
+import { PokemonSpeciesTsv } from "./pokemon-species-tsv";
+import { TsvIcon } from "../../icons/tsv-icon";
+import { BarChartIcon } from "../../icons/bar-chart-icon";
 
 export function PokemonSpeciesIndex() {
   useRedrawAll();
@@ -113,17 +116,25 @@ export function PokemonSpeciesIndex() {
             ),
           },
           {
-            id: "Chart",
-            name: "Chart",
-            icon: <ChartIcon />,
+            id: "TSV",
+            name: "TSV",
+            icon: <TsvIcon />,
             component: (
-              <PokemonSpeciesChart pokemonSpecies={filteredPokemonSpecies} />
+              <PokemonSpeciesTsv pokemonSpecies={filteredPokemonSpecies} />
+            ),
+          },
+          {
+            id: "Bar Chart",
+            name: "Bar Chart",
+            icon: <BarChartIcon />,
+            component: (
+              <PokemonSpeciesBarChart pokemonSpecies={filteredPokemonSpecies} />
             ),
           },
           {
             id: "Scatter Plot",
             name: "Scatter Plot",
-            icon: <ChartIcon />,
+            icon: <ScatterPlotIcon />,
             component: (
               <PokemonSpeciesScatterPlot
                 pokemonSpecies={filteredPokemonSpecies}

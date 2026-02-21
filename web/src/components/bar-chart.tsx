@@ -301,7 +301,10 @@ export function BarChart<TData>({
       <svg
         width={width}
         height={chartHeight}
-        style={{ background: "#f9f9f9", border: "1px solid #ddd" }}
+        style={{
+          background: "var(--current-color)",
+          border: "1px solid var(--current-on-color)",
+        }}
       >
         {data.map((_datum, index) => {
           const barHeight = barHeightAxis
@@ -311,7 +314,12 @@ export function BarChart<TData>({
           const result = (
             <g key={index}>
               {/* Name label */}
-              <text x={8} y={y + barHeight / 2 + 6} fontSize={14} fill="#333">
+              <text
+                x={8}
+                y={y + barHeight / 2 + 6}
+                fontSize={14}
+                fill="var(--current-on-color)"
+              >
                 {labelAxis ? labelAxis.stringValue(data, index) : ""}
               </text>
               {/* Bar */}
@@ -328,7 +336,7 @@ export function BarChart<TData>({
                 x={labelWidth + barWidth + 8}
                 y={y + barHeight / 2 + 6}
                 fontSize={13}
-                fill="#222"
+                fill="var(--current-on-color)"
               >
                 {valueAxis ? valueAxis.stringValue(data, index) : ""}
               </text>

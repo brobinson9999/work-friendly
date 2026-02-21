@@ -38,7 +38,10 @@ export function ScatterPlot<TData>({
       <svg
         width={width}
         height={height}
-        style={{ background: "#f9f9f9", border: "1px solid #ddd" }}
+        style={{
+          background: "var(--current-color)",
+          border: "1px solid var(--current-on-color)",
+        }}
       >
         {/* Grid lines: vertical (X ticks) */}
         {xAxis.ticks(data).map((tick, i) => {
@@ -66,7 +69,7 @@ export function ScatterPlot<TData>({
               y1={y}
               x2={width - padding}
               y2={y}
-              stroke="#bbb"
+              stroke="var(--current-on-color)"
               strokeDasharray="4 4"
               opacity={0.3}
             />
@@ -79,7 +82,7 @@ export function ScatterPlot<TData>({
           y1={height - padding}
           x2={width - padding}
           y2={height - padding}
-          stroke="#888"
+          stroke="var(--current-on-color)"
         />
         {/* Y axis */}
         <line
@@ -87,7 +90,7 @@ export function ScatterPlot<TData>({
           y1={padding}
           x2={padding}
           y2={height - padding}
-          stroke="#888"
+          stroke="var(--current-on-color)"
         />
 
         {/* X axis ticks and labels */}
@@ -100,14 +103,14 @@ export function ScatterPlot<TData>({
                 y1={height - padding}
                 x2={x}
                 y2={height - padding + 8}
-                stroke="#888"
+                stroke="var(--current-on-color)"
               />
               <text
                 x={x}
                 y={height - padding + 22}
                 textAnchor="middle"
                 fontSize={12}
-                fill="#444"
+                fill="var(--current-on-color)"
               >
                 {tick.label}
               </text>
@@ -120,13 +123,19 @@ export function ScatterPlot<TData>({
           const y = yScale(tick.position);
           return (
             <g key={"y-tick-" + i}>
-              <line x1={padding - 8} y1={y} x2={padding} y2={y} stroke="#888" />
+              <line
+                x1={padding - 8}
+                y1={y}
+                x2={padding}
+                y2={y}
+                stroke="var(--current-on-color)"
+              />
               <text
                 x={padding - 12}
                 y={y + 4}
                 textAnchor="end"
                 fontSize={12}
-                fill="#444"
+                fill="var(--current-on-color)"
               >
                 {tick.label}
               </text>
@@ -140,7 +149,7 @@ export function ScatterPlot<TData>({
           y={height - 12}
           textAnchor="middle"
           fontSize={14}
-          fill="#444"
+          fill="var(--current-on-color)"
         >
           {xAxis.label}
         </text>
@@ -150,7 +159,7 @@ export function ScatterPlot<TData>({
           y={height / 2}
           textAnchor="middle"
           fontSize={14}
-          fill="#444"
+          fill="var(--current-on-color)"
           transform={`rotate(-90 18,${height / 2})`}
         >
           {yAxis.label}
@@ -167,7 +176,7 @@ export function ScatterPlot<TData>({
                 cx={x}
                 cy={y}
                 r={radiusAxis ? radiusAxis.position(data, i) * 6 : 6}
-                fill={colorAxis ? colorAxis.stringValue(data, i) : "#4f8ef7"}
+                fill={colorAxis ? colorAxis.colorValue(data, i) : "#4f8ef7"}
                 opacity={0.85}
               />
               {/* Visible label next to point */}
@@ -175,7 +184,7 @@ export function ScatterPlot<TData>({
                 x={x + 10}
                 y={y - 8}
                 fontSize={13}
-                fill="#222"
+                fill="var(--current-on-color)"
                 alignmentBaseline="middle"
                 pointerEvents="none"
               >

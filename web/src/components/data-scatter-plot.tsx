@@ -12,11 +12,17 @@ export function DataScatterPlot<TData>({
   data,
   columns,
 }: DataScatterPlotProps<TData>) {
-  const [labelAxisIndex, setLabelAxisIndex] = useState<number>(0);
-  const [xAxisIndex, setXAxisIndex] = useState<number>(0);
-  const [yAxisIndex, setYAxisIndex] = useState<number>(0);
-  const [radiusAxisIndex, setRadiusAxisIndex] = useState<number>(0);
-  const [colorAxisIndex, setColorAxisIndex] = useState<number>(0);
+  const [labelAxisIndex, setLabelAxisIndex] = useState<number>(
+    1 % columns.length,
+  );
+  const [xAxisIndex, setXAxisIndex] = useState<number>(2 % columns.length);
+  const [yAxisIndex, setYAxisIndex] = useState<number>(3 % columns.length);
+  const [radiusAxisIndex, setRadiusAxisIndex] = useState<number>(
+    0 % columns.length,
+  );
+  const [colorAxisIndex, setColorAxisIndex] = useState<number>(
+    0 % columns.length,
+  );
 
   if (!data || data.length === 0) {
     return <div>No data available.</div>;

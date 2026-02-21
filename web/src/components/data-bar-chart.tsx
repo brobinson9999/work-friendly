@@ -11,10 +11,18 @@ export function DataBarChart<TData>({
   data,
   columns,
 }: DataBarChartProps<TData>) {
-  const [labelAxisIndex, setLabelAxisIndex] = useState<number>(0);
-  const [valueAxisIndex, setValueAxisIndex] = useState<number>(0);
-  const [barHeightAxisIndex, setBarHeightAxisIndex] = useState<number>(0);
-  const [colorAxisIndex, setColorAxisIndex] = useState<number>(0);
+  const [labelAxisIndex, setLabelAxisIndex] = useState<number>(
+    1 % columns.length,
+  );
+  const [valueAxisIndex, setValueAxisIndex] = useState<number>(
+    2 % columns.length,
+  );
+  const [barHeightAxisIndex, setBarHeightAxisIndex] = useState<number>(
+    0 % columns.length,
+  );
+  const [colorAxisIndex, setColorAxisIndex] = useState<number>(
+    0 % columns.length,
+  );
 
   if (!data || data.length === 0) {
     return <div>No data available.</div>;

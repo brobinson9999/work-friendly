@@ -278,12 +278,14 @@ export function BarChart<TData>({
   const width = 600;
   const barGap = 8;
   const labelWidth = 120;
-  const barWidthScale = 48;
+  const minimumBarWidth = 8;
+  const barWidthScale = 16;
   const chartHeight =
     barGap +
     data.reduce(
       (sum, _datum, index) =>
         sum +
+        minimumBarWidth +
         (barHeightAxis
           ? barHeightAxis.position(data, index) * barWidthScale
           : barWidthScale) +
@@ -307,9 +309,11 @@ export function BarChart<TData>({
         }}
       >
         {data.map((_datum, index) => {
-          const barHeight = barHeightAxis
-            ? barHeightAxis.position(data, index) * barWidthScale
-            : barWidthScale;
+          const barHeight =
+            minimumBarWidth +
+            (barHeightAxis
+              ? barHeightAxis.position(data, index) * barWidthScale
+              : barWidthScale);
           const barWidth = valueAxis.position(data, index) * barMaxWidth;
           const result = (
             <g key={index}>

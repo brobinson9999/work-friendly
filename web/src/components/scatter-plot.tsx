@@ -175,7 +175,7 @@ export function ScatterPlot<TData>({
               <circle
                 cx={x}
                 cy={y}
-                r={radiusAxis ? radiusAxis.position(data, i) * 6 : 6}
+                r={radiusAxis ? radiusAxis.position(data, i) * 5 + 1 : 6}
                 fill={colorAxis ? colorAxis.colorValue(data, i) : "#4f8ef7"}
                 opacity={0.85}
               />

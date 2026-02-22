@@ -170,12 +170,16 @@ export function textAxis<TData>(
   label: string,
   getValue: (data: TData) => string,
 ): ChartAxis<TData> {
+  const position = (data: TData[], index: number) => {
+    return index / (data.length - 1);
+  };
+
   return {
     id,
     label,
     visible: true,
     colorValue(data: TData[], index: number) {
-      return getValue(data[index]);
+      return `oklch(70% 0.15 ${position(data, index) * 360} / 0.75)`;
     },
     stringValue(data: TData[], index: number) {
       return getValue(data[index]);
@@ -183,9 +187,7 @@ export function textAxis<TData>(
     jsxValue(data: TData[], index: number) {
       return <span>{getValue(data[index])}</span>;
     },
-    position(data: TData[], index: number) {
-      return index / (data.length - 1);
-    },
+    position,
     ticks(data: TData[]) {
       const values = data.map(getValue);
       return values.map((value, index) => ({

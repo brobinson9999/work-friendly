@@ -69,7 +69,7 @@ export function numberAxis<TData>(
     label,
     visible: true,
     colorValue(data: TData[], index: number) {
-      return `oklch(70% 0.15 ${position(data, index) * 360} / 0.75)`;
+      return `oklch(70% 0.15 ${position(data, index) * 270} / 0.75)`;
     },
     stringValue(data: TData[], index: number) {
       const value = getValue(data[index]);
@@ -179,7 +179,7 @@ export function textAxis<TData>(
     label,
     visible: true,
     colorValue(data: TData[], index: number) {
-      return `oklch(70% 0.15 ${position(data, index) * 360} / 0.75)`;
+      return `oklch(70% 0.15 ${position(data, index) * 270} / 0.75)`;
     },
     stringValue(data: TData[], index: number) {
       return getValue(data[index]);

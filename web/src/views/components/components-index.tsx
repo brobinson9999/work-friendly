@@ -4,7 +4,6 @@ import { CodeListing } from "../../components/code-listing";
 import { RowTable } from "../../components/row-table";
 import { ColorSwatch } from "../../components/color-swatch";
 import { PaletteSwatch } from "../../components/palette-swatch";
-import { useState } from "react";
 import { PrimaryContainer } from "../../components/primary-container";
 import { SecondaryContainer } from "../../components/secondary-container";
 import { BackgroundContainer } from "../../components/background-container";
@@ -19,6 +18,8 @@ import {
   textAxis,
 } from "../../components/bar-chart";
 import { ScatterPlot } from "../../components/scatter-plot";
+import { useState } from "react";
+import { GaugeDemo } from "../../components/gauge-demo";
 
 type ChartSampleData = {
   fruit: string;
@@ -316,6 +317,17 @@ export function ComponentsIndex() {
           <div className="gradient-example conic-gradient-current">Conic</div>
         </div>
       </SecondaryContainer>
+      <h2>Gauges</h2>
+      <h3>One Eighty Speedo</h3>
+      <GaugeDemo className="one-eighty-speedo" />
+      <h3>Two Seventy Speedo</h3>
+      <GaugeDemo className="two-seventy-speedo" />
+      <h3>Radio Gauge</h3>
+      <GaugeDemo className="radio-gauge" />
+      <h3>Bar Gauge</h3>
+      <GaugeDemo className="bar-gauge" />
+      <h3>Vertical Gauge</h3>
+      <GaugeDemo className="vertical-gauge" />
     </div>
   );
 }

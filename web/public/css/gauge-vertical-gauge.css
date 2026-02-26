@@ -1,0 +1,75 @@
+.vertical-gauge .gauge {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.vertical-gauge .gauge-background {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    background:
+        /* Tick marks every 45deg */
+        conic-gradient(
+            from 180deg at 100px 100px,
+            black 0deg,
+            transparent 1deg,
+            transparent 44deg,
+            black 45deg,
+            transparent 46deg,
+            transparent 89deg,
+            black 90deg,
+            transparent 91deg,
+            transparent 134deg,
+            black 135deg,
+            transparent 136deg,
+            transparent 179deg,
+            black 180deg,
+            transparent 181deg,
+            transparent 224deg,
+            black 225deg,
+            transparent 226deg,
+            transparent 269deg,
+            black 270deg,
+            transparent 271deg,
+            transparent 314deg,
+            black 315deg,
+            transparent 316deg,
+            transparent 359deg,
+            black 360deg
+        ),
+        conic-gradient(at 100px 100px, transparent 90deg, transparent 225deg, red 225deg, yellow, limegreen 315deg, transparent 315deg, transparent 360deg);
+    mask-image: 
+        conic-gradient(from 225deg, white 90deg, transparent 90deg, transparent 360deg),
+        radial-gradient(ellipse at center 100px, transparent 60px, #fff 61px, #fff 65px, transparent 66px, transparent 100%);
+    mask-composite: intersect;
+}
+
+.vertical-gauge .gauge-indicator {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    transform: translate(-50%, -50%) rotate(calc((var(--gauge-indicator-position) * 90deg) + 135deg));
+    transition: transform 0.7s cubic-bezier(0.4, 2.3, 0.3, 1);
+    font-size: 40px;
+    color: var(--primary-color);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.vertical-gauge .gauge-indicator::before {
+    content: "➤";
+}
+
+.vertical-gauge .gauge-label {
+    position: absolute;
+    left: 100px;
+    top: 60px;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: var(--current-on-color);
+    font-weight: bold;
+    text-align: center;
+    z-index: 3;
+}

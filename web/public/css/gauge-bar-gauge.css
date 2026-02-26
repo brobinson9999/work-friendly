@@ -1,0 +1,30 @@
+.bar-gauge .gauge {
+    height: 1em;
+    width: 200px;
+    margin: 0 auto;
+}
+
+.bar-gauge .gauge-background {
+    width: 200px;
+    margin: 0 auto;
+    display: inline;
+}
+
+.bar-gauge .gauge-indicator {
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50 0%, #2196f3 100%);
+    border-radius: 12px 0 0 12px;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+    width: calc(var(--gauge-indicator-position) * 140px);
+    display: inline-block;
+}
+
+.bar-gauge .gauge-label {
+    font-size: 24px;
+    color: var(--current-on-color);
+    font-weight: bold;
+    text-align: center;
+    z-index: 3;
+    display: inline;
+    margin-left: 1em;
+}

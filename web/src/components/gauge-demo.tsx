@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Gauge, linearIndicatorPosition } from "./gauge";
+import { Gauge, linearIndicatorPosition, type GaugeClassName } from "./gauge";
 
 export type GaugeDemoProps = {
-  className: string;
+  className: GaugeClassName;
 };
 
 export const GaugeDemo: React.FC<GaugeDemoProps> = ({ className }) => {
@@ -21,13 +21,17 @@ export const GaugeDemo: React.FC<GaugeDemoProps> = ({ className }) => {
   }, [minValue, maxValue]);
 
   return (
-    <div className={className}>
-      <Gauge label={`0`} indicatorPosition={0} />
-      <Gauge label={`25`} indicatorPosition={0.25} />
-      <Gauge label={`50`} indicatorPosition={0.5} />
-      <Gauge label={`75`} indicatorPosition={0.75} />
-      <Gauge label={`100`} indicatorPosition={1} />
-      <Gauge label={`${value}`} indicatorPosition={indicatorPosition} />
-    </div>
+    <>
+      <Gauge className={className} label={`0`} indicatorPosition={0} />
+      <Gauge className={className} label={`25`} indicatorPosition={0.25} />
+      <Gauge className={className} label={`50`} indicatorPosition={0.5} />
+      <Gauge className={className} label={`75`} indicatorPosition={0.75} />
+      <Gauge className={className} label={`100`} indicatorPosition={1} />
+      <Gauge
+        className={className}
+        label={`${value}`}
+        indicatorPosition={indicatorPosition}
+      />
+    </>
   );
 };

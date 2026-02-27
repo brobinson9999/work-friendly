@@ -2,9 +2,6 @@ export type Server = {
   id: string;
   hostname: string;
   port: number;
-  ping?: number;
-  cpu?: number;
-  status: "unknown" | "pending" | "online" | "offline";
 };
 
 export const servers: Server[] = [];
@@ -18,5 +15,4 @@ export const localhostServer = createServer({
   id: "localhost",
   hostname: "localhost",
   port: 3000,
-  status: "unknown",
 });

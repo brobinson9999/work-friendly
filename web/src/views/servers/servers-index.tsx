@@ -10,11 +10,19 @@ import { DataIndex } from "../../components/data-index";
 import { ServersBash } from "./servers-bash";
 import { BashIcon } from "../../icons/bash-icon";
 import { redrawAll } from "../../hooks/use-redraw-all";
-import { executeRequest, requests, type Request } from "../../models/requests";
-import { executeShellCommand } from "../../models/shell-command-executions";
+import { requests, type Request } from "../../models/requests";
 import { useEffect, useRef, type JSX } from "react";
 import { PrimaryContainer } from "../../components/primary-container";
 import { Gauge } from "../../components/gauge";
+import {
+  createCpuSample,
+  getMovingAverageCpuUsage,
+} from "../../models/cpu-samples";
+import {
+  createPing,
+  getMovingAveragePingLatencyMs,
+  lastPingWasSuccessful,
+} from "../../models/pings";
 
 function CpuGauge({ value }: { value: number }) {
   return (
@@ -148,59 +156,11 @@ function TimingVisualization({ requests }: { requests: Request[] }) {
 
 export function ServersIndex() {
   const measureCpuUsage = async (server: Server) => {
-    // For Windows servers.
-    const shellCommandExecution = await executeShellCommand(
-      server.id,
-      `powershell -Command "Get-CimInstance Win32_Processor | Select-Object -ExpandProperty LoadPercentage"`,
-    );
-    const cpuUsageMatch = shellCommandExecution.stdout.match(/(\d+)\s*$/m);
-    if (cpuUsageMatch) {
-      server.cpu = parseInt(cpuUsageMatch[1], 10);
-    } else {
-      server.cpu = undefined;
-    }
-
-    // // For linux servers.
-    // const shellCommandExecution = await executeShellCommand(
-    //   server.id,
-    //   `top -bn1 | grep 'Cpu(s)'`,
-    // );
-    // const cpuUsageMatch = shellCommandExecution.stdout.match(/(\d+\.\d+)\s*id/);
-    // if (cpuUsageMatch) {
-    //   const idleCpu = parseFloat(cpuUsageMatch[1]);
-    //   server.cpu = Math.round(100 - idleCpu);
-    // } else {
-    //   server.cpu = undefined;
-    // }
-
-    redrawAll();
+    return createCpuSample({ serverId: server.id });
   };
 
   const testServerConnection = async (server: Server) => {
-    console.log(
-      `Testing connection for server ${server.id} at ${server.hostname}:${server.port}`,
-    );
-    server.status = "pending";
-    server.ping = undefined;
-    try {
-      const newRequest = await executeRequest(server.id, `/health`);
-      const roundTripTime = Math.round(
-        (newRequest.responseTimestamp?.getTime() ?? 0) -
-          newRequest.requestTimestamp.getTime(),
-      );
-
-      if (newRequest.response!.ok) {
-        server.status = "online";
-        server.ping = roundTripTime;
-      } else {
-        server.status = "offline";
-      }
-      // eslint-disable-next-line no-unused-vars
-    } catch (_error) {
-      server.status = "offline";
-      server.ping = undefined;
-    }
-    redrawAll();
+    return createPing({ serverId: server.id });
   };
 
   // Background CPU usage polling
@@ -220,12 +180,26 @@ export function ServersIndex() {
     textAxis<Server>("id", "ID", (server) => server.id),
     textAxis<Server>("hostname", "Hostname", (server) => server.hostname),
     numberAxis<Server>("port", "Port", (server) => server.port),
-    // textAxis<Server>("status", "Status", (server) => server.status),
+    textAxis<Server>("status", "Status", (server) =>
+      lastPingWasSuccessful(server.id) ? "online" : "offline",
+    ),
     widgetAxis<Server>("Ping (ms)", (data, index) => (
-      <PingGauge value={data[index].ping || 0} />
+      <PingGauge
+        value={
+          lastPingWasSuccessful(data[index].id)
+            ? getMovingAveragePingLatencyMs(data[index].id)
+            : 0
+        }
+      />
     )),
     widgetAxis<Server>("CPU Usage", (data, index) => (
-      <CpuGauge value={data[index].cpu || 0} />
+      <CpuGauge
+        value={
+          lastPingWasSuccessful(data[index].id)
+            ? getMovingAverageCpuUsage(data[index].id)
+            : 0
+        }
+      />
     )),
     widgetAxis<Server>("Visualization", (data, index) => (
       <TimingVisualization

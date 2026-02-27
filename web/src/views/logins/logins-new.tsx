@@ -6,7 +6,7 @@ interface LoginsNewProps {
 }
 
 export function LoginsNew({ submitCommand }: LoginsNewProps) {
-  const [serverId, setServerId] = useState("");
+  const [serverId, setServerId] = useState(servers[0]?.id || "");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {

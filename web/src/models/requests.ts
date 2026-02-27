@@ -44,7 +44,7 @@ export function createRequest(
 }
 
 export async function performRequest(request: Request): Promise<void> {
-  await fetch(request.url, request.init);
+  request.response = await fetch(request.url, request.init);
   completeRequest(request);
 }
 

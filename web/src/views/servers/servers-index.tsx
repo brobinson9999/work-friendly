@@ -12,8 +12,31 @@ import { BashIcon } from "../../icons/bash-icon";
 import { redrawAll } from "../../hooks/use-redraw-all";
 import { executeRequest, requests, type Request } from "../../models/requests";
 import { executeShellCommand } from "../../models/shell-command-executions";
-import { useRef, type JSX } from "react";
+import { useEffect, useRef, type JSX } from "react";
 import { PrimaryContainer } from "../../components/primary-container";
+import { Gauge } from "../../components/gauge";
+
+function CpuGauge({ value }: { value: number }) {
+  return (
+    <Gauge
+      className="two-seventy-speedo"
+      label={`${value}%`}
+      indicatorPosition={value / 100}
+    />
+  );
+}
+
+function PingGauge({ value }: { value: number }) {
+  return (
+    <div>
+      <Gauge
+        className="vertical-gauge"
+        label={`${value} ms`}
+        indicatorPosition={1 - 1 / (value / 100 + 1)}
+      />
+    </div>
+  );
+}
 
 const TIME_WINDOW_MS = 10000; // 10 seconds
 
@@ -154,13 +177,13 @@ export function ServersIndex() {
   };
 
   const testServerConnection = async (server: Server) => {
+    console.log(
+      `Testing connection for server ${server.id} at ${server.hostname}:${server.port}`,
+    );
     server.status = "pending";
     server.ping = undefined;
     try {
-      const newRequest = await executeRequest(
-        server.id,
-        `http://${server.hostname}:${server.port}/health`,
-      );
+      const newRequest = await executeRequest(server.id, `/health`);
       const roundTripTime = Math.round(
         (newRequest.responseTimestamp?.getTime() ?? 0) -
           newRequest.requestTimestamp.getTime(),
@@ -180,14 +203,30 @@ export function ServersIndex() {
     redrawAll();
   };
 
+  // Background CPU usage polling
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const interval = setInterval(() => {
+      servers.forEach((server) => {
+        measureCpuUsage(server);
+        testServerConnection(server);
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const axes: ChartAxis<Server>[] = [
     nullAxis<Server>("None"),
     textAxis<Server>("id", "ID", (server) => server.id),
     textAxis<Server>("hostname", "Hostname", (server) => server.hostname),
     numberAxis<Server>("port", "Port", (server) => server.port),
-    textAxis<Server>("status", "Status", (server) => server.status),
-    numberAxis<Server>("ping", "Ping (ms)", (server) => server.ping || 0),
-    numberAxis<Server>("cpu", "CPU Usage (%)", (server) => server.cpu || 0),
+    // textAxis<Server>("status", "Status", (server) => server.status),
+    widgetAxis<Server>("Ping (ms)", (data, index) => (
+      <PingGauge value={data[index].ping || 0} />
+    )),
+    widgetAxis<Server>("CPU Usage", (data, index) => (
+      <CpuGauge value={data[index].cpu || 0} />
+    )),
     widgetAxis<Server>("Visualization", (data, index) => (
       <TimingVisualization
         requests={requests.filter((r) => r.serverId === data[index].id)}

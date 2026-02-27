@@ -49,16 +49,20 @@
     position: absolute;
     left: 100px;
     top: 100px;
-    transform: translate(-50%, -50%) rotate(calc((var(--gauge-indicator-position) * 270deg) - 270deg));
-    transition: transform 0.7s cubic-bezier(0.4, 2.3, 0.3, 1);
+    transform: translate(-50%, -50%) rotate(calc((var(--gauge-indicator-position) * 270deg) - 135deg));
+    transition: transform 0.7s cubic-bezier(0.4, 0.6, 0.8, 1);
     font-size: 40px;
     color: var(--primary-color);
     z-index: 2;
-    pointer-events: none;
-}
 
-.two-seventy-speedo .gauge-indicator::before {
-    content: "➤";
+    width: 8px;
+    height: 140px;
+    background: linear-gradient(90deg, transparent 0 20%, var(--primary-color) 50%, var(--primary-variant-color) 50%, transparent 80% 100%);
+    mask: 
+      linear-gradient(to bottom, transparent 0 5%, white 5% 70%, transparent 70% 100%),
+      linear-gradient(85deg, white 0 75%, transparent 75% 100%),
+      linear-gradient(-85deg, white 0 75%, transparent 75% 100%);
+    mask-composite: intersect;
 }
 
 .two-seventy-speedo .gauge-label {

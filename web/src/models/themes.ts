@@ -139,17 +139,19 @@ export const vite = createMaterialTheme({
   onBackgroundColor: colors.ViteForeground,
   surfaceColor: colors.ViteDarkPurple,
   onSurfaceColor: colors.ViteForeground,
-  errorColor: colors.ViteBackground,
+  errorColor: colors.oklchRed,
   onErrorColor: colors.ViteForeground,
 
-  warningColor: colors.ViteBackground,
+  warningColor: colors.JavaScriptYellow,
   onWarningColor: colors.ViteForeground,
-  successColor: colors.ViteBackground,
+  successColor: colors.oklchGreen,
   onSuccessColor: colors.ViteForeground,
 
   logo: "/vite-logo.svg",
   linkColor: colors.ViteLinkColor,
   linkHoverColor: colors.ViteLinkHoverColor,
+
+  cssFiles: ["css/vite.css"],
 });
 
 export const react = createMaterialTheme({
@@ -165,12 +167,12 @@ export const react = createMaterialTheme({
   onBackgroundColor: colors.ReactText,
   surfaceColor: colors.ReactSurface,
   onSurfaceColor: colors.ReactText,
-  errorColor: colors.ReactBackground,
+  errorColor: colors.oklchRed,
   onErrorColor: colors.ReactText,
 
   warningColor: colors.JavaScriptYellow,
   onWarningColor: colors.ReactSurface,
-  successColor: colors.JavaScriptYellow,
+  successColor: colors.oklchGreen,
   onSuccessColor: colors.ReactSurface,
 
   logo: "/react-logo.svg",

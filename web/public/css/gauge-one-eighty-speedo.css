@@ -3,6 +3,14 @@
   height: 120px;
   margin: 0 auto;
   position: relative;
+
+  --color-zero: limegreen;
+  --color-zero-point-five: yellow;
+  --color-one: red;
+
+  --indicator-offset: -180deg;
+  --background-offset: 270deg;
+  --background-sweep: 180deg;
 }
 
 .one-eighty-speedo .gauge-background {
@@ -12,50 +20,45 @@
   background:
         /* Tick marks every 45deg */
     conic-gradient(
-      from 180deg at 100px 100px,
-      black 0deg,
-      transparent 1deg,
-      transparent 44deg,
-      black 45deg,
-      transparent 46deg,
-      transparent 89deg,
+      from var(--background-offset) at center 100px,
+      black 0deg 1deg,
+      transparent 1deg 44deg,
+      black 44deg 46deg,
+      transparent 46deg 89deg,
       black 90deg,
-      transparent 91deg,
-      transparent 134deg,
-      black 135deg,
-      transparent 136deg,
-      transparent 179deg,
-      black 180deg,
-      transparent 181deg,
-      transparent 224deg,
-      black 225deg,
-      transparent 226deg,
-      transparent 269deg,
-      black 270deg,
-      transparent 271deg,
-      transparent 314deg,
-      black 315deg,
-      transparent 316deg,
-      transparent 359deg,
-      black 360deg
+      transparent 91deg 134deg,
+      black 134deg 136deg,
+      transparent 136deg 179deg,
+      black 179deg 181deg,
+      transparent 181deg 224deg,
+      black 224deg 226deg,
+      transparent 226deg 269deg,
+      black 269deg 271deg,
+      transparent 271deg 314deg,
+      black 314deg 316deg,
+      transparent 316deg 359deg,
+      black 359deg 360deg
     ),
     conic-gradient(
-      from 270deg at 100px 100px,
-      red,
-      yellow,
-      limegreen 180deg,
-      transparent 180deg,
-      transparent 360deg
+      from var(--background-offset) at 100px 100px,
+      var(--color-zero),
+      var(--color-zero-point-five),
+      var(--color-one) var(--background-sweep),
+      transparent var(--background-sweep) 360deg
     );
-  mask-image: radial-gradient(
-    ellipse at center 100px,
-    transparent 60px,
-    #fff 61px,
-    #fff 65px,
-    transparent 66px,
-    transparent 100%
-  );
-  overflow: hidden;
+  mask-image:
+    conic-gradient(
+      from var(--background-offset) at center 100px,
+      white 0 var(--background-sweep),
+      transparent var(--background-sweep) 360deg
+    ),
+    radial-gradient(
+      ellipse at center 100px,
+      transparent 0 60px,
+      #fff 61px 65px,
+      transparent 66px 100%
+    );
+  mask-composite: intersect;
 }
 
 .one-eighty-speedo .gauge-indicator {
@@ -63,7 +66,9 @@
   left: 100px;
   top: 100px;
   transform: translate(-50%, -50%)
-    rotate(calc((var(--gauge-indicator-position) * 180deg) - 180deg));
+    rotate(
+      calc((var(--gauge-indicator-position) * 180deg) + var(--indicator-offset))
+    );
   transition: transform 0.7s cubic-bezier(0.4, 2.3, 0.3, 1);
   font-size: 40px;
   color: var(--primary-color);

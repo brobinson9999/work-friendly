@@ -1,0 +1,7 @@
+.one-eighty-speedo .gauge-indicator {
+  --indicator-offset: 90deg;
+}
+
+.one-eighty-speedo .gauge-indicator::before {
+  content: url(/vite-logo.svg);
+}

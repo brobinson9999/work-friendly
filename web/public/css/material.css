@@ -121,3 +121,9 @@ tr {
   background-color: var(--surface-color);
   color: var(--on-surface-color);
 }
+
+.one-eighty-speedo {
+  --color-zero: var(--error-color);
+  --color-zero-point-five: var(--warning-color);
+  --color-one: var(--success-color);
+}

@@ -126,6 +126,12 @@ export const common = createTheme({
   inlineCss: "",
 });
 
+export const explorer = createTheme({
+  name: "Explorer",
+  cssFiles: ["css/explorer.css"],
+  inlineCss: "",
+});
+
 export const vite = createMaterialTheme({
   name: "Vite",
 

@@ -154,8 +154,8 @@ function TimingVisualization({ requests }: { requests: Request[] }) {
             }}
           />
 
-          {requestBars.current.values()}
-          {responseBars.current.values()}
+          {[...requestBars.current.values()]}
+          {[...responseBars.current.values()]}
         </div>
       </PrimaryContainer>
     </>

@@ -68,37 +68,49 @@ function TimingVisualization({ requests }: { requests: Request[] }) {
 
   const timeRange = TIME_WINDOW_MS;
 
-  const requestBars = useRef<JSX.Element[]>([]);
-  const responseBars = useRef<JSX.Element[]>([]);
+  const requestBars = useRef<Map<string, JSX.Element>>(new Map());
+  const responseBars = useRef<Map<string, JSX.Element>>(new Map());
 
   for (let i = 0; i < requests.length; i++) {
     const request = requests[i];
-    if (!requestBars.current[i]) {
-      const timestamp = request.requestTimestamp.getTime();
-      const positionPercent = ((timestamp - minTime) / timeRange) * 100;
-      requestBars.current[i] = (
-        <div
-          key={`req-${request.id}`}
-          className="timing-bar"
-          style={{
-            position: "absolute",
-            left: `${positionPercent}%`,
-            top: "0%",
-            width: "2px",
-            height: "50%",
-            backgroundColor: "var(--current-on-color)",
-          }}
-        />
-      );
+    if (request.requestTimestamp.getTime() < minTime) {
+      requestBars.current.delete(request.id);
+    } else {
+      if (!requestBars.current.has(request.id)) {
+        const timestamp = request.requestTimestamp.getTime();
+        const positionPercent = ((timestamp - minTime) / timeRange) * 100;
+        requestBars.current.set(
+          request.id,
+          <div
+            key={`req-${request.id}`}
+            className="timing-bar"
+            style={{
+              position: "absolute",
+              left: `${positionPercent}%`,
+              top: "0%",
+              width: "2px",
+              height: "50%",
+              backgroundColor: "var(--current-on-color)",
+            }}
+          />,
+        );
+      }
     }
   }
 
   for (let i = 0; i < requests.length; i++) {
     const request = requests[i];
-    if (!responseBars.current[i] && request.responseTimestamp) {
+    if (
+      request.responseTimestamp &&
+      request.responseTimestamp.getTime() < minTime
+    ) {
+      responseBars.current.delete(request.id);
+    }
+    if (!responseBars.current.has(request.id) && request.responseTimestamp) {
       const timestamp = request.responseTimestamp.getTime();
       const positionPercent = ((timestamp - minTime) / timeRange) * 100;
-      responseBars.current[i] = (
+      responseBars.current.set(
+        request.id,
         <div
           key={`res-${request.id}`}
           className="timing-bar"
@@ -110,7 +122,7 @@ function TimingVisualization({ requests }: { requests: Request[] }) {
             height: "50%",
             backgroundColor: "var(--current-on-color)",
           }}
-        />
+        />,
       );
     }
   }
@@ -142,11 +154,8 @@ function TimingVisualization({ requests }: { requests: Request[] }) {
             }}
           />
 
-          {/* Request bars (going up) */}
-          {...requestBars.current}
-
-          {/* Response bars (going down) */}
-          {...responseBars.current}
+          {requestBars.current.values()}
+          {responseBars.current.values()}
         </div>
       </PrimaryContainer>
     </>

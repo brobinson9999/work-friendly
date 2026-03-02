@@ -1,7 +1,9 @@
+import { div } from "./tags";
+
 interface ContainerProps {
   children: React.ReactNode;
 }
 
 export function PrimaryContainer({ children }: ContainerProps) {
-  return <div className="primary">{children}</div>;
+  return div(["primary"], {}, children);
 }

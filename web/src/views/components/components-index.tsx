@@ -16,6 +16,7 @@ import { ScatterPlot } from "../../components/scatter-plot";
 import { useState } from "react";
 import { GaugeDemo } from "../../components/gauge-demo";
 import { dateAxis, numberAxis, textAxis } from "../../components/chart-axis";
+import { div } from "../../components/tags";
 
 type ChartSampleData = {
   fruit: string;
@@ -170,14 +171,14 @@ export function ComponentsIndex() {
 
       <h2>Containers</h2>
       <PrimaryContainer>Primary</PrimaryContainer>
-      <div className="primary-variant">Primary Variant</div>
+      {div(["primary-variant"], {}, "Primary Variant")}
       <SecondaryContainer>Secondary</SecondaryContainer>
-      <div className="secondary-variant">Secondary Variant</div>
+      {div(["secondary-variant"], {}, "Secondary Variant")}
       <BackgroundContainer>Background</BackgroundContainer>
       <SurfaceContainer>Surface</SurfaceContainer>
-      <div className="error">Error</div>
-      <div className="warning">Warning</div>
-      <div className="success">Success</div>
+      {div(["error"], {}, "Error")}
+      {div(["warning"], {}, "Warning")}
+      {div(["success"], {}, "Success")}
 
       <h2>Bar Chart</h2>
       <BarChart

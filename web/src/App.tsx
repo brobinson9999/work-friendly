@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 import { SurfaceContainer } from "./components/surface-container";
 import { invalidateLogCache } from "./models/logs";
+import { div } from "./components/tags";
 
 function App() {
   useEffect(() => {
@@ -50,7 +51,7 @@ function App() {
           <SurfaceContainer>
             <nav className="top-left-nav">
               <Link to="/">
-                <div className="logo"></div>
+                {div(["logo"])}
                 <span>Back to Home</span>
               </Link>
             </nav>
@@ -65,14 +66,16 @@ function App() {
             </nav>
           </SurfaceContainer>
         </header>
-        <div className="main-content">
+        {div(
+          ["main-content"],
+          {},
           <Routes>
             <Route path="/" element={<Navigate to="/routes" replace />} />
             {reactRoutes.map(({ href, element }) => (
               <Route key={href} path={href} element={element} />
             ))}
-          </Routes>
-        </div>
+          </Routes>,
+        )}
         <footer>
           <SurfaceContainer>
             Copyright &copy; {new Date().getFullYear()} Brendon Robinson. All

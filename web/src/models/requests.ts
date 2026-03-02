@@ -2,6 +2,7 @@ import { redrawAll } from "../hooks/use-redraw-all";
 import { servers } from "./servers";
 
 export type Request = {
+  id: string;
   serverId: string;
   init: RequestInit;
   url: string;
@@ -32,6 +33,7 @@ export function createRequest(
     throw new Error(`Server with ID ${serverId} not found`);
   }
   const newRequest: Request = {
+    id: crypto.randomUUID(),
     serverId,
     url: `http://${server.hostname}:${server.port}${url}`,
     init: requestInit ?? {},

@@ -9,7 +9,6 @@ import {
 import { DataIndex } from "../../components/data-index";
 import { ServersBash } from "./servers-bash";
 import { BashIcon } from "../../icons/bash-icon";
-import { redrawAll } from "../../hooks/use-redraw-all";
 import { requests, type Request } from "../../models/requests";
 import { useEffect, useRef, type JSX } from "react";
 import { PrimaryContainer } from "../../components/primary-container";
@@ -79,7 +78,7 @@ function TimingVisualization({ requests }: { requests: Request[] }) {
       const positionPercent = ((timestamp - minTime) / timeRange) * 100;
       requestBars.current[i] = (
         <div
-          key={`req-${i++}`}
+          key={`req-${request.id}`}
           className="timing-bar"
           style={{
             position: "absolute",
@@ -101,7 +100,7 @@ function TimingVisualization({ requests }: { requests: Request[] }) {
       const positionPercent = ((timestamp - minTime) / timeRange) * 100;
       responseBars.current[i] = (
         <div
-          key={`res-${i++}`}
+          key={`res-${request.id}`}
           className="timing-bar"
           style={{
             position: "absolute",

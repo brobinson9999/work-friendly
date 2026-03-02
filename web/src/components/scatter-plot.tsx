@@ -34,15 +34,8 @@ export function ScatterPlot<TData>({
     (1 - position) * availableHeight + padding;
 
   return (
-    <div>
-      <svg
-        width={width}
-        height={height}
-        style={{
-          background: "var(--current-color)",
-          border: "1px solid var(--current-on-color)",
-        }}
-      >
+    <div className="scatter-plot">
+      <svg width={width} height={height}>
         {/* Grid lines: vertical (X ticks) */}
         {xAxis.ticks(data).map((tick, i) => {
           const x = xScale(tick.position);

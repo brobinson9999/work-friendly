@@ -42,10 +42,13 @@ export function DataTable<TData>({ data, columns }: DataTableProps<TData>) {
       <ColumnTable
         columns={tableColumns}
         rows={data}
-        rowStyle={(_row, index) => {
+        rowVars={(_row, index) => {
           const foreColor = foreColorAxis.colorValue(data, index) || undefined;
           const backColor = backColorAxis.colorValue(data, index) || undefined;
-          return { color: foreColor, backgroundColor: backColor };
+          return {
+            "--table-row-foreground": foreColor,
+            "--table-row-background": backColor,
+          };
         }}
       />
     </>

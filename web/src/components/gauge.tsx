@@ -1,3 +1,5 @@
+import { div } from "./tags";
+
 const GaugeClassName = {
   BarGauge: "bar-gauge",
   OneEightySpeedo: "one-eighty-speedo",
@@ -28,18 +30,11 @@ export const Gauge: React.FC<GaugeProps> = ({
   label,
   indicatorPosition,
 }) => {
-  return (
-    <div className={`gauge ${className}`}>
-      <div className="gauge-background"></div>
-      <div
-        className="gauge-indicator"
-        style={
-          {
-            ["--gauge-indicator-position"]: `${indicatorPosition}`,
-          } as React.CSSProperties
-        }
-      ></div>
-      <div className="gauge-label">{label}</div>
-    </div>
-  );
+  return div(["gauge", className], {}, [
+    div(["gauge-background"]),
+    div(["gauge-indicator"], {
+      "--gauge-indicator-position": indicatorPosition.toString(),
+    }),
+    div(["gauge-label"], {}, label),
+  ]);
 };

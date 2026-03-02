@@ -1,6 +1,7 @@
 import { useRef, type JSX } from "react";
 
 import type { ChartAxis } from "./chart-axis";
+import { div } from "./tags";
 
 export type RealTimeColumnChartProps<TData> = {
   data: TData[];
@@ -30,15 +31,14 @@ export function RealTimeColumnChart<TData>({
     } else if (!positiveBars.current.has(keyValue)) {
       positiveBars.current.set(
         keyValue,
-        <div
-          key={`positive-${keyValue}`}
-          className="positive timing-bar"
-          style={
-            {
-              ["--x-position"]: `${positivePosition}`,
-            } as React.CSSProperties
-          }
-        />,
+        div(
+          ["positive", "timing-bar"],
+          {
+            "--x-position": `${positivePosition}`,
+          },
+          [],
+          { key: `positive-${keyValue}` },
+        ),
       );
     }
 
@@ -47,30 +47,23 @@ export function RealTimeColumnChart<TData>({
     } else if (!negativeBars.current.has(keyValue)) {
       negativeBars.current.set(
         keyValue,
-        <div
-          key={`negative-${keyValue}`}
-          className="negative timing-bar"
-          style={
-            {
-              ["--x-position"]: `${negativePosition}`,
-            } as React.CSSProperties
-          }
-        />,
+        div(
+          ["negative", "timing-bar"],
+          {
+            "--x-position": `${negativePosition}`,
+          },
+          [],
+          { key: `negative-${keyValue}` },
+        ),
       );
     }
   });
 
-  return (
-    <div
-      className="timing-visualization"
-      style={
-        {
-          ["--time-window"]: `${TIME_WINDOW_MS}ms`,
-        } as React.CSSProperties
-      }
-    >
-      {[...positiveBars.current.values()]}
-      {[...negativeBars.current.values()]}
-    </div>
+  return div(
+    ["timing-visualization"],
+    {
+      "--time-window": `${TIME_WINDOW_MS}ms`,
+    },
+    [...positiveBars.current.values(), ...negativeBars.current.values()],
   );
 }

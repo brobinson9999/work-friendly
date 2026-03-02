@@ -288,3 +288,10 @@ td {
   height: 50%;
   background-color: var(--current-on-color);
 }
+
+/* Bar Chart and Scatter Plot styles */
+.bar-chart svg,
+.scatter-plot svg {
+  background: var(--current-color);
+  border: 1px solid var(--current-on-color);
+}

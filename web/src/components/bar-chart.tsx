@@ -45,15 +45,8 @@ export function BarChart<TData>({
   let y = barGap;
 
   return (
-    <div>
-      <svg
-        width={width}
-        height={chartHeight}
-        style={{
-          background: "var(--current-color)",
-          border: "1px solid var(--current-on-color)",
-        }}
-      >
+    <div className="bar-chart">
+      <svg width={width} height={chartHeight}>
         {data.map((_datum, index) => {
           const barHeight =
             minimumBarWidth +

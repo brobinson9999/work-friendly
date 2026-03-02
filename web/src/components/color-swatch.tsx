@@ -1,16 +1,12 @@
 import type { Color } from "../models/colors";
+import { div } from "./tags";
 
 interface Props {
   color: Color;
 }
 
 export function ColorSwatch({ color }: Props) {
-  return (
-    <div
-      className="color-swatch-container"
-      style={{ "--swatch-color": color.cssValue } as React.CSSProperties}
-    >
-      <div className="color-swatch-inner"></div>
-    </div>
-  );
+  return div(["color-swatch-container"], { "--swatch-color": color.cssValue }, [
+    div(["color-swatch-inner"]),
+  ]);
 }

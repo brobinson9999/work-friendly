@@ -9,7 +9,7 @@ export interface ColumnTableProps<T> {
   rows: T[];
   tableClasses?: string[];
   rowClasses?: (row: T, index: number) => string[];
-  rowStyle?: (row: T, index: number) => React.CSSProperties;
+  rowVars?: (row: T, index: number) => Record<string, string>;
 }
 
 export const loadingSpan = <span className="loading">Loading...</span>;
@@ -19,7 +19,7 @@ export function ColumnTable<T>({
   rows,
   tableClasses,
   rowClasses,
-  rowStyle,
+  rowVars,
 }: ColumnTableProps<T>) {
   return (
     <RowTable
@@ -27,7 +27,7 @@ export function ColumnTable<T>({
       rows={rows}
       tableClasses={tableClasses}
       rowClasses={rowClasses}
-      rowStyle={rowStyle}
+      rowVars={rowVars}
       renderRow={(row, index) => (
         <>
           {(() => {

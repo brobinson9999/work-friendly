@@ -1,3 +1,5 @@
+import { tr } from "./tags";
+
 export interface RowTableColumn {
   header: string;
   onClick?: () => void;
@@ -9,7 +11,7 @@ export interface RowTableProps<T> {
   renderRow: (row: T, index: number) => React.ReactNode;
   tableClasses?: string[];
   rowClasses?: (row: T, index: number) => string[];
-  rowStyle?: (row: T, index: number) => React.CSSProperties;
+  rowVars?: (row: T, index: number) => Record<string, string>;
 }
 
 export function RowTable<T>({
@@ -18,7 +20,7 @@ export function RowTable<T>({
   renderRow,
   tableClasses,
   rowClasses,
-  rowStyle,
+  rowVars,
 }: RowTableProps<T>) {
   return (
     <table className={["data-table", ...(tableClasses || [])].join(" ")}>
@@ -39,15 +41,14 @@ export function RowTable<T>({
             </td>
           </tr>
         ) : (
-          rows.map((row, index) => (
-            <tr
-              key={index}
-              className={(rowClasses ? rowClasses(row, index) : []).join(" ")}
-              style={rowStyle ? rowStyle(row, index) : undefined}
-            >
-              {renderRow(row, index)}
-            </tr>
-          ))
+          rows.map((row, index) =>
+            tr(
+              rowClasses ? rowClasses(row, index) : [],
+              rowVars ? rowVars(row, index) : undefined,
+              renderRow(row, index),
+              { key: index.toString() },
+            ),
+          )
         )}
       </tbody>
     </table>

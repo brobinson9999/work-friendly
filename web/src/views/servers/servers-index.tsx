@@ -47,21 +47,6 @@ function PingGauge({ value }: { value: number }) {
 
 const TIME_WINDOW_MS = 10000; // 10 seconds
 
-const styles = `
-  @keyframes slideLeft {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-600px);
-    }
-  }
-
-  .timing-bar {
-    animation: slideLeft ${TIME_WINDOW_MS * 2}ms linear forwards;
-  }
-`;
-
 function TimingVisualization({ requests }: { requests: Request[] }) {
   const maxTime = new Date().getTime();
   const minTime = maxTime - TIME_WINDOW_MS;
@@ -83,15 +68,12 @@ function TimingVisualization({ requests }: { requests: Request[] }) {
           request.id,
           <div
             key={`req-${request.id}`}
-            className="timing-bar"
-            style={{
-              position: "absolute",
-              left: `${positionPercent}%`,
-              top: "0%",
-              width: "2px",
-              height: "50%",
-              backgroundColor: "var(--current-on-color)",
-            }}
+            className="request timing-bar"
+            style={
+              {
+                ["--x-value"]: `${positionPercent}%`,
+              } as React.CSSProperties
+            }
           />,
         );
       }
@@ -113,52 +95,29 @@ function TimingVisualization({ requests }: { requests: Request[] }) {
         request.id,
         <div
           key={`res-${request.id}`}
-          className="timing-bar"
-          style={{
-            position: "absolute",
-            left: `${positionPercent}%`,
-            top: "50%",
-            width: "2px",
-            height: "50%",
-            backgroundColor: "var(--current-on-color)",
-          }}
+          className="response timing-bar"
+          style={
+            {
+              ["--x-value"]: `${positionPercent}%`,
+            } as React.CSSProperties
+          }
         />,
       );
     }
   }
 
   return (
-    <>
-      <style>{styles}</style>
-      <PrimaryContainer>
-        <div
-          style={{
-            position: "relative",
-            width: "300px",
-            height: "60px",
-            border: "1px solid var(--current-on-color)",
-            borderRadius: "4px",
-            backgroundColor: "var(--current-color)",
-            overflow: "hidden",
-          }}
-        >
-          {/* Horizon line */}
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: 0,
-              right: 0,
-              height: "50%",
-              backgroundColor: "var(--current-variant-color)",
-            }}
-          />
-
-          {[...requestBars.current.values()]}
-          {[...responseBars.current.values()]}
-        </div>
-      </PrimaryContainer>
-    </>
+    <div
+      className="timing-visualization"
+      style={
+        {
+          ["--time-window"]: `${TIME_WINDOW_MS}ms`,
+        } as React.CSSProperties
+      }
+    >
+      {[...requestBars.current.values()]}
+      {[...responseBars.current.values()]}
+    </div>
   );
 }
 
@@ -210,9 +169,11 @@ export function ServersIndex() {
       />
     )),
     widgetAxis<Server>("Visualization", (data, index) => (
-      <TimingVisualization
-        requests={requests.filter((r) => r.serverId === data[index].id)}
-      />
+      <PrimaryContainer>
+        <TimingVisualization
+          requests={requests.filter((r) => r.serverId === data[index].id)}
+        />
+      </PrimaryContainer>
     )),
     widgetAxis<Server>("Actions", (data, index) => (
       <div style={{ display: "flex", gap: "8px" }}>

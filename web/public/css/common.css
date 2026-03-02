@@ -241,3 +241,50 @@ td {
   justify-content: flex-end;
   gap: 0px;
 }
+
+/* For ping visualization (servers-index.tsx) */
+@keyframes slideLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-600px);
+  }
+}
+
+.timing-visualization {
+  position: relative;
+  width: 300px;
+  height: 60px;
+  border: 1px solid var(--current-on-color);
+  border-radius: 4px;
+  background: linear-gradient(
+    to bottom,
+    var(--current-color) 0 49.9%,
+    var(--current-on-color) 49.9% 50.1%,
+    var(--current-variant-color) 50.1% 100%
+  );
+  overflow: hidden;
+}
+
+.timing-bar {
+  animation: slideLeft calc(var(--time-window) * 2) linear forwards;
+}
+
+.request.timing-bar {
+  position: absolute;
+  left: var(--x-value);
+  top: 0%;
+  width: 2px;
+  height: 50%;
+  background-color: var(--current-on-color);
+}
+
+.response.timing-bar {
+  position: absolute;
+  left: var(--x-value);
+  top: 50%;
+  width: 2px;
+  height: 50%;
+  background-color: var(--current-on-color);
+}

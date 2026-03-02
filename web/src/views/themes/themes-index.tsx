@@ -1,12 +1,12 @@
 import { themes, type Theme } from "../../models/themes";
 import { DataIndex } from "../../components/data-index";
+import { CodeListing } from "../../components/code-listing";
 import {
   nullAxis,
   textAxis,
   widgetAxis,
   type ChartAxis,
-} from "../../components/bar-chart";
-import { CodeListing } from "../../components/code-listing";
+} from "../../components/chart-axis";
 
 export function ThemesIndex() {
   const axes: ChartAxis<Theme>[] = [

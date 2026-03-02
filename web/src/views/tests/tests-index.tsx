@@ -1,4 +1,8 @@
-import { nullAxis, textAxis, type ChartAxis } from "../../components/bar-chart";
+import {
+  nullAxis,
+  textAxis,
+  type ChartAxis,
+} from "../../components/chart-axis";
 import { DataIndex } from "../../components/data-index";
 import { getTests, type Test } from "../../models/tests";
 

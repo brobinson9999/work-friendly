@@ -1,16 +1,9 @@
 import { servers, type Server } from "../../models/servers";
-import {
-  nullAxis,
-  numberAxis,
-  textAxis,
-  widgetAxis,
-  type ChartAxis,
-} from "../../components/bar-chart";
 import { DataIndex } from "../../components/data-index";
 import { ServersBash } from "./servers-bash";
 import { BashIcon } from "../../icons/bash-icon";
-import { requests, type Request } from "../../models/requests";
-import { useEffect, useRef, type JSX } from "react";
+import { requests } from "../../models/requests";
+import { useEffect } from "react";
 import { PrimaryContainer } from "../../components/primary-container";
 import { Gauge } from "../../components/gauge";
 import {
@@ -22,6 +15,14 @@ import {
   getMovingAveragePingLatencyMs,
   lastPingWasSuccessful,
 } from "../../models/pings";
+import {
+  nullAxis,
+  numberAxis,
+  textAxis,
+  widgetAxis,
+  type ChartAxis,
+} from "../../components/chart-axis";
+import { ServersRequestTimingVisualization } from "./servers-request-timing-visualization";
 
 function CpuGauge({ value }: { value: number }) {
   return (
@@ -41,82 +42,6 @@ function PingGauge({ value }: { value: number }) {
         label={`${value} ms`}
         indicatorPosition={1 - 1 / (value / 100 + 1)}
       />
-    </div>
-  );
-}
-
-const TIME_WINDOW_MS = 10000; // 10 seconds
-
-function TimingVisualization({ requests }: { requests: Request[] }) {
-  const maxTime = new Date().getTime();
-  const minTime = maxTime - TIME_WINDOW_MS;
-
-  const timeRange = TIME_WINDOW_MS;
-
-  const requestBars = useRef<Map<string, JSX.Element>>(new Map());
-  const responseBars = useRef<Map<string, JSX.Element>>(new Map());
-
-  for (let i = 0; i < requests.length; i++) {
-    const request = requests[i];
-    if (request.requestTimestamp.getTime() < minTime) {
-      requestBars.current.delete(request.id);
-    } else {
-      if (!requestBars.current.has(request.id)) {
-        const timestamp = request.requestTimestamp.getTime();
-        const positionPercent = ((timestamp - minTime) / timeRange) * 100;
-        requestBars.current.set(
-          request.id,
-          <div
-            key={`req-${request.id}`}
-            className="request timing-bar"
-            style={
-              {
-                ["--x-value"]: `${positionPercent}%`,
-              } as React.CSSProperties
-            }
-          />,
-        );
-      }
-    }
-  }
-
-  for (let i = 0; i < requests.length; i++) {
-    const request = requests[i];
-    if (
-      request.responseTimestamp &&
-      request.responseTimestamp.getTime() < minTime
-    ) {
-      responseBars.current.delete(request.id);
-    }
-    if (!responseBars.current.has(request.id) && request.responseTimestamp) {
-      const timestamp = request.responseTimestamp.getTime();
-      const positionPercent = ((timestamp - minTime) / timeRange) * 100;
-      responseBars.current.set(
-        request.id,
-        <div
-          key={`res-${request.id}`}
-          className="response timing-bar"
-          style={
-            {
-              ["--x-value"]: `${positionPercent}%`,
-            } as React.CSSProperties
-          }
-        />,
-      );
-    }
-  }
-
-  return (
-    <div
-      className="timing-visualization"
-      style={
-        {
-          ["--time-window"]: `${TIME_WINDOW_MS}ms`,
-        } as React.CSSProperties
-      }
-    >
-      {[...requestBars.current.values()]}
-      {[...responseBars.current.values()]}
     </div>
   );
 }
@@ -170,7 +95,7 @@ export function ServersIndex() {
     )),
     widgetAxis<Server>("Visualization", (data, index) => (
       <PrimaryContainer>
-        <TimingVisualization
+        <ServersRequestTimingVisualization
           requests={requests.filter((r) => r.serverId === data[index].id)}
         />
       </PrimaryContainer>

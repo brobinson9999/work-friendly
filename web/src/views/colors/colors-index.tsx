@@ -3,7 +3,7 @@ import {
   nullAxis,
   textAxis,
   type ChartAxis,
-} from "../../components/bar-chart";
+} from "../../components/chart-axis";
 import { DataIndex } from "../../components/data-index";
 import { colors, type Color } from "../../models/colors";
 

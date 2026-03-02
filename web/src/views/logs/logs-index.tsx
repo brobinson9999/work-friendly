@@ -9,7 +9,7 @@ import {
   nullAxis,
   textAxis,
   type ChartAxis,
-} from "../../components/bar-chart";
+} from "../../components/chart-axis";
 
 export function LogsIndex() {
   const submitCommand = async (message: string) => {

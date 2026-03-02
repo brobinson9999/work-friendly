@@ -13,7 +13,7 @@ import {
   numberAxis,
   textAxis,
   type ChartAxis,
-} from "../../components/bar-chart";
+} from "../../components/chart-axis";
 
 export function ShellCommandExecutionsIndex() {
   const submitCommand = async (serverId: string, command: string) => {

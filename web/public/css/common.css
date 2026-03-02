@@ -271,18 +271,18 @@ td {
   animation: slideLeft calc(var(--time-window) * 2) linear forwards;
 }
 
-.request.timing-bar {
+.positive.timing-bar {
   position: absolute;
-  left: var(--x-value);
+  left: calc(var(--x-position) * 100%);
   top: 0%;
   width: 2px;
   height: 50%;
   background-color: var(--current-on-color);
 }
 
-.response.timing-bar {
+.negative.timing-bar {
   position: absolute;
-  left: var(--x-value);
+  left: calc(var(--x-position) * 100%);
   top: 50%;
   width: 2px;
   height: 50%;

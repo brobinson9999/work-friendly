@@ -11,15 +11,11 @@ import { SurfaceContainer } from "../../components/surface-container";
 import { ViteForeground } from "../../models/colors";
 import { libations } from "../../models/palettes";
 
-import {
-  BarChart,
-  dateAxis,
-  numberAxis,
-  textAxis,
-} from "../../components/bar-chart";
+import { BarChart } from "../../components/bar-chart";
 import { ScatterPlot } from "../../components/scatter-plot";
 import { useState } from "react";
 import { GaugeDemo } from "../../components/gauge-demo";
+import { dateAxis, numberAxis, textAxis } from "../../components/chart-axis";
 
 type ChartSampleData = {
   fruit: string;

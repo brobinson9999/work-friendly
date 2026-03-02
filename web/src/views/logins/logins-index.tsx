@@ -6,7 +6,7 @@ import {
   nullAxis,
   textAxis,
   type ChartAxis,
-} from "../../components/bar-chart";
+} from "../../components/chart-axis";
 
 export function LoginsIndex() {
   const submitCommand = async (serverId: string, password: string) => {

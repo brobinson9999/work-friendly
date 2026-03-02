@@ -1,12 +1,12 @@
 import { palettes, type Palette } from "../../models/palettes";
+import { PaletteSwatch } from "../../components/palette-swatch";
+import { DataIndex } from "../../components/data-index";
 import {
   nullAxis,
   textAxis,
   widgetAxis,
   type ChartAxis,
-} from "../../components/bar-chart";
-import { PaletteSwatch } from "../../components/palette-swatch";
-import { DataIndex } from "../../components/data-index";
+} from "../../components/chart-axis";
 
 export function PalettesIndex() {
   const axes: ChartAxis<Palette>[] = [

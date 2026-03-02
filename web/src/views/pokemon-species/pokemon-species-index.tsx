@@ -1,13 +1,13 @@
 import { getPokemonSpecies } from "../../models/pokemon-species";
 import type { PokemonSpecies } from "../../models/pokemon-species";
+import { DataIndex } from "../../components/data-index";
 import {
   colorAxis,
   nullAxis,
   numberAxis,
   textAxis,
   type ChartAxis,
-} from "../../components/bar-chart";
-import { DataIndex } from "../../components/data-index";
+} from "../../components/chart-axis";
 
 const pokemonSpeciesChartAxes: ChartAxis<PokemonSpecies>[] = [
   nullAxis<PokemonSpecies>("None"),

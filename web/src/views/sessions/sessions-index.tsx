@@ -7,7 +7,7 @@ import {
   nullAxis,
   textAxis,
   type ChartAxis,
-} from "../../components/bar-chart";
+} from "../../components/chart-axis";
 
 export function SessionsIndex() {
   const submitCommand = async (loginId: string) => {

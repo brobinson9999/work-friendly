@@ -101,7 +101,7 @@ export function ServersIndex() {
       </PrimaryContainer>
     )),
     widgetAxis<Server>("Actions", (data, index) => (
-      <div style={{ display: "flex", gap: "8px" }}>
+      <div className="server-actions">
         <button onClick={() => testServerConnection(data[index])}>
           Test Connection
         </button>

@@ -1,4 +1,4 @@
-import type { ChartAxis } from "./bar-chart";
+import type { ChartAxis } from "./chart-axis";
 
 export type ScatterPlotProps<TData> = {
   data: TData[];

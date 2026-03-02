@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ButtonBar } from "./button-bar";
 import { executeQuery, type OrderByClause } from "../utils/queryable";
-import type { ChartAxis } from "./bar-chart";
 import { useRedrawAll } from "../hooks/use-redraw-all";
 import type { View } from ".";
 import { DataScatterPlot } from "./data-scatter-plot";
@@ -12,6 +11,7 @@ import { TsvListing } from "./tsv-listing";
 import { TsvIcon } from "../icons/tsv-icon";
 import { DataTable } from "./data-table";
 import { TableIcon } from "../icons/table-icon";
+import type { ChartAxis } from "./chart-axis";
 
 interface DataIndexProps<TData> {
   title: string;

@@ -1,4 +1,4 @@
-import type { ChartAxis } from "./bar-chart";
+import type { ChartAxis } from "./chart-axis";
 
 export type ChartAxisSelectorProps<TData> = {
   id: string;
@@ -17,7 +17,7 @@ export function ChartAxisSelector<TData>({
   setState,
 }: ChartAxisSelectorProps<TData>) {
   return (
-    <div style={{ marginBottom: "1em" }}>
+    <div>
       <label htmlFor={`${id}-select`}>{label}: </label>
       <select
         id={`${id}-select`}

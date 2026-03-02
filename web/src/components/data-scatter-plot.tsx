@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ScatterPlot } from "./scatter-plot";
 import { ChartAxisSelector } from "./chart-axis-selector";
-import type { ChartAxis } from "./bar-chart";
+import type { ChartAxis } from "./chart-axis";
 
 export type DataScatterPlotProps<TData> = {
   data: TData[];

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ColumnTable, type ColumnTableColumn } from "./column-table";
 import { ChartAxisSelector } from "./chart-axis-selector";
-import type { ChartAxis } from "./bar-chart";
+import type { ChartAxis } from "./chart-axis";
 
 export type DataTableProps<TData> = {
   data: TData[];

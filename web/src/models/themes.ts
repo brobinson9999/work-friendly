@@ -172,8 +172,34 @@ export const vite = createMaterialTheme({
   cssFiles: ["css/vite.css"],
 });
 
-export const react = createMaterialTheme({
-  name: "React",
+export const reactDark = createMaterialTheme({
+  name: "React Dark",
+
+  primaryColor: colors.ReactBlue,
+  primaryVariantColor: colors.TypeScriptBlue,
+  onPrimaryColor: colors.ReactSurface,
+  secondaryColor: colors.TypeScriptBlue,
+  secondaryVariantColor: colors.ReactBlue,
+  onSecondaryColor: colors.ReactSurface,
+  backgroundColor: colors.ReactBackground,
+  onBackgroundColor: colors.ReactText,
+  surfaceColor: colors.ReactSurface,
+  onSurfaceColor: colors.ReactText,
+  errorColor: colors.oklchRed,
+  onErrorColor: colors.ReactText,
+
+  warningColor: colors.JavaScriptYellow,
+  onWarningColor: colors.ReactSurface,
+  successColor: colors.oklchGreen,
+  onSuccessColor: colors.ReactSurface,
+
+  logo: "/react-logo.svg",
+
+  cssFiles: ["css/react.css"],
+});
+
+export const reactLight = createMaterialTheme({
+  name: "React Light",
 
   primaryColor: colors.ReactBlue,
   primaryVariantColor: colors.TypeScriptBlue,

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { BarChart, type ChartAxis } from "./bar-chart";
+import { BarChart } from "./bar-chart";
 import { ChartAxisSelector } from "./chart-axis-selector";
+import type { ChartAxis } from "./chart-axis";
 
 export type DataBarChartProps<TData> = {
   data: TData[];

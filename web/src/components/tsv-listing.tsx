@@ -1,4 +1,4 @@
-import type { ChartAxis } from "./bar-chart";
+import type { ChartAxis } from "./chart-axis";
 import { CodeListing } from "./code-listing";
 
 export interface TsvListingProps<TData> {

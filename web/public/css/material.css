@@ -107,6 +107,7 @@ a:hover {
 button {
   background-color: var(--current-color);
 }
+
 button:hover {
   border-color: var(--current-on-color);
   background-color: var(--current-variant-color);
@@ -120,6 +121,12 @@ th {
 tr {
   background-color: var(--surface-color);
   color: var(--on-surface-color);
+}
+
+tr button {
+  --current-color: var(--primary-color);
+  --current-variant-color: var(--primary-variant-color);
+  --current-on-color: var(--on-primary-color);
 }
 
 .one-eighty-speedo {

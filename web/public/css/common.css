@@ -28,6 +28,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --current-color: white;
+    --current-variant-color: lightgray;
+    --current-on-color: black;
+
+    color: var(--current-on-color);
+    background-color: var(--current-color);
+  }
+}
+
 a {
   font-weight: 500;
   text-decoration: inherit;
@@ -49,6 +60,8 @@ h1 {
 button {
   border-radius: 8px;
   border: 1px solid transparent;
+  background-color: var(--current-color);
+  color: var(--current-on-color);
   /* padding: 0.6em 1.2em; */
   height: 36px;
   margin: 0.2em;
@@ -61,19 +74,6 @@ button {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
 
 header {
@@ -149,14 +149,14 @@ td {
 .data-table {
   margin-top: 20px;
   width: 100%;
-  border: 1px solid var(--current-on-color); 
+  border: 1px solid var(--current-on-color);
   border-collapse: collapse;
 }
 
 .data-table th,
 .data-table tr,
 .data-table td {
-  border: 1px solid var(--current-on-color); 
+  border: 1px solid var(--current-on-color);
 }
 
 .table-no-data-cell {

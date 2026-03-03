@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { logins } from "../../models/logins";
+import { FormField } from "../../components/form-field";
 
 interface SessionsNewProps {
   submitCommand: (loginId: string) => void;
@@ -17,31 +18,32 @@ export function SessionsNew({ submitCommand }: SessionsNewProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="shell-command-form">
-      <div className="form-group">
-        <label htmlFor="message" className="form-label">
-          Login ID
-        </label>
-        <select
-          id="loginId"
-          value={loginId}
-          onChange={(e) => setLoginId(e.target.value)}
-          required
-          className="form-input"
-        >
-          {logins.length === 0 ? (
-            <option value="" disabled>
-              No logins available
-            </option>
-          ) : (
-            logins.map((login) => (
-              <option key={login.id} value={login.id}>
-                {login.id}
+    <form onSubmit={handleSubmit} className="sessions new">
+      <FormField
+        label="Login ID"
+        input={(id) => (
+          <select
+            id={id}
+            value={loginId}
+            onChange={(e) => setLoginId(e.target.value)}
+            required
+            className="form-input"
+          >
+            {logins.length === 0 ? (
+              <option value="" disabled>
+                No logins available
               </option>
-            ))
-          )}
-        </select>
-      </div>
+            ) : (
+              logins.map((login) => (
+                <option key={login.id} value={login.id}>
+                  {login.id}
+                </option>
+              ))
+            )}
+          </select>
+        )}
+      />
+
       <button type="submit" className="form-button">
         Create Session
       </button>

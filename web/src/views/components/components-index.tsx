@@ -17,6 +17,7 @@ import { useState } from "react";
 import { GaugeDemo } from "../../components/gauge-demo";
 import { dateAxis, numberAxis, textAxis } from "../../components/chart-axis";
 import { div } from "../../components/tags";
+import { FormField } from "../../components/form-field";
 
 type ChartSampleData = {
   fruit: string;
@@ -325,6 +326,216 @@ export function ComponentsIndex() {
       <GaugeDemo className="bar-gauge" />
       <h3>Vertical Gauge</h3>
       <GaugeDemo className="vertical-gauge" />
+
+      <h2>Form Showcase</h2>
+      <form>
+        <fieldset>
+          <legend>Text Inputs</legend>
+          <FormField
+            label="Text"
+            input={(id) => (
+              <input type="text" id={id} name="text" placeholder="Text input" />
+            )}
+          />
+          <FormField
+            label="Password"
+            input={(id) => (
+              <input
+                type="password"
+                id={id}
+                name="password"
+                placeholder="Password"
+              />
+            )}
+          />
+          <FormField
+            label="Email"
+            input={(id) => (
+              <input type="email" id={id} name="email" placeholder="Email" />
+            )}
+          />
+          <FormField
+            label="Search"
+            input={(id) => (
+              <input type="search" id={id} name="search" placeholder="Search" />
+            )}
+          />
+          <FormField
+            label="URL"
+            input={(id) => (
+              <input
+                type="url"
+                id={id}
+                name="url"
+                placeholder="https://example.com"
+              />
+            )}
+          />
+          <FormField
+            label="Telephone"
+            input={(id) => (
+              <input
+                type="tel"
+                id={id}
+                name="tel"
+                placeholder="(555) 555-5555"
+              />
+            )}
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Number & Range</legend>
+          <FormField
+            label="Number"
+            input={(id) => (
+              <input type="number" id={id} name="number" min="0" max="10" />
+            )}
+          />
+          <FormField
+            label="Range"
+            input={(id) => (
+              <input type="range" id={id} name="range" min="0" max="100" />
+            )}
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Date & Time</legend>
+          <FormField
+            label="Date"
+            input={(id) => <input type="date" id={id} name="date" />}
+          />
+          <FormField
+            label="Time"
+            input={(id) => <input type="time" id={id} name="time" />}
+          />
+          <FormField
+            label="Month"
+            input={(id) => <input type="month" id={id} name="month" />}
+          />
+          <FormField
+            label="Week"
+            input={(id) => <input type="week" id={id} name="week" />}
+          />
+          <FormField
+            label="Datetime-local"
+            input={(id) => (
+              <input type="datetime-local" id={id} name="datetime-local" />
+            )}
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Choices</legend>
+          <FormField
+            label="Select"
+            input={(id) => (
+              <select id={id} name="select">
+                <option value="">Please choose</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+              </select>
+            )}
+          />
+          <FormField
+            label="Multi-select"
+            input={(id) => (
+              <select id={id} name="multi-select" multiple size={3}>
+                <option value="a">Alpha</option>
+                <option value="b">Bravo</option>
+                <option value="c">Charlie</option>
+              </select>
+            )}
+          />
+          <FormField
+            label="Datalist"
+            input={(id) => (
+              <>
+                <input list="browsers" id={id} name="browser" />
+                <datalist id="browsers">
+                  <option value="Chrome" />
+                  <option value="Firefox" />
+                  <option value="Safari" />
+                  <option value="Edge" />
+                  <option value="Opera" />
+                </datalist>
+              </>
+            )}
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Checkboxes & Radios</legend>
+          <label>
+            <input type="checkbox" name="check1" /> Checkbox 1
+          </label>
+          <label>
+            <input type="checkbox" name="check2" defaultChecked /> Checkbox 2
+            (checked)
+          </label>
+          <label>
+            <input type="radio" name="radio" value="a" /> Radio A
+          </label>
+          <label>
+            <input type="radio" name="radio" value="b" defaultChecked /> Radio B
+          </label>
+        </fieldset>
+        <fieldset>
+          <legend>File & Color</legend>
+          <FormField
+            label="File"
+            input={(id) => <input type="file" id={id} name="file" />}
+          />
+          <FormField
+            label="Color"
+            input={(id) => (
+              <input type="color" id={id} name="color" defaultValue="#ff0000" />
+            )}
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Textarea & Output</legend>
+          <FormField
+            label="Textarea"
+            input={(id) => (
+              <textarea
+                id={id}
+                name="textarea"
+                rows={3}
+                cols={30}
+                placeholder="Type here..."
+              />
+            )}
+          />
+          <FormField
+            label="Output"
+            input={(id) => (
+              <output id={id} htmlFor="number">
+                42
+              </output>
+            )}
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Buttons</legend>
+          <button type="button">Button</button>
+          <button type="submit">Submit</button>
+          <button type="reset">Reset</button>
+        </fieldset>
+        <fieldset>
+          <legend>Other Inputs</legend>
+          <FormField
+            label="Hidden"
+            input={(id) => (
+              <input type="hidden" id={id} name="hidden" value="hidden value" />
+            )}
+          />
+          <FormField
+            label="Image Button"
+            input={(id) => (
+              <input type="image" id={id} src="/react-logo.svg" alt="Submit" />
+            )}
+          />
+        </fieldset>
+      </form>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { servers } from "../../models/servers";
+import { FormField } from "../../components/form-field";
 
 interface LoginsNewProps {
   submitCommand: (serverId: string, password: string) => void;
@@ -16,42 +17,45 @@ export function LoginsNew({ submitCommand }: LoginsNewProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="shell-command-form">
-      <div className="form-group">
-        <select
-          id="serverId"
-          value={serverId}
-          onChange={(e) => setServerId(e.target.value)}
-          required
-          className="form-input"
-        >
-          {servers.length === 0 ? (
-            <option value="" disabled>
-              No servers available
-            </option>
-          ) : (
-            servers.map((server) => (
-              <option key={server.id} value={server.id}>
-                {server.id}
+    <form onSubmit={handleSubmit} className="logins new">
+      <FormField
+        label="Server Id"
+        input={(id) => (
+          <select
+            id={id}
+            value={serverId}
+            onChange={(e) => setServerId(e.target.value)}
+            required
+            className="form-input"
+          >
+            {servers.length === 0 ? (
+              <option value="" disabled>
+                No servers available
               </option>
-            ))
-          )}
-        </select>
-      </div>
+            ) : (
+              servers.map((server) => (
+                <option key={server.id} value={server.id}>
+                  {server.id}
+                </option>
+              ))
+            )}
+          </select>
+        )}
+      />
 
-      <div className="form-group">
-        <label htmlFor="message" className="form-label">
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="form-input"
-        />
-      </div>
+      <FormField
+        label="Password"
+        input={(id) => (
+          <input
+            type="password"
+            id={id}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="form-input"
+          />
+        )}
+      />
 
       <button type="submit" className="form-button">
         Log In

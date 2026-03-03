@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FormField } from "../../components/form-field";
 
 interface LogsNewProps {
   submitCommand: (message: string) => void;
@@ -14,20 +15,21 @@ export function LogsNew({ submitCommand }: LogsNewProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="shell-command-form">
-      <div className="form-group">
-        <label htmlFor="message" className="form-label">
-          Message
-        </label>
-        <input
-          type="text"
-          id="message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          required
-          className="form-input"
-        />
-      </div>
+    <form onSubmit={handleSubmit} className="logs new">
+      <FormField
+        label="Message"
+        input={(id) => (
+          <input
+            type="text"
+            id={id}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            required
+            className="form-input"
+          />
+        )}
+      />
+
       <button type="submit" className="form-button">
         Write to Log
       </button>

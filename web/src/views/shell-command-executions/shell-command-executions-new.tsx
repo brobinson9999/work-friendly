@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { servers } from "../../models/servers";
+import { FormField } from "../../components/form-field";
 
 interface ShellCommandExecutionsNewProps {
   submitCommand: (serverId: string, command: string) => void;
@@ -18,41 +19,43 @@ export function ShellCommandExecutionsNew({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="shell-command-form">
-      <div className="form-group">
-        <label htmlFor="serverId" className="form-label">
-          Server
-        </label>
-        <select
-          id="serverId"
-          value={serverId}
-          onChange={(e) => setServerId(e.target.value)}
-          required
-          className="form-select"
-        >
-          <option value="" disabled>
-            Select server
-          </option>
-          {servers.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.id} ({s.hostname}:{s.port})
+    <form onSubmit={handleSubmit} className="shell-command-executions new">
+      <FormField
+        label="Server"
+        input={(id) => (
+          <select
+            id={id}
+            value={serverId}
+            onChange={(e) => setServerId(e.target.value)}
+            required
+            className="form-select"
+          >
+            <option value="" disabled>
+              Select server
             </option>
-          ))}
-        </select>
-      </div>
-      <div className="form-group">
-        <label htmlFor="command" className="form-label">
-          Command
-        </label>
-        <input
-          type="text"
-          id="command"
-          value={command}
-          onChange={(e) => setCommand(e.target.value)}
-          required
-          className="form-input"
-        />
-      </div>
+            {servers.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.id} ({s.hostname}:{s.port})
+              </option>
+            ))}
+          </select>
+        )}
+      />
+
+      <FormField
+        label="Command"
+        input={(id) => (
+          <input
+            type="text"
+            id={id}
+            value={command}
+            onChange={(e) => setCommand(e.target.value)}
+            required
+            className="form-input"
+          />
+        )}
+      />
+
       <button type="submit" className="form-button">
         Run
       </button>

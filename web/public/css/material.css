@@ -134,3 +134,45 @@ tr button {
   --color-zero-point-five: var(--warning-color);
   --color-one: var(--success-color);
 }
+
+/* Button bar styles */
+.button-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0px;
+}
+
+.button-bar button {
+  cursor: pointer;
+  height: 44px;
+  padding: 10px;
+  margin: 0px;
+}
+
+.button-bar button {
+  border-left: 1px solid var(--current-on-color);
+  border-radius: 0;
+}
+
+.button-bar button:first-child {
+  border-left: 0px;
+  cursor: default;
+  border-radius: 24px 0 0 24px;
+}
+
+.button-bar button:last-child {
+  border-left: 1px solid var(--current-on-color);
+  border-radius: 0 24px 24px 0;
+}
+
+.button-bar button {
+  --current-color: var(--primary-color);
+  --current-on-color: var(--on-primary-color);
+  --current-variant-color: var(--primary-variant-color);
+}
+
+.button-bar button.selected {
+  --current-color: var(--secondary-color);
+  --current-on-color: var(--on-secondary-color);
+  --current-variant-color: var(--secondary-variant-color);
+}

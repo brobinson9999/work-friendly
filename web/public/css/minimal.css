@@ -1,0 +1,33 @@
+table {
+  border-collapse: collapse;
+}
+
+thead tr {
+  border-bottom: 3px solid;
+}
+
+th {
+  border: 1px solid #000;
+}
+
+td {
+  border: 1px solid #000;
+}
+
+td,
+th {
+  padding: 0.1em 2em;
+}
+
+.code-listing {
+  padding: 0.2em 2em;
+  border: 1px solid #000;
+}
+
+.form-group {
+  margin-bottom: 0.5em;
+}
+
+.form-group label {
+  display: block;
+}

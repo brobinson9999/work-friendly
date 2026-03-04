@@ -38,6 +38,7 @@ export function Index({ title, newElement, views }: IndexProps) {
           />
         </div>
       )}
+      <h2>{views.find((v) => v.id === mode)?.name}</h2>
       {views.find((v) => v.id === mode)?.component}
     </div>
   );

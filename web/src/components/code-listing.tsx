@@ -22,7 +22,9 @@ export function CodeListing({ content }: CodeListingProps) {
   return (
     <SurfaceContainer>
       <div className="code-listing-container">
-        <pre className="code-listing">{content}</pre>
+        <pre className="code-listing">
+          <code>{content}</code>
+        </pre>
         <button
           className="copy-button"
           onClick={handleCopy}

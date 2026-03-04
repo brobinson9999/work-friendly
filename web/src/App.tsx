@@ -66,16 +66,14 @@ function App() {
             </nav>
           </SurfaceContainer>
         </header>
-        {div(
-          ["main-content"],
-          {},
+        <main>
           <Routes>
             <Route path="/" element={<Navigate to="/routes" replace />} />
             {reactRoutes.map(({ href, element }) => (
               <Route key={href} path={href} element={element} />
             ))}
-          </Routes>,
-        )}
+          </Routes>
+        </main>
         <footer>
           <SurfaceContainer>
             Copyright &copy; {new Date().getFullYear()} Brendon Robinson. All

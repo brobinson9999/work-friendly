@@ -132,15 +132,39 @@ export const explorer = createTheme({
   inlineCss: "",
 });
 
+export const windows7 = createTheme({
+  name: "Windows 7",
+  cssFiles: [
+    "css/windows-7/windows-7.css",
+    "css/windows-extra.css",
+    "css/windows-7/windows-7-extra.css",
+  ],
+  inlineCss: "",
+});
+
 export const windowsXp = createTheme({
   name: "Windows XP",
-  cssFiles: ["css/windows-xp.css"],
+  cssFiles: [
+    "css/windows-xp/windows-xp.css",
+    "css/windows-extra.css",
+    "css/windows-xp/windows-xp-extra.css",
+  ],
   inlineCss: "",
 });
 
 export const windows98 = createTheme({
   name: "Windows 98",
-  cssFiles: ["css/windows-98.css"],
+  cssFiles: [
+    "css/windows-98/windows-98.css",
+    "css/windows-extra.css",
+    "css/windows-98/windows-98-extra.css",
+  ],
+  inlineCss: "",
+});
+
+export const minimal = createTheme({
+  name: "Minimal",
+  cssFiles: ["css/minimal.css"],
   inlineCss: "",
 });
 

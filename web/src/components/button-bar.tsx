@@ -18,16 +18,7 @@ export function ButtonBar<T>({
   return (
     <div className="button-bar">
       {buttons.map((button, index) => {
-        let buttonClass =
-          selectedButton === button.id ? "primary" : "secondary";
-        buttonClass += " button-bar-button";
-        if (index === 0) {
-          buttonClass += " button-bar-button-first";
-        } else if (index === buttons.length - 1) {
-          buttonClass += " button-bar-button-last";
-        } else {
-          buttonClass += " button-bar-button-middle";
-        }
+        let buttonClass = selectedButton === button.id ? "selected" : undefined;
         return (
           <button
             key={index}

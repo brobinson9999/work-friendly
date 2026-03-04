@@ -1,0 +1,15 @@
+/* Additional styles added to windows-98.css and windows-xp.css */
+
+td,
+th,
+tr {
+  border: 1px solid #000;
+}
+
+.form-group {
+  margin-bottom: 0.5em;
+}
+
+.form-group label {
+  display: block;
+}

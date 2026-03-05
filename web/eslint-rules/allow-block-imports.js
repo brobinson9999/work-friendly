@@ -52,6 +52,10 @@ export default {
         checks.push((importPath) => checkBlockList(importPath, ['components', 'icons', 'views']));
     }
 
+    if (checkFilePath(filename, 'icons')) {
+        checks.push((importPath) => checkBlockList(importPath, ['components', 'hooks', 'models', 'views']));
+    }
+
     if (checkFilePath(filename, 'models')) {
         checks.push((importPath) => checkBlockList(importPath, ['components', 'hooks', 'icons', 'views']));
     }

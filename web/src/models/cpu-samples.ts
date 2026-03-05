@@ -1,5 +1,5 @@
-import { redrawAll } from "../hooks/use-redraw-all";
 import { executeShellCommand } from "./shell-command-executions";
+import { stateChanged } from "./state-change";
 
 export type CpuSampleParams = {
   serverId: string;
@@ -28,7 +28,7 @@ export async function createCpuSample(
       usage: parseInt(cpuUsageMatch[1], 10),
     };
     cpuSamples.push(newCpuSample);
-    redrawAll();
+    stateChanged();
     return newCpuSample;
   } else {
     throw new Error("Failed to parse CPU usage from command output");

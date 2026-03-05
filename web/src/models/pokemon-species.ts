@@ -1,4 +1,4 @@
-import { redrawAll } from "../hooks/use-redraw-all";
+import { stateChanged } from "./state-change";
 
 export type PokemonSpecies = {
   name: string;
@@ -22,14 +22,14 @@ export function getPokemonSpecies(): PokemonSpecies[] | undefined {
           }),
         );
         pokemonSpecies = fetchedPokemonSpecies;
-        redrawAll();
+        stateChanged();
         fetchedPokemonSpecies.forEach((species) =>
           fetch(species.url)
             .then((res) => res.json())
             .then((details) => {
               Object.assign(species, details);
               console.log("species with details:", species);
-              redrawAll();
+              stateChanged();
             }),
         );
       });

@@ -1,5 +1,5 @@
-import { redrawAll } from "../hooks/use-redraw-all";
 import { servers } from "./servers";
+import { stateChanged } from "./state-change";
 
 export type Request = {
   id: string;
@@ -41,7 +41,7 @@ export function createRequest(
   };
 
   requests.push(newRequest);
-  redrawAll();
+  stateChanged();
   return newRequest;
 }
 
@@ -52,5 +52,5 @@ export async function performRequest(request: Request): Promise<void> {
 
 export function completeRequest(request: Request): void {
   request.responseTimestamp = new Date();
-  redrawAll();
+  stateChanged();
 }

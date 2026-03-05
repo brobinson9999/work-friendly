@@ -1,6 +1,5 @@
 import { SessionsNew } from "./sessions-new";
 import { createSession, sessions, type Session } from "../../models/sessions";
-import { redrawAll } from "../../hooks/use-redraw-all";
 import { DataIndex } from "../../components/data-index";
 import {
   dateAxis,
@@ -12,7 +11,6 @@ import {
 export function SessionsIndex() {
   const submitCommand = async (loginId: string) => {
     await createSession({ loginId });
-    redrawAll();
   };
 
   const axes: ChartAxis<Session>[] = [

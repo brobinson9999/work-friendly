@@ -1,5 +1,5 @@
-import { redrawAll } from "../hooks/use-redraw-all";
 import { executeRequest } from "./requests";
+import { stateChanged } from "./state-change";
 
 export type LoginParams = {
   serverId: string;
@@ -26,7 +26,7 @@ export async function createLogin(params: LoginParams): Promise<Login> {
   const newLogin = await request.response!.json();
 
   logins.push({ ...newLogin, createdAt: new Date(newLogin.createdAt) });
-  redrawAll();
+  stateChanged();
 
   return newLogin;
 }

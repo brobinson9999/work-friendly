@@ -5,7 +5,6 @@ import {
   type ShellCommandExecution,
 } from "../../models/shell-command-executions";
 import { ShellCommandExecutionsNew } from "./shell-command-executions-new";
-import { redrawAll } from "../../hooks/use-redraw-all";
 import { DataIndex } from "../../components/data-index";
 import {
   dateAxis,
@@ -21,9 +20,7 @@ export function ShellCommandExecutionsIndex() {
       serverId,
       command,
     );
-    redrawAll();
     await runShellCommand(newShellCommandExecution);
-    redrawAll();
   };
 
   const axes: ChartAxis<ShellCommandExecution>[] = [

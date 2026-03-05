@@ -2,7 +2,6 @@ import { BashIcon } from "../../icons/bash-icon";
 import { LogsPre } from "./logs-pre";
 import { log, logs, type Log } from "../../models/logs";
 import { LogsNew } from "./logs-new";
-import { redrawAll } from "../../hooks/use-redraw-all";
 import { DataIndex } from "../../components/data-index";
 import {
   dateAxis,
@@ -14,7 +13,6 @@ import {
 export function LogsIndex() {
   const submitCommand = async (message: string) => {
     log(message);
-    redrawAll();
   };
 
   const axes: ChartAxis<Log>[] = [

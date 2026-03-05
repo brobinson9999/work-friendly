@@ -1,5 +1,5 @@
-import { redrawAll } from "../hooks/use-redraw-all";
 import { executeRequest } from "./requests";
+import { stateChanged } from "./state-change";
 
 export type PingParams = {
   serverId: string;
@@ -28,7 +28,7 @@ export async function createPing(params: PingParams): Promise<Ping> {
       online: newRequest.response!.ok,
     };
     pings.push(newPing);
-    redrawAll();
+    stateChanged();
     return newPing;
     // eslint-disable-next-line no-unused-vars
   } catch (_error) {
@@ -39,7 +39,7 @@ export async function createPing(params: PingParams): Promise<Ping> {
       online: false,
     };
     pings.push(newPing);
-    redrawAll();
+    stateChanged();
     return newPing;
   }
 }

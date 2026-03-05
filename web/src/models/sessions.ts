@@ -1,3 +1,5 @@
+import { stateChanged } from "./state-change";
+
 export type SessionParams = {
   loginId: string;
 };
@@ -21,6 +23,7 @@ export async function createSession(params: SessionParams): Promise<Session> {
   const newSession = (await response.json()) as Session;
 
   sessions.push({ ...newSession, createdAt: new Date(newSession.createdAt) });
+  stateChanged();
 
   return newSession;
 }

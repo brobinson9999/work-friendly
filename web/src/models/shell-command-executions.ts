@@ -1,6 +1,6 @@
-import { redrawAll } from "../hooks/use-redraw-all";
 import { executeRequest } from "./requests";
 import { servers } from "./servers";
+import { stateChanged } from "./state-change";
 
 export type ShellCommandExecution = {
   serverId: string;
@@ -20,6 +20,7 @@ export function createShellCommandExecution(
 ): ShellCommandExecution {
   const shellCommandExecution = newShellCommandExecution(serverId, command);
   shellCommandExecutions.push(shellCommandExecution);
+  stateChanged();
   return shellCommandExecution;
 }
 
@@ -56,6 +57,7 @@ export async function runShellCommand(
   }
   const startTime = new Date();
   shellCommandExecution.startTime = startTime;
+  stateChanged();
   try {
     const request = await executeRequest(server.id, "/shell", {
       method: "POST",
@@ -79,5 +81,5 @@ export async function runShellCommand(
     shellCommandExecution.endTime = endTime;
   }
 
-  redrawAll();
+  stateChanged();
 }

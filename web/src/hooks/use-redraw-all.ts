@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useRedraw } from "./use-redraw";
+import { onStateChanged } from "../models/state-change";
 
 const redraws: (() => void)[] = [];
+
+onStateChanged(redrawAll);
 
 export function redrawAll() {
   const oldRedraws = [...redraws];

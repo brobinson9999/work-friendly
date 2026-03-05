@@ -1,5 +1,5 @@
-import { redrawAll } from "../hooks/use-redraw-all";
 import type { JsonObject } from "../utils/json-value";
+import { stateChanged } from "./state-change";
 
 export type LogPayload = JsonObject;
 
@@ -18,7 +18,7 @@ export function invalidateLogCache(): void {
       data.forEach((log: Log) =>
         logs.push({ ...log, timestamp: new Date(log.timestamp) }),
       );
-      redrawAll();
+      stateChanged();
     });
 }
 
@@ -34,6 +34,7 @@ export function log(payload: LogPayload | string): void {
   };
 
   logs.push(newLog);
+  stateChanged();
 
   consoleLog(newLog);
 }

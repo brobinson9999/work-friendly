@@ -48,8 +48,16 @@ export default {
         checks.push((importPath) => checkBlockList(importPath, ['views']));
     }
 
+    if (checkFilePath(filename, 'hooks')) {
+        checks.push((importPath) => checkBlockList(importPath, ['components', 'icons', 'views']));
+    }
+
     if (checkFilePath(filename, 'models')) {
-        checks.push((importPath) => checkBlockList(importPath, ['components', 'hooks', 'views']));
+        checks.push((importPath) => checkBlockList(importPath, ['components', 'hooks', 'icons', 'views']));
+    }
+
+    if (checkFilePath(filename, 'utils')) {
+        checks.push((importPath) => checkBlockList(importPath, ['components', 'hooks', 'icons', 'models', 'views']));
     }
 
     return {

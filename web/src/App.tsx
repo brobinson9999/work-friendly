@@ -3,7 +3,6 @@ import { reactRoutes } from "./routes";
 import { themes } from "./models/themes";
 import { useState, useEffect } from "react";
 import { io, Socket } from "socket.io-client";
-import { SurfaceContainer } from "./components/surface-container";
 import { invalidateLogCache } from "./models/logs";
 import { div } from "./components/tags";
 
@@ -48,23 +47,21 @@ function App() {
       ))}
       <HashRouter>
         <header>
-          <SurfaceContainer>
-            <nav className="top-left-nav">
-              <Link to="/">
-                {div(["logo"])}
-                <span>Back to Home</span>
-              </Link>
-            </nav>
-            <nav className="top-right-nav">
-              <select value={selectedTheme} onChange={handleThemeChange}>
-                {themeNames.map((themeName) => (
-                  <option key={themeName} value={themeName}>
-                    {themeName}
-                  </option>
-                ))}
-              </select>
-            </nav>
-          </SurfaceContainer>
+          <nav className="top-left-nav">
+            <Link to="/">
+              {div(["logo"])}
+              <span>Back to Home</span>
+            </Link>
+          </nav>
+          <nav className="top-right-nav">
+            <select value={selectedTheme} onChange={handleThemeChange}>
+              {themeNames.map((themeName) => (
+                <option key={themeName} value={themeName}>
+                  {themeName}
+                </option>
+              ))}
+            </select>
+          </nav>
         </header>
         <main>
           <Routes>
@@ -75,10 +72,8 @@ function App() {
           </Routes>
         </main>
         <footer>
-          <SurfaceContainer>
-            Copyright &copy; {new Date().getFullYear()} Brendon Robinson. All
-            rights reserved.
-          </SurfaceContainer>
+          Copyright &copy; {new Date().getFullYear()} Brendon Robinson. All
+          rights reserved.
         </footer>
       </HashRouter>
     </>

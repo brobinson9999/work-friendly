@@ -4,10 +4,6 @@ import { CodeListing } from "../../components/code-listing";
 import { RowTable } from "../../components/row-table";
 import { ColorSwatch } from "../../components/color-swatch";
 import { PaletteSwatch } from "../../components/palette-swatch";
-import { PrimaryContainer } from "../../components/primary-container";
-import { SecondaryContainer } from "../../components/secondary-container";
-import { BackgroundContainer } from "../../components/background-container";
-import { SurfaceContainer } from "../../components/surface-container";
 import { ViteForeground } from "../../models/colors";
 import { libations } from "../../models/palettes";
 
@@ -218,12 +214,12 @@ export function ComponentsIndex() {
           </ComponentCard>
 
           <ComponentCard title="Containers">
-            <PrimaryContainer>Primary</PrimaryContainer>
+            {div(["primary"], {}, "Primary")}
             {div(["primary-variant"], {}, "Primary Variant")}
-            <SecondaryContainer>Secondary</SecondaryContainer>
+            {div(["secondary"], {}, "Secondary")}
             {div(["secondary-variant"], {}, "Secondary Variant")}
-            <BackgroundContainer>Background</BackgroundContainer>
-            <SurfaceContainer>Surface</SurfaceContainer>
+            {div(["background"], {}, "Background")}
+            {div(["surface"], {}, "Surface")}
             {div(["error"], {}, "Error")}
             {div(["warning"], {}, "Warning")}
             {div(["success"], {}, "Success")}
@@ -299,74 +295,26 @@ export function ComponentsIndex() {
           </ComponentCard>
 
           <ComponentCard title="Gradients">
-            <style>{`
-        .gradient-examples {
-          display: grid;
-          gap: 1rem;
-          grid-template-rows: repeat(5, 1fr);
-          margin: auto;
-          max-height: 250px;
-          max-width: 800px;
-          padding: 1rem;
-        }
-
-        @media (min-width: 600px) {
-          .gradient-examples {
-            grid-template-columns: repeat(5, 1fr);
-          }
-        }
-
-        .gradient-example {
-          align-items: center;
-          border-radius: 16px;
-          box-shadow: 0 0 15px hsla(0deg, 0%, 0%, 0.5);
-          color: var(--current-on-color);
-          font-size: 1.25rem;
-          font-weight: 900;
-          display: flex;
-          height: 250px;
-          justify-content: center;
-          text-shadow: 0 2px 3px hsla(0deg, 0%, 0%, 0.25);
-        }
-
-        .linear-gradient-current {
-          background-image: linear-gradient(var(--current-color), var(--current-variant-color));
-        }
-
-        .linear-gradient-current-on-bottom {
-          background-image: linear-gradient(var(--current-color), var(--current-variant-color), var(--current-on-color));
-        }
-
-        .linear-gradient-current-on-center {
-          background-image: linear-gradient(var(--current-on-color), var(--current-color), var(--current-variant-color), var(--current-on-color));
-        }
-
-        .radial-gradient-current {
-          background-image: radial-gradient(var(--current-color), var(--current-variant-color));
-        }
-
-        .conic-gradient-current {
-          background-image: conic-gradient(var(--current-color), var(--current-variant-color), var(--current-on-color), var(--current-color));
-        }
-      `}</style>
-            <div className="gradient-examples">
-              <div className="gradient-example linear-gradient-current">
-                Linear
-              </div>
-              <div className="gradient-example linear-gradient-current-on-bottom">
-                Linear
-              </div>
-              <div className="gradient-example linear-gradient-current-on-center">
-                Linear
-              </div>
-              <div className="gradient-example radial-gradient-current">
-                Radial
-              </div>
-              <div className="gradient-example conic-gradient-current">
-                Conic
+            <div className="gradient-examples-row-1">
+              <div className="gradient-examples">
+                <div className="gradient-example linear-gradient-current">
+                  Linear
+                </div>
+                <div className="gradient-example linear-gradient-current-on-bottom">
+                  Linear
+                </div>
+                <div className="gradient-example linear-gradient-current-on-center">
+                  Linear
+                </div>
+                <div className="gradient-example radial-gradient-current">
+                  Radial
+                </div>
+                <div className="gradient-example conic-gradient-current">
+                  Conic
+                </div>
               </div>
             </div>
-            <PrimaryContainer>
+            <div className="gradient-examples-row-2">
               <div className="gradient-examples">
                 <div className="gradient-example linear-gradient-current">
                   Linear
@@ -384,8 +332,8 @@ export function ComponentsIndex() {
                   Conic
                 </div>
               </div>
-            </PrimaryContainer>
-            <SecondaryContainer>
+            </div>
+            <div className="gradient-examples-row-3">
               <div className="gradient-examples">
                 <div className="gradient-example linear-gradient-current">
                   Linear
@@ -403,7 +351,7 @@ export function ComponentsIndex() {
                   Conic
                 </div>
               </div>
-            </SecondaryContainer>
+            </div>
           </ComponentCard>
 
           <ComponentCard title="Gauges">

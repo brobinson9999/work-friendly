@@ -5,8 +5,6 @@ export function TsvIcon() {
       viewBox="0 0 24 24"
       width="24"
       height="24"
-      fill="none"
-      stroke="var(--current-on-color)"
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -24,7 +22,6 @@ export function TsvIcon() {
         y="21"
         textAnchor="middle"
         fontSize="4.5"
-        fill="var(--current-on-color)"
         fontFamily="monospace"
       >
         TSV

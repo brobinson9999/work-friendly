@@ -4,7 +4,6 @@ import { ServersBash } from "./servers-bash";
 import { BashIcon } from "../../icons/bash-icon";
 import { requests } from "../../models/requests";
 import { useEffect } from "react";
-import { PrimaryContainer } from "../../components/primary-container";
 import { Gauge } from "../../components/gauge";
 import {
   createCpuSample,
@@ -92,11 +91,9 @@ export function ServersIndex() {
       />
     )),
     widgetAxis<Server>("Visualization", (data, index) => (
-      <PrimaryContainer>
-        <ServersRequestTimingVisualization
-          requests={requests.filter((r) => r.serverId === data[index].id)}
-        />
-      </PrimaryContainer>
+      <ServersRequestTimingVisualization
+        requests={requests.filter((r) => r.serverId === data[index].id)}
+      />
     )),
     widgetAxis<Server>("Actions", (data, index) => (
       <div className="server-actions">

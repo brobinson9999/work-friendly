@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { SurfaceContainer } from "./surface-container";
 import { ClipboardIcon } from "../icons/clipboard-icon";
 
 interface CodeListingProps {
@@ -20,21 +19,19 @@ export function CodeListing({ content }: CodeListingProps) {
   };
 
   return (
-    <SurfaceContainer>
-      <div className="code-listing-container">
-        <pre className="code-listing">
-          <code>{content}</code>
-        </pre>
-        <button
-          className="copy-button"
-          onClick={handleCopy}
-          aria-label="Copy to clipboard"
-          title="Copy to clipboard"
-        >
-          <ClipboardIcon />
-        </button>
-        {showCopied && <div className="copy-toast">Copied to clipboard</div>}
-      </div>
-    </SurfaceContainer>
+    <div className="code-listing-container">
+      <pre className="code-listing">
+        <code>{content}</code>
+      </pre>
+      <button
+        className="copy-button"
+        onClick={handleCopy}
+        aria-label="Copy to clipboard"
+        title="Copy to clipboard"
+      >
+        <ClipboardIcon />
+      </button>
+      {showCopied && <div className="copy-toast">Copied to clipboard</div>}
+    </div>
   );
 }

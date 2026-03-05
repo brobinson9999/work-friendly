@@ -129,6 +129,7 @@ tr button {
   --current-on-color: var(--on-primary-color);
 }
 
+/* Gauge styles */
 .one-eighty-speedo {
   --color-zero: var(--error-color);
   --color-zero-point-five: var(--warning-color);
@@ -175,4 +176,136 @@ tr button {
   --current-color: var(--secondary-color);
   --current-on-color: var(--on-secondary-color);
   --current-variant-color: var(--secondary-variant-color);
+}
+
+.timing-visualization {
+  --current-color: var(--primary-color);
+  --current-on-color: var(--on-primary-color);
+  --current-variant-color: var(--primary-variant-color);
+}
+
+.code-listing,
+header,
+footer {
+  --current-color: var(--surface-color);
+  --current-on-color: var(--on-surface-color);
+  --current-variant-color: var(--surface-color);
+
+  color: var(--current-on-color);
+  background-color: var(--current-color);
+}
+
+/* Gradient examples */
+.gradient-examples-row-1 {
+  --current-color: var(--background-color);
+  --current-on-color: var(--on-background-color);
+  --current-variant-color: var(--background-color);
+
+  color: var(--current-on-color);
+  background-color: var(--current-color);
+}
+
+.gradient-examples-row-2 {
+  --current-color: var(--primary-color);
+  --current-on-color: var(--on-primary-color);
+  --current-variant-color: var(--primary-variant-color);
+
+  color: var(--current-on-color);
+  background-color: var(--current-color);
+}
+
+.gradient-examples-row-3 {
+  --current-color: var(--secondary-color);
+  --current-on-color: var(--on-secondary-color);
+  --current-variant-color: var(--secondary-variant-color);
+
+  color: var(--current-on-color);
+  background-color: var(--current-color);
+}
+
+.gradient-examples {
+  display: grid;
+  gap: 1rem;
+  grid-template-rows: repeat(5, 1fr);
+  margin: auto;
+  max-height: 250px;
+  max-width: 800px;
+  padding: 1rem;
+}
+
+@media (min-width: 600px) {
+  .gradient-examples {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.gradient-example {
+  align-items: center;
+  border-radius: 16px;
+  box-shadow: 0 0 15px hsla(0deg, 0%, 0%, 0.5);
+  color: var(--current-on-color);
+  font-size: 1.25rem;
+  font-weight: 900;
+  display: flex;
+  height: 250px;
+  justify-content: center;
+  text-shadow: 0 2px 3px hsla(0deg, 0%, 0%, 0.25);
+}
+
+.linear-gradient-current {
+  background-image: linear-gradient(
+    var(--current-color),
+    var(--current-variant-color)
+  );
+}
+
+.linear-gradient-current-on-bottom {
+  background-image: linear-gradient(
+    var(--current-color),
+    var(--current-variant-color),
+    var(--current-on-color)
+  );
+}
+
+.linear-gradient-current-on-center {
+  background-image: linear-gradient(
+    var(--current-on-color),
+    var(--current-color),
+    var(--current-variant-color),
+    var(--current-on-color)
+  );
+}
+
+.radial-gradient-current {
+  background-image: radial-gradient(
+    var(--current-color),
+    var(--current-variant-color)
+  );
+}
+
+.conic-gradient-current {
+  background-image: conic-gradient(
+    var(--current-color),
+    var(--current-variant-color),
+    var(--current-on-color),
+    var(--current-color)
+  );
+}
+
+/* Icon styles */
+svg.icon {
+  fill: var(--current-color);
+  stroke: var(--current-on-color);
+}
+
+svg.icon circle,
+svg.icon line,
+svg.icon path,
+svg.icon text {
+  stroke: var(--current-on-color);
+}
+
+svg.icon rect {
+  stroke: none;
+  fill: var(--current-on-color);
 }

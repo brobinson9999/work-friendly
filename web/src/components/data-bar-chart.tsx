@@ -37,35 +37,37 @@ export function DataBarChart<TData>({
   const colorAxis = axes[colorAxisIndex];
 
   return (
-    <div>
-      <ChartAxisSelector
-        id="label"
-        label="Label Axis"
-        axes={axes}
-        state={labelAxisIndex}
-        setState={setLabelAxisIndex}
-      />
-      <ChartAxisSelector
-        id="value"
-        label="Value Axis"
-        axes={axes}
-        state={valueAxisIndex}
-        setState={setValueAxisIndex}
-      />
-      <ChartAxisSelector
-        id="bar-height"
-        label="Bar Height Axis"
-        axes={axes}
-        state={barHeightAxisIndex}
-        setState={setBarHeightAxisIndex}
-      />
-      <ChartAxisSelector
-        id="color"
-        label="Color Axis"
-        axes={axes}
-        state={colorAxisIndex}
-        setState={setColorAxisIndex}
-      />
+    <>
+      <form>
+        <fieldset>
+          <legend>Bar Chart Settings</legend>
+
+          <ChartAxisSelector
+            label="Label Axis"
+            axes={axes}
+            state={labelAxisIndex}
+            setState={setLabelAxisIndex}
+          />
+          <ChartAxisSelector
+            label="Value Axis"
+            axes={axes}
+            state={valueAxisIndex}
+            setState={setValueAxisIndex}
+          />
+          <ChartAxisSelector
+            label="Bar Height Axis"
+            axes={axes}
+            state={barHeightAxisIndex}
+            setState={setBarHeightAxisIndex}
+          />
+          <ChartAxisSelector
+            label="Color Axis"
+            axes={axes}
+            state={colorAxisIndex}
+            setState={setColorAxisIndex}
+          />
+        </fieldset>
+      </form>
 
       <BarChart
         data={data}
@@ -74,6 +76,6 @@ export function DataBarChart<TData>({
         barHeightAxis={barHeightAxis}
         colorAxis={colorAxis}
       />
-    </div>
+    </>
   );
 }

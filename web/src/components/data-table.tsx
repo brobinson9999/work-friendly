@@ -24,20 +24,23 @@ export function DataTable<TData>({ data, columns }: DataTableProps<TData>) {
 
   return (
     <>
-      <ChartAxisSelector
-        id="fore-color"
-        label="Foreground Color"
-        axes={columns}
-        state={foreColorAxisIndex}
-        setState={setForeColorAxisIndex}
-      />
-      <ChartAxisSelector
-        id="back-color"
-        label="Background Color"
-        axes={columns}
-        state={backColorAxisIndex}
-        setState={setBackColorAxisIndex}
-      />
+      <form>
+        <fieldset>
+          <legend>Table Settings</legend>
+          <ChartAxisSelector
+            label="Foreground Color"
+            axes={columns}
+            state={foreColorAxisIndex}
+            setState={setForeColorAxisIndex}
+          />
+          <ChartAxisSelector
+            label="Background Color"
+            axes={columns}
+            state={backColorAxisIndex}
+            setState={setBackColorAxisIndex}
+          />
+        </fieldset>
+      </form>
 
       <ColumnTable
         columns={tableColumns}

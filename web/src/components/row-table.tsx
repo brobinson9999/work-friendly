@@ -11,7 +11,7 @@ export interface RowTableProps<T> {
   renderRow: (row: T, index: number) => React.ReactNode;
   tableClasses?: string[];
   rowClasses?: (row: T, index: number) => string[];
-  rowVars?: (row: T, index: number) => Record<string, string>;
+  rowVars?: (row: T, index: number) => Record<string, string | undefined>;
 }
 
 export function RowTable<T>({

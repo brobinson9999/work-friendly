@@ -2,7 +2,7 @@ import type { JSX } from "react";
 
 export function div(
   classes?: string[],
-  vars?: Record<string, string>,
+  vars?: Record<string, string | undefined>,
   children?: React.ReactNode,
   opts: { key?: string } = {},
 ): JSX.Element {
@@ -16,7 +16,7 @@ export function div(
 
 export function tr(
   classes?: string[],
-  vars?: Record<string, string>,
+  vars?: Record<string, string | undefined>,
   children?: React.ReactNode,
   opts: { key?: string } = {},
 ): JSX.Element {

@@ -18,6 +18,7 @@ import { GaugeDemo } from "../../components/gauge-demo";
 import { dateAxis, numberAxis, textAxis } from "../../components/chart-axis";
 import { div } from "../../components/tags";
 import { FormField } from "../../components/form-field";
+import { FormFieldReverse } from "../../components/form-field-reverse";
 
 type ChartSampleData = {
   fruit: string;
@@ -585,20 +586,59 @@ export function ComponentsIndex() {
               </fieldset>
               <fieldset>
                 <legend>Checkboxes & Radios</legend>
-                <label>
-                  <input type="checkbox" name="check1" /> Checkbox 1
-                </label>
-                <label>
-                  <input type="checkbox" name="check2" defaultChecked />{" "}
-                  Checkbox 2 (checked)
-                </label>
-                <label>
-                  <input type="radio" name="radio" value="a" /> Radio A
-                </label>
-                <label>
-                  <input type="radio" name="radio" value="b" defaultChecked />{" "}
-                  Radio B
-                </label>
+                <FormFieldReverse
+                  label="Checkbox 1"
+                  input={(id) => (
+                    <input type="checkbox" id={id} name="check1" />
+                  )}
+                />
+                <FormFieldReverse
+                  label="Checkbox 2 (disabled)"
+                  input={(id) => (
+                    <input type="checkbox" id={id} name="check1" disabled />
+                  )}
+                />
+                <FormFieldReverse
+                  label="Checkbox 3 (checked)"
+                  input={(id) => (
+                    <input
+                      type="checkbox"
+                      id={id}
+                      name="check2"
+                      defaultChecked
+                    />
+                  )}
+                />
+                <FormFieldReverse
+                  label="Radio A"
+                  input={(id) => (
+                    <input type="radio" id={id} name="radio" value="a" />
+                  )}
+                />
+                <FormFieldReverse
+                  label="Radio B (checked)"
+                  input={(id) => (
+                    <input
+                      type="radio"
+                      id={id}
+                      name="radio"
+                      value="b"
+                      defaultChecked
+                    />
+                  )}
+                />
+                <FormFieldReverse
+                  label="Radio C (disabled)"
+                  input={(id) => (
+                    <input
+                      type="radio"
+                      id={id}
+                      name="radio"
+                      value="c"
+                      disabled
+                    />
+                  )}
+                />
               </fieldset>
               <fieldset>
                 <legend>File & Color</legend>

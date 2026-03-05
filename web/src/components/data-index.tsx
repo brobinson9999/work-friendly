@@ -12,6 +12,7 @@ import { TsvIcon } from "../icons/tsv-icon";
 import { DataTable } from "./data-table";
 import { TableIcon } from "../icons/table-icon";
 import type { ChartAxis } from "./chart-axis";
+import { FormField } from "./form-field";
 
 interface DataIndexProps<TData> {
   title: string;
@@ -86,26 +87,42 @@ export function DataIndex<TData>({
     <div>
       <h1>{title}</h1>
       {newElement}
-      <div>
-        <h4>Search</h4>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-        <h4>Sort By</h4>
-        <select
-          value={sortBy}
-          onChange={(e) => setSortBy(parseInt(e.target.value))}
-        >
-          {sortableColumns.map((col, index) => (
-            <option key={index} value={index}>
-              {col.label}
-            </option>
-          ))}
-        </select>
-      </div>
+
+      <form>
+        <fieldset>
+          <legend>Search & Sort</legend>
+          <FormField
+            label="Search"
+            input={(id) => (
+              <input
+                id={id}
+                type="text"
+                placeholder="Search..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            )}
+          />
+
+          <FormField
+            label="Sort By"
+            input={(id) => (
+              <select
+                id={id}
+                value={sortBy}
+                onChange={(e) => setSortBy(parseInt(e.target.value))}
+              >
+                {sortableColumns.map((col, index) => (
+                  <option key={index} value={index}>
+                    {col.label}
+                  </option>
+                ))}
+              </select>
+            )}
+          />
+        </fieldset>
+      </form>
+
       {combinedViews.length > 1 && (
         <div className="view-selector">
           <ButtonBar

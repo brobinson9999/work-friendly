@@ -37,46 +37,47 @@ export function DataScatterPlot<TData>({
   const colorAxis = axes[colorAxisIndex];
 
   return (
-    <div>
-      <ChartAxisSelector
-        id="label"
-        label="Label Axis"
-        axes={axes}
-        state={labelAxisIndex}
-        setState={setLabelAxisIndex}
-      />
+    <>
+      <form>
+        <fieldset>
+          <legend>Scatter Plot Settings</legend>
 
-      <ChartAxisSelector
-        id="x"
-        label="X Axis"
-        axes={axes}
-        state={xAxisIndex}
-        setState={setXAxisIndex}
-      />
+          <ChartAxisSelector
+            label="Label Axis"
+            axes={axes}
+            state={labelAxisIndex}
+            setState={setLabelAxisIndex}
+          />
 
-      <ChartAxisSelector
-        id="y"
-        label="Y Axis"
-        axes={axes}
-        state={yAxisIndex}
-        setState={setYAxisIndex}
-      />
+          <ChartAxisSelector
+            label="X Axis"
+            axes={axes}
+            state={xAxisIndex}
+            setState={setXAxisIndex}
+          />
 
-      <ChartAxisSelector
-        id="radius"
-        label="Radius Axis"
-        axes={axes}
-        state={radiusAxisIndex}
-        setState={setRadiusAxisIndex}
-      />
+          <ChartAxisSelector
+            label="Y Axis"
+            axes={axes}
+            state={yAxisIndex}
+            setState={setYAxisIndex}
+          />
 
-      <ChartAxisSelector
-        id="color"
-        label="Color Axis"
-        axes={axes}
-        state={colorAxisIndex}
-        setState={setColorAxisIndex}
-      />
+          <ChartAxisSelector
+            label="Radius Axis"
+            axes={axes}
+            state={radiusAxisIndex}
+            setState={setRadiusAxisIndex}
+          />
+
+          <ChartAxisSelector
+            label="Color Axis"
+            axes={axes}
+            state={colorAxisIndex}
+            setState={setColorAxisIndex}
+          />
+        </fieldset>
+      </form>
 
       <ScatterPlot
         data={data}
@@ -86,6 +87,6 @@ export function DataScatterPlot<TData>({
         radiusAxis={radiusAxis}
         colorAxis={colorAxis}
       />
-    </div>
+    </>
   );
 }

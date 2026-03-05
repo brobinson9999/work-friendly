@@ -9,7 +9,7 @@ export interface ColumnTableProps<T> {
   rows: T[];
   tableClasses?: string[];
   rowClasses?: (row: T, index: number) => string[];
-  rowVars?: (row: T, index: number) => Record<string, string>;
+  rowVars?: (row: T, index: number) => Record<string, string | undefined>;
 }
 
 export const loadingSpan = <span className="loading">Loading...</span>;

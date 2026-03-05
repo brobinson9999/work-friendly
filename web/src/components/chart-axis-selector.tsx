@@ -1,7 +1,7 @@
 import type { ChartAxis } from "./chart-axis";
+import { FormField } from "./form-field";
 
 export type ChartAxisSelectorProps<TData> = {
-  id: string;
   label: string;
   axes: ChartAxis<TData>[];
   state: number;
@@ -10,26 +10,27 @@ export type ChartAxisSelectorProps<TData> = {
 
 // Simple bar chart using SVG
 export function ChartAxisSelector<TData>({
-  id,
   label,
   axes,
   state,
   setState,
 }: ChartAxisSelectorProps<TData>) {
   return (
-    <div>
-      <label htmlFor={`${id}-select`}>{label}: </label>
-      <select
-        id={`${id}-select`}
-        value={state}
-        onChange={(e) => setState(parseInt(e.target.value))}
-      >
-        {axes.map((axis, index) => (
-          <option key={index} value={index}>
-            {axis.label}
-          </option>
-        ))}
-      </select>
-    </div>
+    <FormField
+      label={label}
+      input={(id) => (
+        <select
+          id={`${id}`}
+          value={state}
+          onChange={(e) => setState(parseInt(e.target.value))}
+        >
+          {axes.map((axis, index) => (
+            <option key={index} value={index}>
+              {axis.label}
+            </option>
+          ))}
+        </select>
+      )}
+    />
   );
 }

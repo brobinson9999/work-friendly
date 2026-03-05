@@ -30,8 +30,7 @@ export async function createPing(params: PingParams): Promise<Ping> {
     pings.push(newPing);
     stateChanged();
     return newPing;
-    // eslint-disable-next-line no-unused-vars
-  } catch (_error) {
+  } catch {
     const newPing: Ping = {
       ...params,
       timestamp: new Date(),
@@ -61,7 +60,7 @@ export function getMovingAveragePingLatencyMs(
 }
 
 export function lastPingWasSuccessful(serverId: string): boolean {
-  for (var i = pings.length - 1; i >= 0; i--) {
+  for (let i = pings.length - 1; i >= 0; i--) {
     if (pings[i].serverId === serverId) {
       return pings[i].online;
     }

@@ -24,7 +24,8 @@ export function LogsIndex() {
       (log) => log.payload.message?.toString() ?? "",
     ),
     textAxis<Log>("rest", "Rest", (log) => {
-      const { message, ...rest } = log.payload;
+      const rest = { ...log.payload };
+      delete rest.message;
       return JSON.stringify(rest);
     }),
   ];

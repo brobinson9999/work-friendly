@@ -17,7 +17,7 @@ function App() {
     socket.on("disconnect", () => {
       console.log("WebSocket disconnected");
     });
-    socket.on("invalidate-cache", (_data) => {
+    socket.on("invalidate-cache", () => {
       invalidateLogCache();
     });
     // Clean up on unmount

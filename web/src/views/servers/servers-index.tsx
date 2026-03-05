@@ -55,8 +55,6 @@ export function ServersIndex() {
     return createPing({ serverId: server.id });
   };
 
-  // Background CPU usage polling
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const interval = setInterval(() => {
       servers.forEach((server) => {

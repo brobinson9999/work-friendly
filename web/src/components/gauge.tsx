@@ -17,14 +17,6 @@ export type GaugeProps = {
   indicatorPosition: number;
 };
 
-export function linearIndicatorPosition(
-  value: number,
-  minValue: number,
-  maxValue: number,
-) {
-  return (value - minValue) / (maxValue - minValue);
-}
-
 export const Gauge: React.FC<GaugeProps> = ({
   className,
   label,

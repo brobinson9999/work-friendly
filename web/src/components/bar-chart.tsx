@@ -85,6 +85,7 @@ export function BarChart<TData>({
               </text>
             </g>
           );
+          // eslint-disable-next-line react-hooks/immutability
           y += barHeight + barGap;
           return result;
         })}

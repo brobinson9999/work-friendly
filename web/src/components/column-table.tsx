@@ -1,3 +1,4 @@
+import { loadingSpan } from "./loading-span";
 import { RowTable, type RowTableColumn } from "./row-table";
 
 export interface ColumnTableColumn<T> extends RowTableColumn {
@@ -11,8 +12,6 @@ export interface ColumnTableProps<T> {
   rowClasses?: (row: T, index: number) => string[];
   rowVars?: (row: T, index: number) => Record<string, string | undefined>;
 }
-
-export const loadingSpan = <span className="loading">Loading...</span>;
 
 export function ColumnTable<T>({
   columns,

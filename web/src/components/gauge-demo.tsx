@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Gauge, linearIndicatorPosition, type GaugeClassName } from "./gauge";
+import { Gauge, type GaugeClassName } from "./gauge";
+import { linearInterpolate } from "../utils/linear-interpolate";
 
 export type GaugeDemoProps = {
   className: GaugeClassName;
@@ -11,7 +12,7 @@ export const GaugeDemo: React.FC<GaugeDemoProps> = ({ className }) => {
 
   const [value, setValue] = useState(minValue);
 
-  const indicatorPosition = linearIndicatorPosition(value, minValue, maxValue);
+  const indicatorPosition = linearInterpolate(value, minValue, maxValue);
 
   useEffect(() => {
     const interval = setInterval(() => {

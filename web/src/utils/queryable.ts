@@ -16,7 +16,7 @@ export type QueryPredicate =
   | number
   | boolean
   | null
-  | {};
+  | object;
 
 export type OrderByClause<T> = {
   column: keyof T;
@@ -58,20 +58,36 @@ function checkWhereClause<T>(item: T, where?: WhereClause<T>): boolean {
 
   for (const key in where) {
     const matchValue = where[key];
+    if (matchValue === undefined) {
+      continue; // Ignore undefined values in where clause
+    }
+
     const actualValue = item[key];
-    if (
-      matchValue !== undefined &&
-      !checkWherePredicate(actualValue, matchValue)
-    ) {
+    if (!valueIsQueryPredicate(matchValue)) {
       return false;
     }
+    if (checkWherePredicate(actualValue as QueryPredicate, matchValue)) {
+      continue; // This key matches, check next key
+    }
+
+    return false;
   }
 
   return true;
 }
 
+function valueIsQueryPredicate(value: unknown): value is QueryPredicate {
+  return (
+    typeof value === "string" ||
+    typeof value === "number" ||
+    typeof value === "boolean" ||
+    value === null ||
+    typeof value === "object"
+  );
+}
+
 function checkWherePredicate(
-  actualValue: any,
+  actualValue: QueryPredicate,
   matchValue: QueryPredicate,
 ): boolean {
   if (Array.isArray(matchValue)) {
@@ -104,7 +120,7 @@ function compareByOrderBys<T>(
 
 function applySelect<T>(select: (keyof T)[], data: T[]): T[] {
   return data.map((item) => {
-    const result: any = {};
+    const result: Partial<T> = {};
     for (const key of select) {
       result[key] = item[key];
     }

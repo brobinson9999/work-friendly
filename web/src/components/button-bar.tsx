@@ -18,14 +18,13 @@ export function ButtonBar<T>({
   return (
     <div className="button-bar">
       {buttons.map((button, index) => {
-        let buttonClass = selectedButton === button.id ? "selected" : undefined;
         return (
           <button
             key={index}
             onClick={() =>
               selectedButton !== button.id && setSelectedButton(button.id)
             }
-            className={buttonClass}
+            className={selectedButton === button.id ? "selected" : undefined}
             title={button.tooltip}
           >
             {button.contents}

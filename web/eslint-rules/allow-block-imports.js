@@ -44,8 +44,12 @@ export default {
 
     const checks = [];
 
+    if (checkFilePath(filename, 'components')) {
+        checks.push((importPath) => checkBlockList(importPath, ['views']));
+    }
+
     if (checkFilePath(filename, 'models')) {
-        checks.push((importPath) => checkBlockList(importPath, ['hooks']));
+        checks.push((importPath) => checkBlockList(importPath, ['components', 'hooks', 'views']));
     }
 
     return {

@@ -1,4 +1,4 @@
-import { useRef, type JSX } from "react";
+import { useMemo, type JSX } from "react";
 
 import type { ChartAxis } from "./chart-axis";
 import { div } from "./tags";
@@ -18,8 +18,8 @@ export function RealTimeColumnChart<TData>({
   positiveAxis,
   negativeAxis,
 }: RealTimeColumnChartProps<TData>) {
-  const positiveBars = useRef<Map<string, JSX.Element>>(new Map());
-  const negativeBars = useRef<Map<string, JSX.Element>>(new Map());
+  const positiveBars = useMemo(() => new Map<string, JSX.Element>(), []);
+  const negativeBars = useMemo(() => new Map<string, JSX.Element>(), []);
 
   data.forEach((_datum, index) => {
     const keyValue = keyAxis.stringValue(data, index);
@@ -27,9 +27,10 @@ export function RealTimeColumnChart<TData>({
     const negativePosition = negativeAxis.position(data, index);
 
     if (positivePosition < 0) {
-      positiveBars.current.delete(keyValue);
-    } else if (!positiveBars.current.has(keyValue)) {
-      positiveBars.current.set(
+      // eslint-disable-next-line react-hooks/immutability
+      positiveBars.delete(keyValue);
+    } else if (!positiveBars.has(keyValue)) {
+      positiveBars.set(
         keyValue,
         div(
           ["positive", "timing-bar"],
@@ -43,9 +44,10 @@ export function RealTimeColumnChart<TData>({
     }
 
     if (negativePosition < 0) {
-      negativeBars.current.delete(keyValue);
-    } else if (!negativeBars.current.has(keyValue)) {
-      negativeBars.current.set(
+      // eslint-disable-next-line react-hooks/immutability
+      negativeBars.delete(keyValue);
+    } else if (!negativeBars.has(keyValue)) {
+      negativeBars.set(
         keyValue,
         div(
           ["negative", "timing-bar"],
@@ -64,6 +66,6 @@ export function RealTimeColumnChart<TData>({
     {
       "--time-window": `${TIME_WINDOW_MS}ms`,
     },
-    [...positiveBars.current.values(), ...negativeBars.current.values()],
+    [...positiveBars.values(), ...negativeBars.values()],
   );
 }

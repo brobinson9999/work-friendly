@@ -1,5 +1,5 @@
 import { ButtonBar } from "../../components/button-bar";
-import { ColumnTable, loadingSpan } from "../../components/column-table";
+import { ColumnTable } from "../../components/column-table";
 import { CodeListing } from "../../components/code-listing";
 import { RowTable } from "../../components/row-table";
 import { ColorSwatch } from "../../components/color-swatch";
@@ -19,6 +19,7 @@ import { dateAxis, numberAxis, textAxis } from "../../components/chart-axis";
 import { div } from "../../components/tags";
 import { FormField } from "../../components/form-field";
 import { FormFieldReverse } from "../../components/form-field-reverse";
+import { loadingSpan } from "../../components/loading-span";
 
 type ChartSampleData = {
   fruit: string;

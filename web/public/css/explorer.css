@@ -23,16 +23,18 @@ h6 {
 
 /* Links - blue and underlined */
 a:link {
-  color: #0000ee;
+  color: #00e;
   text-decoration: underline;
 }
+
 a:visited {
   color: #551a8b;
   text-decoration: underline;
 }
+
 a:hover,
 a:active {
-  color: #ff0000;
+  color: #f00;
 }
 
 /* Paragraphs */
@@ -52,6 +54,7 @@ table {
   border-collapse: separate;
   border-spacing: 2px;
 }
+
 th,
 td {
   padding: 1px;

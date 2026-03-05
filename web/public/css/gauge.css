@@ -1,5 +1,5 @@
-@import "gauge-bar-gauge.css";
-@import "gauge-one-eighty-speedo.css";
-@import "gauge-two-seventy-speedo.css";
-@import "gauge-radio-gauge.css";
-@import "gauge-vertical-gauge.css";
+@import url("gauge-bar-gauge.css");
+@import url("gauge-one-eighty-speedo.css");
+@import url("gauge-two-seventy-speedo.css");
+@import url("gauge-radio-gauge.css");
+@import url("gauge-vertical-gauge.css");

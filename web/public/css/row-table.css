@@ -1,22 +1,25 @@
 .clickable-table tbody tr {
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   cursor: pointer;
 }
 
 .clickable-table tbody tr:hover {
   background-color: #f0f8ff; /* Light blue background */
-  color: #0072CE; /* blue text */
+  color: #0072ce; /* blue text */
   text-decoration: underline;
 }
 
 .fade-in-row {
-  animation: fadeIn 0.5s ease-in;
+  animation: fade-in 0.5s ease-in;
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

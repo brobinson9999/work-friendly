@@ -1,13 +1,15 @@
-@import "code-listing.css";
-@import "gauge.css";
-@import "row-table.css";
-@import "shell-command-executions-new.css";
-@import "shell-command-executions-table.css";
+@import url("code-listing.css");
+@import url("gauge.css");
+@import url("row-table.css");
+@import url("shell-command-executions-new.css");
+@import url("shell-command-executions-table.css");
 
 #root {
   /* max-width: 1280px; */
   width: 100%;
+
   /* margin: 0 auto; */
+
   /* padding: 2rem; */
   min-height: 100vh;
   text-align: center;
@@ -19,11 +21,9 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
-
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -40,8 +40,12 @@
 }
 
 a {
-  font-weight: 500;
   text-decoration: inherit;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 body {
@@ -62,6 +66,7 @@ button {
   border: 1px solid transparent;
   background-color: var(--current-color);
   color: var(--current-on-color);
+
   /* padding: 0.6em 1.2em; */
   height: 36px;
   margin: 0.2em;
@@ -71,6 +76,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -114,16 +120,6 @@ footer .surface {
   width: 100%;
 }
 
-a {
-  text-decoration: none;
-  /* color: #0061AA; */
-  font-weight: bold;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 main {
   max-width: 1280px;
   margin: 0 auto;
@@ -143,6 +139,7 @@ td {
   top: 1rem;
   right: 1rem;
 }
+
 /* Extracted inline styles from components */
 
 /* Table styles */
@@ -209,14 +206,15 @@ td {
 .view-selector {
   display: flex;
   justify-content: flex-end;
-  gap: 0px;
+  gap: 0;
 }
 
 /* For ping visualization (servers-index.tsx) */
-@keyframes slideLeft {
+@keyframes slide-left {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-600px);
   }
@@ -238,7 +236,7 @@ td {
 }
 
 .timing-bar {
-  animation: slideLeft calc(var(--time-window) * 2) linear forwards;
+  animation: slide-left calc(var(--time-window) * 2) linear forwards;
 }
 
 .positive.timing-bar {

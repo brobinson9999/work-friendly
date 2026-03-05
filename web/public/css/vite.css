@@ -3,5 +3,5 @@
 }
 
 .one-eighty-speedo .gauge-indicator::before {
-  content: url(/vite-logo.svg);
+  content: url("/vite-logo.svg");
 }

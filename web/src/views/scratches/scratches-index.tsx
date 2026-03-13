@@ -1,42 +1,23 @@
 import { useState } from "react";
+import { Scratch20260313 } from "./scratch-20260313";
 
 export function ScratchesIndex() {
-  const [scratchOutput, setScratchOutput] = useState<React.ReactNode>("");
-  const [isScratchRunning, setIsScratchRunning] = useState(false);
+  const [runTimestamp, setRunTimestamp] = useState(0);
 
   const runScratch = async () => {
-    setIsScratchRunning(true);
-    setScratchOutput("Running scratch...");
-
-    try {
-      await scratch(setScratchOutput);
-    } catch (error) {
-      setScratchOutput(`Error: ${error}`);
-    } finally {
-      setIsScratchRunning(false);
-    }
+    setRunTimestamp(Date.now());
   };
 
   return (
     <div>
       <h1>Scratch Space</h1>
 
-      <button onClick={runScratch} disabled={isScratchRunning}>
-        {isScratchRunning ? "Running..." : "Run Scratch"}
-      </button>
+      <button onClick={runScratch}>Run Scratch</button>
 
       <div className="scratch-output">
         <h2>Output:</h2>
-        {scratchOutput}
+        {runTimestamp > 0 && <Scratch20260313 key={runTimestamp} />}
       </div>
     </div>
   );
-}
-
-async function scratch(setOutput: (output: React.ReactNode) => void) {
-  setOutput("Hello from the scratch space!");
-
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  setOutput("Scratch completed!");
 }

@@ -48,9 +48,9 @@ async function scratch(render: (output: React.ReactNode) => void) {
         promises.length < tasks.length
       ) {
         const promiseIndex = promises.length;
-        console.log(
-          `Starting task ${promiseIndex}... ${runningPromises} running`,
-        );
+        // console.log(
+        //   `Starting task ${promiseIndex}... ${runningPromises} running`,
+        // );
         promises.push(
           tasks[promiseIndex]().then(() => {
             runningPromises--;
@@ -61,12 +61,12 @@ async function scratch(render: (output: React.ReactNode) => void) {
       }
     };
 
-    console.log(`Starting ${tasks.length} tasks...`);
+    // console.log(`Starting ${tasks.length} tasks...`);
     startTasks();
     for (let i = 0; i < promises.length; i++) {
-      console.log(
-        `Waiting for task ${i + 1} to complete... ${runningPromises} running`,
-      );
+      // console.log(
+      //   `Waiting for task ${i + 1} to complete... ${runningPromises} running`,
+      // );
       await promises[i];
     }
   };

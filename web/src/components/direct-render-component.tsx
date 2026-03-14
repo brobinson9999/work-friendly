@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export function DirectRenderComponent({
   fn,
@@ -7,7 +7,13 @@ export function DirectRenderComponent({
 }) {
   const [content, setContent] = useState<React.ReactNode>("");
 
-  useMemo(() => fn(setContent), [fn]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fn(setContent);
+    }, 10); // 10ms delay to prevent running twice in development mode with React.StrictMode
+
+    return () => clearTimeout(timer);
+  }, [fn]);
 
   return content;
 }

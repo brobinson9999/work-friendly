@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Scratch20260313 } from "./scratch-20260313";
+import { ScratchParallelTaskTest } from "./scratch-parallel-task-test";
 
 export function ScratchesIndex() {
   const [runTimestamp, setRunTimestamp] = useState(0);
@@ -16,7 +16,7 @@ export function ScratchesIndex() {
 
       <div className="scratch-output">
         <h2>Output:</h2>
-        {runTimestamp > 0 && <Scratch20260313 key={runTimestamp} />}
+        {runTimestamp > 0 && <ScratchParallelTaskTest key={runTimestamp} />}
       </div>
     </div>
   );

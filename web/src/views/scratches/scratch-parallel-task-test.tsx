@@ -16,7 +16,7 @@ async function scratch(render: (output: React.ReactNode) => void) {
     renderParts();
 
     return (replacement: React.ReactNode) => {
-      console.log("Replacing " + output + " with " + replacement);
+      // console.log("Replacing " + output + " with " + replacement);
       outputParts[outputPartIndex] = replacement;
       renderParts();
     };

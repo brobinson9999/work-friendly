@@ -162,8 +162,17 @@ export function textAxis<TData>(
   label: string,
   getValue: (data: TData) => string,
 ): ChartAxis<TData> {
+  const uniqueValues = (data: TData[]) => {
+    const values = data.map(getValue);
+    return Array.from(new Set(values));
+  };
+
   const position = (data: TData[], index: number) => {
-    return index / (data.length - 1);
+    const unique = uniqueValues(data);
+    const value = getValue(data[index]);
+    const valueIndex = unique.indexOf(value);
+    if (valueIndex === -1) return 0;
+    return valueIndex / (unique.length - 1);
   };
 
   return {
@@ -181,10 +190,10 @@ export function textAxis<TData>(
     },
     position,
     ticks(data: TData[]) {
-      const values = data.map(getValue);
-      return values.map((value, index) => ({
+      const unique = uniqueValues(data);
+      return unique.map((value, index) => ({
         label: value,
-        position: index / (values.length - 1),
+        position: index / (unique.length - 1),
       }));
     },
     compare(data: TData[], aIndex: number, bIndex: number) {
@@ -204,6 +213,11 @@ export function colorAxis<TData>(
   label: string,
   getValue: (data: TData) => string,
 ): ChartAxis<TData> {
+  const uniqueValues = (data: TData[]) => {
+    const values = data.map(getValue);
+    return Array.from(new Set(values));
+  };
+
   return {
     id,
     label,
@@ -220,13 +234,17 @@ export function colorAxis<TData>(
       );
     },
     position(data: TData[], index: number) {
-      return index / (data.length - 1);
+      const unique = uniqueValues(data);
+      const value = getValue(data[index]);
+      const valueIndex = unique.indexOf(value);
+      if (valueIndex === -1) return 0;
+      return valueIndex / (unique.length - 1);
     },
     ticks(data: TData[]) {
-      const values = data.map(getValue);
-      return values.map((value, index) => ({
+      const unique = uniqueValues(data);
+      return unique.map((value, index) => ({
         label: value,
-        position: index / (values.length - 1),
+        position: index / (unique.length - 1),
       }));
     },
   };

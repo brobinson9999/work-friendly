@@ -1,5 +1,9 @@
 import type { JSX } from "react";
 
+export function br(): JSX.Element {
+  return <br />;
+}
+
 export function div(
   classes?: string[],
   vars?: Record<string, string | undefined>,

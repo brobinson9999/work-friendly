@@ -4,8 +4,8 @@ import {
   getAverageImmediateElapsedMs,
 } from '../models/performance-samples.js';
 
-export function registerPerformanceSamplesRoutes(app: Express) {
-  app.get('/performance-samples/moving-average', async (req, res) => {
+export function registerStatusRoutes(app: Express) {
+  app.get('/status', async (req, res) => {
     const eventLoopErrorMs = getAverageEventLoopErrorMs();
     const immediateElapsedMs = getAverageImmediateElapsedMs();
     res.status(200).json({ eventLoopErrorMs, immediateElapsedMs });

@@ -9,11 +9,7 @@ import { Gauge } from "../../components/gauge";
 //   createCpuSample,
 //   getMovingAverageCpuUsage,
 // } from "../../models/cpu-samples";
-import {
-  createPing,
-  getMovingAveragePingLatencyMs,
-  lastPingWasSuccessful,
-} from "../../models/pings";
+import { createPing, lastPingWasSuccessful } from "../../models/pings";
 import {
   nullAxis,
   numberAxis,
@@ -26,6 +22,7 @@ import {
   createPerformanceSample,
   getEventLoopErrorMsMovingAverage,
   getImmediateElapsedMsMovingAverage,
+  getPingMsMovingAverage,
 } from "../../models/performance-samples";
 
 function PerformanceGauge({ value }: { value: number }) {
@@ -73,7 +70,6 @@ export function ServersIndex() {
     const interval = setInterval(() => {
       servers.forEach((server) => {
         measurePerformance(server);
-        testServerConnection(server);
       });
     }, 1000);
     return () => clearInterval(interval);
@@ -91,7 +87,7 @@ export function ServersIndex() {
       <PingGauge
         value={
           lastPingWasSuccessful(data[index].id)
-            ? getMovingAveragePingLatencyMs(data[index].id)
+            ? getPingMsMovingAverage(data[index].id)
             : 0
         }
       />

@@ -9,7 +9,7 @@ import { registerSessionRoutes } from './controllers/sessions-controller.js';
 import { registerLoginRoutes } from './controllers/logins-controller.js';
 import { registerWebsocketRoutes } from './controllers/websockets-controller.js';
 import { startPerformanceSampling } from './models/performance-samples.js';
-import { registerPerformanceSamplesRoutes } from './controllers/performance-samples-controller.js';
+import { registerStatusRoutes } from './controllers/status-controller.js';
 // import { addItem } from './models/items.js';
 
 async function startup() {
@@ -47,7 +47,7 @@ async function startup() {
   registerLogsRoutes(app);
   registerSessionRoutes(app);
   registerShellRoutes(app);
-  registerPerformanceSamplesRoutes(app);
+  registerStatusRoutes(app);
   registerWebsocketRoutes(httpServer);
 
   try {

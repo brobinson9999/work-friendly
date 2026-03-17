@@ -11,15 +11,15 @@ export type Log = {
 export const logs: Log[] = [];
 
 export function invalidateLogCache(): void {
-  fetch("http://localhost:3000/logs")
-    .then((res) => res.json())
-    .then((data) => {
-      logs.length = 0;
-      data.forEach((log: Log) =>
-        logs.push({ ...log, timestamp: new Date(log.timestamp) }),
-      );
-      stateChanged();
-    });
+  // fetch("http://localhost:3000/logs")
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     logs.length = 0;
+  //     data.forEach((log: Log) =>
+  //       logs.push({ ...log, timestamp: new Date(log.timestamp) }),
+  //     );
+  //     stateChanged();
+  //   });
 }
 
 export function log(payload: LogPayload | string): void {

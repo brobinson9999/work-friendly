@@ -8,6 +8,8 @@ import { registerHealthRoutes } from './controllers/health-controller.js';
 import { registerSessionRoutes } from './controllers/sessions-controller.js';
 import { registerLoginRoutes } from './controllers/logins-controller.js';
 import { registerWebsocketRoutes } from './controllers/websockets-controller.js';
+import { startPerformanceSampling } from './models/performance-samples.js';
+import { registerPerformanceSamplesRoutes } from './controllers/performance-samples-controller.js';
 // import { addItem } from './models/items.js';
 
 async function startup() {
@@ -15,7 +17,7 @@ async function startup() {
 
   const port = 3000;
 
-  let app: express.Express = express();
+  const app: express.Express = express();
   const httpServer = createServer(app);
 
   // Custom logging middleware
@@ -45,6 +47,7 @@ async function startup() {
   registerLogsRoutes(app);
   registerSessionRoutes(app);
   registerShellRoutes(app);
+  registerPerformanceSamplesRoutes(app);
   registerWebsocketRoutes(httpServer);
 
   try {
@@ -53,6 +56,8 @@ async function startup() {
     console.error('failed to start listening:', err);
     process.exit(1);
   }
+
+  startPerformanceSampling();
 }
 
 // Accepts either an Express app or an HTTP server
@@ -65,7 +70,7 @@ async function listen(
     const serverInstance = httpServer.listen(port, () =>
       resolve(serverInstance),
     );
-    serverInstance.on('error', (err: any) => reject(err));
+    serverInstance.on('error', (err) => reject(err));
   });
 }
 

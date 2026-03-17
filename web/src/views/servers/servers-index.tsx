@@ -5,10 +5,10 @@ import { BashIcon } from "../../icons/bash-icon";
 import { requests } from "../../models/requests";
 import { useEffect } from "react";
 import { Gauge } from "../../components/gauge";
-import {
-  createCpuSample,
-  getMovingAverageCpuUsage,
-} from "../../models/cpu-samples";
+// import {
+//   createCpuSample,
+//   getMovingAverageCpuUsage,
+// } from "../../models/cpu-samples";
 import {
   createPing,
   getMovingAveragePingLatencyMs,
@@ -22,13 +22,28 @@ import {
   type ChartAxis,
 } from "../../components/chart-axis";
 import { ServersRequestTimingVisualization } from "./servers-request-timing-visualization";
+import {
+  createPerformanceSample,
+  getEventLoopErrorMsMovingAverage,
+  getImmediateElapsedMsMovingAverage,
+} from "../../models/performance-samples";
 
-function CpuGauge({ value }: { value: number }) {
+function PerformanceGauge({ value }: { value: number }) {
   return (
     <Gauge
-      className="two-seventy-speedo"
-      label={`${value}%`}
-      indicatorPosition={value / 100}
+      className="vertical-gauge"
+      label={`${value.toFixed(1)} ms`}
+      indicatorPosition={1 - 1 / (value / 10 + 1)}
+    />
+  );
+}
+
+function ImmediateElapsedGauge({ value }: { value: number }) {
+  return (
+    <Gauge
+      className="vertical-gauge"
+      label={`${(value * 1000).toFixed(0)} µs`}
+      indicatorPosition={1 - 1 / (value / 0.05 + 1)}
     />
   );
 }
@@ -38,7 +53,7 @@ function PingGauge({ value }: { value: number }) {
     <div>
       <Gauge
         className="vertical-gauge"
-        label={`${value} ms`}
+        label={`${value.toFixed(0)} ms`}
         indicatorPosition={1 - 1 / (value / 100 + 1)}
       />
     </div>
@@ -46,8 +61,8 @@ function PingGauge({ value }: { value: number }) {
 }
 
 export function ServersIndex() {
-  const measureCpuUsage = async (server: Server) => {
-    return createCpuSample({ serverId: server.id });
+  const measurePerformance = async (server: Server) => {
+    return createPerformanceSample({ serverId: server.id });
   };
 
   const testServerConnection = async (server: Server) => {
@@ -57,7 +72,7 @@ export function ServersIndex() {
   useEffect(() => {
     const interval = setInterval(() => {
       servers.forEach((server) => {
-        measureCpuUsage(server);
+        measurePerformance(server);
         testServerConnection(server);
       });
     }, 1000);
@@ -81,11 +96,20 @@ export function ServersIndex() {
         }
       />
     )),
-    widgetAxis<Server>("CPU Usage", (data, index) => (
-      <CpuGauge
+    widgetAxis<Server>("Event Loop Delay (ms)", (data, index) => (
+      <PerformanceGauge
         value={
           lastPingWasSuccessful(data[index].id)
-            ? getMovingAverageCpuUsage(data[index].id)
+            ? getEventLoopErrorMsMovingAverage(data[index].id)
+            : 0
+        }
+      />
+    )),
+    widgetAxis<Server>("Immediate Elapsed (µs)", (data, index) => (
+      <ImmediateElapsedGauge
+        value={
+          lastPingWasSuccessful(data[index].id)
+            ? getImmediateElapsedMsMovingAverage(data[index].id)
             : 0
         }
       />
@@ -100,8 +124,8 @@ export function ServersIndex() {
         <button onClick={() => testServerConnection(data[index])}>
           Test Connection
         </button>
-        <button onClick={() => measureCpuUsage(data[index])}>
-          Measure CPU
+        <button onClick={() => measurePerformance(data[index])}>
+          Measure Performance
         </button>
       </div>
     )),

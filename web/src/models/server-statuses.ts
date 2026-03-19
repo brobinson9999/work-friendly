@@ -1,22 +1,23 @@
 import { executeRequest } from "./requests";
 import { stateChanged } from "./state-change";
 
-export type PerformanceSampleParams = {
+export type ServerStatusParams = {
   serverId: string;
 };
 
-export type PerformanceSample = PerformanceSampleParams & {
+export type ServerStatus = ServerStatusParams & {
   timestamp: Date;
+  httpStatus: number;
   eventLoopErrorMs: number;
   immediateElapsedMs: number;
   pingMs: number;
 };
 
-export const performanceSamples: PerformanceSample[] = [];
+export const serverStatuses: ServerStatus[] = [];
 
-export async function createPerformanceSample(
-  params: PerformanceSampleParams,
-): Promise<PerformanceSample> {
+export async function createServerStatus(
+  params: ServerStatusParams,
+): Promise<ServerStatus> {
   const pingStart = performance.now();
   const request = await executeRequest(params.serverId, "/status");
   const performanceSampleData = await request.response!.json();
@@ -25,24 +26,47 @@ export async function createPerformanceSample(
   const eventLoopErrorMs = performanceSampleData.eventLoopErrorMs;
   const immediateElapsedMs = performanceSampleData.immediateElapsedMs;
 
-  const newPerformanceSample: PerformanceSample = {
+  const newServerStatus: ServerStatus = {
     ...params,
     timestamp: new Date(),
     pingMs,
     eventLoopErrorMs,
     immediateElapsedMs,
+    httpStatus: request.response!.status,
   };
-  performanceSamples.push(newPerformanceSample);
+  serverStatuses.push(newServerStatus);
   stateChanged();
-  return newPerformanceSample;
+  return newServerStatus;
+}
+
+export function lastServerStatusWasOk(serverId: string): boolean {
+  const lastStatus = lastServerStatus(serverId);
+  return lastStatus.httpStatus === 200;
+}
+
+export function lastServerStatus(serverId: string): ServerStatus {
+  const samples = serverStatuses.filter(
+    (sample) => sample.serverId === serverId,
+  );
+  if (samples.length === 0) {
+    return {
+      serverId,
+      timestamp: new Date(),
+      eventLoopErrorMs: 0,
+      immediateElapsedMs: 0,
+      pingMs: 0,
+      httpStatus: 0,
+    };
+  }
+  return samples[samples.length - 1];
 }
 
 export function getEventLoopErrorMsMovingAverage(
   serverId: string,
   windowSize: number = 5,
 ): number {
-  const samples = performanceSamples.filter(
-    (sample) => sample.serverId === serverId,
+  const samples = serverStatuses.filter(
+    (sample) => sample.httpStatus === 200 && sample.serverId === serverId,
   );
   if (samples.length === 0) {
     return 0;
@@ -59,8 +83,8 @@ export function getImmediateElapsedMsMovingAverage(
   serverId: string,
   windowSize: number = 5,
 ): number {
-  const samples = performanceSamples.filter(
-    (sample) => sample.serverId === serverId,
+  const samples = serverStatuses.filter(
+    (sample) => sample.httpStatus === 200 && sample.serverId === serverId,
   );
   if (samples.length === 0) {
     return 0;
@@ -77,8 +101,8 @@ export function getPingMsMovingAverage(
   serverId: string,
   windowSize: number = 5,
 ): number {
-  const samples = performanceSamples.filter(
-    (sample) => sample.serverId === serverId,
+  const samples = serverStatuses.filter(
+    (sample) => sample.httpStatus === 200 && sample.serverId === serverId,
   );
   if (samples.length === 0) {
     return 0;

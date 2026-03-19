@@ -5,25 +5,17 @@ import { useState, useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 import { invalidateLogCache } from "./models/logs";
 import { div } from "./components/tags";
+import {
+  connectWebsockets,
+  disconnectWebsockets,
+} from "./models/websocket-connection";
 
 function App() {
   useEffect(() => {
-    // Connect to the server (adjust URL/port if needed)
-    const socket: Socket = io("http://localhost:3000");
-    socket.on("connect", () => {
-      console.log("WebSocket connected", socket.id);
-    });
-    socket.on("disconnect", () => {
-      console.log("WebSocket disconnected");
-    });
-    socket.on("invalidate-cache", () => {
-      invalidateLogCache();
-    });
-    // Clean up on unmount
-    return () => {
-      socket.disconnect();
-    };
+    connectWebsockets();
+    return disconnectWebsockets;
   }, []);
+
   const themeNames = themes.map((theme) => theme.name);
 
   const [selectedTheme, setSelectedTheme] = useState(() => {

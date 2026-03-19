@@ -1,3 +1,4 @@
+import { executeRequest } from "./requests";
 import { stateChanged } from "./state-change";
 
 export type PerformanceSampleParams = {
@@ -17,10 +18,10 @@ export async function createPerformanceSample(
   params: PerformanceSampleParams,
 ): Promise<PerformanceSample> {
   const pingStart = performance.now();
-  const performanceSample = await fetch("http://localhost:3000/status");
+  const request = await executeRequest(params.serverId, "/status");
+  const performanceSampleData = await request.response!.json();
   const pingEnd = performance.now();
   const pingMs = pingEnd - pingStart;
-  const performanceSampleData = await performanceSample.json();
   const eventLoopErrorMs = performanceSampleData.eventLoopErrorMs;
   const immediateElapsedMs = performanceSampleData.immediateElapsedMs;
 

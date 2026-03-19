@@ -120,51 +120,15 @@ export const bones = createTheme({
   inlineCss: "",
 });
 
-export const common = createTheme({
-  name: "Common",
-  cssFiles: ["css/common.css"],
-  inlineCss: "",
-});
-
-export const explorer = createTheme({
-  name: "Explorer",
-  cssFiles: ["css/explorer.css"],
-  inlineCss: "",
-});
-
-export const windows7 = createTheme({
-  name: "Windows 7",
-  cssFiles: [
-    "css/windows-7/windows-7.css",
-    "css/windows-extra.css",
-    "css/windows-7/windows-7-extra.css",
-  ],
-  inlineCss: "",
-});
-
-export const windowsXp = createTheme({
-  name: "Windows XP",
-  cssFiles: [
-    "css/windows-xp/windows-xp.css",
-    "css/windows-extra.css",
-    "css/windows-xp/windows-xp-extra.css",
-  ],
-  inlineCss: "",
-});
-
-export const windows98 = createTheme({
-  name: "Windows 98",
-  cssFiles: [
-    "css/windows-98/windows-98.css",
-    "css/windows-extra.css",
-    "css/windows-98/windows-98-extra.css",
-  ],
-  inlineCss: "",
-});
-
 export const minimal = createTheme({
   name: "Minimal",
   cssFiles: ["css/minimal.css"],
+  inlineCss: "",
+});
+
+export const common = createTheme({
+  name: "Common",
+  cssFiles: ["css/common.css"],
   inlineCss: "",
 });
 
@@ -201,21 +165,21 @@ export const reactDark = createMaterialTheme({
 
   primaryColor: colors.ReactBlue,
   primaryVariantColor: colors.TypeScriptBlue,
-  onPrimaryColor: colors.ReactSurface,
+  onPrimaryColor: colors.ReactDarkSurface,
   secondaryColor: colors.TypeScriptBlue,
   secondaryVariantColor: colors.ReactBlue,
-  onSecondaryColor: colors.ReactSurface,
-  backgroundColor: colors.ReactBackground,
-  onBackgroundColor: colors.ReactText,
-  surfaceColor: colors.ReactSurface,
-  onSurfaceColor: colors.ReactText,
+  onSecondaryColor: colors.ReactDarkSurface,
+  backgroundColor: colors.ReactDarkBackground,
+  onBackgroundColor: colors.ReactDarkText,
+  surfaceColor: colors.ReactDarkSurface,
+  onSurfaceColor: colors.ReactDarkText,
   errorColor: colors.oklchRed,
-  onErrorColor: colors.ReactText,
+  onErrorColor: colors.ReactDarkText,
 
   warningColor: colors.JavaScriptYellow,
-  onWarningColor: colors.ReactSurface,
+  onWarningColor: colors.ReactDarkSurface,
   successColor: colors.oklchGreen,
-  onSuccessColor: colors.ReactSurface,
+  onSuccessColor: colors.ReactDarkSurface,
 
   logo: "/react-logo.svg",
 
@@ -227,21 +191,21 @@ export const reactLight = createMaterialTheme({
 
   primaryColor: colors.ReactBlue,
   primaryVariantColor: colors.TypeScriptBlue,
-  onPrimaryColor: colors.ReactSurface,
+  onPrimaryColor: colors.ReactLightSurface,
   secondaryColor: colors.TypeScriptBlue,
   secondaryVariantColor: colors.ReactBlue,
-  onSecondaryColor: colors.ReactSurface,
-  backgroundColor: colors.ReactBackground,
-  onBackgroundColor: colors.ReactText,
-  surfaceColor: colors.ReactSurface,
-  onSurfaceColor: colors.ReactText,
+  onSecondaryColor: colors.ReactLightSurface,
+  backgroundColor: colors.ReactLightBackground,
+  onBackgroundColor: colors.ReactLightText,
+  surfaceColor: colors.ReactLightSurface,
+  onSurfaceColor: colors.ReactLightText,
   errorColor: colors.oklchRed,
-  onErrorColor: colors.ReactText,
+  onErrorColor: colors.ReactLightText,
 
   warningColor: colors.JavaScriptYellow,
-  onWarningColor: colors.ReactSurface,
+  onWarningColor: colors.ReactLightSurface,
   successColor: colors.oklchGreen,
-  onSuccessColor: colors.ReactSurface,
+  onSuccessColor: colors.ReactLightSurface,
 
   logo: "/react-logo.svg",
 
@@ -270,47 +234,4 @@ export const relaxedEleganceMaterial = createMaterialTheme({
 
   logo: "/pantone-logo.png",
   cssFiles: ["css/relaxed-elegance.css"],
-});
-
-export const powderedPastels = createMaterialTheme({
-  name: "Powdered Pastels",
-  primaryColor: colors.LemonIcing,
-  primaryVariantColor: colors.PeachDust,
-  onPrimaryColor: colors.NimbusCloud,
-  secondaryColor: colors.IceMelt,
-  secondaryVariantColor: colors.AlmostAqua,
-  onSecondaryColor: colors.NimbusCloud,
-  backgroundColor: colors.transparent,
-  onBackgroundColor: colors.OrchidTint,
-  surfaceColor: colors.NimbusCloud,
-  onErrorColor: colors.CloudDancer,
-  errorColor: colors.RaindropsOnRoses,
-  onSurfaceColor: colors.CloudDancer,
-  warningColor: colors.LemonIcing,
-  onWarningColor: colors.NimbusCloud,
-  successColor: colors.AlmostAqua,
-  onSuccessColor: colors.NimbusCloud,
-
-  backgroundImage: "powdered-pastels-background.png",
-});
-
-export const takeABreak = createMaterialTheme({
-  name: "Take A Break",
-
-  primaryColor: colors.Papaya,
-  primaryVariantColor: colors.IcedCoffee,
-  onPrimaryColor: colors.CloudDancer,
-  secondaryColor: colors.MangoMojito,
-  secondaryVariantColor: colors.Caramel,
-  onSecondaryColor: colors.CloudDancer,
-  backgroundColor: colors.Tea,
-  onBackgroundColor: colors.CocoaCreme,
-  surfaceColor: colors.CocoaCreme,
-  onErrorColor: colors.CloudDancer,
-  errorColor: colors.PinkLemonade,
-  onSurfaceColor: colors.CloudDancer,
-  warningColor: colors.MangoMojito,
-  onWarningColor: colors.CloudDancer,
-  successColor: colors.Tea,
-  onSuccessColor: colors.CloudDancer,
 });

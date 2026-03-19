@@ -230,10 +230,10 @@ export const vitePalette: Palette = createPalette("Vite", [
 ]);
 
 export const reactPalette: Palette = createPalette("React", [
-  colors.ReactBackground,
+  colors.ReactDarkBackground,
   colors.ReactBlue,
-  colors.ReactSurface,
-  colors.ReactText,
+  colors.ReactDarkSurface,
+  colors.ReactDarkText,
   colors.TypeScriptBlue,
   colors.JavaScriptYellow,
 ]);

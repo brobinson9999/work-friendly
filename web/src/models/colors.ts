@@ -51,9 +51,26 @@ export const ViteLinkHoverColor = fromHex("Vite Link Hover Color", "#535BF2");
 export const ViteDarkPurple = fromHex("Vite Dark Purple", "#3b3440");
 export const ViteLightPurple = fromHex("Vite Light Purple", "#9d87e0");
 
-export const ReactText = fromRgba("React Text", 235, 236, 240, 1);
-export const ReactBackground = fromRgba("React Background", 35, 39, 47, 1);
-export const ReactSurface = fromRgba("React Surface", 25, 27, 33, 1);
+export const ReactDarkText = fromRgba("React Dark Text", 235, 236, 240, 1);
+export const ReactDarkBackground = fromRgba(
+  "React Dark Background",
+  35,
+  39,
+  47,
+  1,
+);
+export const ReactDarkSurface = fromRgba("React Dark Surface", 25, 27, 33, 1);
+
+export const ReactLightText = fromRgba("React Light Text", 35, 39, 47, 1);
+export const ReactLightBackground = fromRgba(
+  "React Light Background",
+  255,
+  255,
+  255,
+  1,
+);
+export const ReactLightSurface = fromHex("React Light Surface", "#bcc1cd");
+
 export const ReactBlue = fromHex("React Blue", "#61DAFB");
 export const TypeScriptBlue = fromHex("TypeScript Blue", "#3178C6");
 export const JavaScriptYellow = fromHex("JavaScript Yellow", "#F7DF1E");

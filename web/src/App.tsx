@@ -37,14 +37,17 @@ function App() {
       ))}
       <HashRouter>
         <header>
-          <nav className="top-left-nav">
-            <Link to="/">
+          <nav>
+            <Link className="back-link" to="/">
               {div(["logo"])}
               <span>Back to Home</span>
             </Link>
-          </nav>
-          <nav className="top-right-nav">
-            <select value={selectedTheme} onChange={handleThemeChange}>
+            <div className="spacer" />
+            <select
+              className="theme-selector"
+              value={selectedTheme}
+              onChange={handleThemeChange}
+            >
               {themeNames.map((themeName) => (
                 <option key={themeName} value={themeName}>
                   {themeName}

@@ -92,22 +92,14 @@ footer {
   width: 100%;
 }
 
-.top-left-nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 1rem;
-}
-
-.top-left-nav a {
+header nav {
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 1rem;
 }
 
-.logo {
-  height: 36px;
-  margin-right: 10px;
+header nav .spacer {
+  flex-grow: 1;
 }
 
 header .surface {

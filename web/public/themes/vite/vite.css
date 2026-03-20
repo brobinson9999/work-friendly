@@ -1,7 +1,18 @@
+.logo::before {
+  content: "";
+  display: inline-block;
+  height: 36px;
+  width: 36px;
+  background-image: url("/themes/vite/vite-logo.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .one-eighty-speedo .gauge-indicator {
   --indicator-offset: 90deg;
 }
 
 .one-eighty-speedo .gauge-indicator::before {
-  content: url("/vite-logo.svg");
+  content: url("/themes/vite/vite-logo.svg");
 }

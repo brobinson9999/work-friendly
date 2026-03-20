@@ -153,28 +153,10 @@ export const reactDark = createMaterialTheme({
   cssFiles: ["themes/react-dark/react-dark.css"],
 });
 
-export const reactLight = createMaterialTheme({
+export const reactLight = createTheme({
   name: "React Light",
-
-  primaryColor: colors.ReactBlue,
-  primaryVariantColor: colors.TypeScriptBlue,
-  onPrimaryColor: colors.ReactLightSurface,
-  secondaryColor: colors.TypeScriptBlue,
-  secondaryVariantColor: colors.ReactBlue,
-  onSecondaryColor: colors.ReactLightSurface,
-  backgroundColor: colors.ReactLightBackground,
-  onBackgroundColor: colors.ReactLightText,
-  surfaceColor: colors.ReactLightSurface,
-  onSurfaceColor: colors.ReactLightText,
-  errorColor: colors.oklchRed,
-  onErrorColor: colors.ReactLightText,
-
-  warningColor: colors.JavaScriptYellow,
-  onWarningColor: colors.ReactLightSurface,
-  successColor: colors.oklchGreen,
-  onSuccessColor: colors.ReactDarkSurface,
-
   cssFiles: ["themes/react-light/react-light.css"],
+  inlineCss: "",
 });
 
 export const relaxedEleganceMaterial = createMaterialTheme({

@@ -18,6 +18,7 @@ import {
   getEventLoopErrorMsMovingAverage,
   getImmediateElapsedMsMovingAverage,
   getPingMsMovingAverage,
+  getRequestsPerSecondMovingAverage,
   lastWebsocketStatus,
   lastWebsocketStatusWasOk,
 } from "../../models/websocket-statuses";
@@ -98,6 +99,13 @@ export function WebsocketStatusesIndex() {
       pendingRequestsGauge(
         lastWebsocketStatusWasOk(data[index].id)
           ? lastWebsocketStatus(data[index].id).pendingRequests
+          : 0,
+      ),
+    ),
+    widgetAxis<Server>("Requests Per Second", (data, index) =>
+      pendingRequestsGauge(
+        lastWebsocketStatusWasOk(data[index].id)
+          ? getRequestsPerSecondMovingAverage(data[index].id)
           : 0,
       ),
     ),

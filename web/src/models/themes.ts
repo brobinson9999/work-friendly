@@ -34,8 +34,6 @@ export type MaterialTheme = {
   onErrorColor: Color;
 
   // Added stuff :)
-  logo?: string;
-  backgroundImage?: string;
   linkColor?: Color;
   linkHoverColor?: Color;
 
@@ -73,39 +71,11 @@ function createMaterialTheme(materialTheme: MaterialTheme): Theme {
     },
   ];
 
-  if (materialTheme.logo) {
-    cssDeclarations.push({
-      selector: ".logo::before",
-      content: {
-        content: `url(${materialTheme.logo})`,
-      },
-    });
-  }
-
-  if (materialTheme.backgroundImage) {
-    cssDeclarations.push({
-      selector: "body::before",
-      content: {
-        content: '""',
-        position: "fixed",
-        top: "0",
-        left: "0",
-        width: "100%",
-        height: "100%",
-        backgroundImage: `url(${materialTheme.backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        // opacity: "0.1",
-        zIndex: "-1",
-      },
-    });
-  }
-
   const newTheme: Theme = {
     ...materialTheme,
     cssFiles: [
-      "css/common.css",
-      "css/material.css",
+      "themes/common.css",
+      "themes/material.css",
       ...(materialTheme.cssFiles || []),
     ],
     inlineCss: cssDeclarationsToString(cssDeclarations),
@@ -122,13 +92,13 @@ export const bones = createTheme({
 
 export const minimal = createTheme({
   name: "Minimal",
-  cssFiles: ["css/minimal.css"],
+  cssFiles: ["themes/minimal/minimal.css"],
   inlineCss: "",
 });
 
 export const common = createTheme({
   name: "Common",
-  cssFiles: ["css/common.css"],
+  cssFiles: ["themes/common.css"],
   inlineCss: "",
 });
 
@@ -153,11 +123,10 @@ export const vite = createMaterialTheme({
   successColor: colors.oklchGreen,
   onSuccessColor: colors.ViteForeground,
 
-  logo: "/vite-logo.svg",
   linkColor: colors.ViteLinkColor,
   linkHoverColor: colors.ViteLinkHoverColor,
 
-  cssFiles: ["css/vite.css"],
+  cssFiles: ["themes/vite/vite.css"],
 });
 
 export const reactDark = createMaterialTheme({
@@ -181,9 +150,7 @@ export const reactDark = createMaterialTheme({
   successColor: colors.oklchGreen,
   onSuccessColor: colors.ReactDarkSurface,
 
-  logo: "/react-logo.svg",
-
-  cssFiles: ["css/react.css"],
+  cssFiles: ["themes/react-dark/react-dark.css"],
 });
 
 export const reactLight = createMaterialTheme({
@@ -205,11 +172,9 @@ export const reactLight = createMaterialTheme({
   warningColor: colors.JavaScriptYellow,
   onWarningColor: colors.ReactLightSurface,
   successColor: colors.oklchGreen,
-  onSuccessColor: colors.ReactLightSurface,
+  onSuccessColor: colors.ReactDarkSurface,
 
-  logo: "/react-logo.svg",
-
-  cssFiles: ["css/react.css"],
+  cssFiles: ["themes/react-light/react-light.css"],
 });
 
 export const relaxedEleganceMaterial = createMaterialTheme({
@@ -232,6 +197,5 @@ export const relaxedEleganceMaterial = createMaterialTheme({
   successColor: colors.CreamTan,
   onSuccessColor: colors.ChocolateMartini,
 
-  logo: "/pantone-logo.png",
-  cssFiles: ["css/relaxed-elegance.css"],
+  cssFiles: ["themes/relaxed-elegance/relaxed-elegance.css"],
 });

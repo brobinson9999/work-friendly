@@ -11,9 +11,11 @@ import {
   getAverageEventLoopErrorMs,
   getAverageImmediateElapsedMs,
 } from '../models/performance-samples.js';
+import { TimeoutMovingAverage } from '../utils/timeout-moving-average.js';
 
 const clients = new Map<string, SocketIOSocket>();
 let pendingRequests: number = 0;
+const requestsPerMillisecond = new TimeoutMovingAverage(1000);
 
 export function invalidateCache() {
   clients.forEach((socket) => {
@@ -45,6 +47,7 @@ export function registerWebsocketRoutes(
       let status: number = 0;
 
       pendingRequests++;
+      requestsPerMillisecond.add(1);
       responseData = await getResponseData();
       pendingRequests--;
       status = 200;
@@ -64,10 +67,12 @@ async function getResponseData(): Promise<JsonObject> {
   const clientsCount = clients.size;
   const eventLoopErrorMs = getAverageEventLoopErrorMs();
   const immediateElapsedMs = getAverageImmediateElapsedMs();
+  const requestsPerSecond = requestsPerMillisecond.get() * 1000;
   return {
     clientsCount,
     pendingRequests,
     eventLoopErrorMs,
     immediateElapsedMs,
+    requestsPerSecond,
   };
 }

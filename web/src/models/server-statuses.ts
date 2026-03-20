@@ -11,6 +11,7 @@ export type ServerStatus = ServerStatusParams & {
   eventLoopErrorMs: number;
   immediateElapsedMs: number;
   pingMs: number;
+  requestsPerSecond: number;
 };
 
 export const serverStatuses: ServerStatus[] = [];
@@ -25,7 +26,7 @@ export async function createServerStatus(
   const pingMs = pingEnd - pingStart;
   const eventLoopErrorMs = performanceSampleData.eventLoopErrorMs;
   const immediateElapsedMs = performanceSampleData.immediateElapsedMs;
-
+  const requestsPerSecond = performanceSampleData.requestsPerSecond;
   const newServerStatus: ServerStatus = {
     ...params,
     timestamp: new Date(),
@@ -33,6 +34,7 @@ export async function createServerStatus(
     eventLoopErrorMs,
     immediateElapsedMs,
     httpStatus: request.response!.status,
+    requestsPerSecond,
   };
   serverStatuses.push(newServerStatus);
   stateChanged();
@@ -56,6 +58,7 @@ export function lastServerStatus(serverId: string): ServerStatus {
       immediateElapsedMs: 0,
       pingMs: 0,
       httpStatus: 0,
+      requestsPerSecond: 0,
     };
   }
   return samples[samples.length - 1];
@@ -113,4 +116,22 @@ export function getPingMsMovingAverage(
     0,
   );
   return totalPing / recentSamples.length;
+}
+
+export function getRequestsPerSecondMovingAverage(
+  serverId: string,
+  windowSize: number = 5,
+): number {
+  const samples = serverStatuses.filter(
+    (sample) => sample.httpStatus === 200 && sample.serverId === serverId,
+  );
+  if (samples.length === 0) {
+    return 0;
+  }
+  const recentSamples = samples.slice(-windowSize);
+  const totalRequests = recentSamples.reduce(
+    (sum, sample) => sum + sample.requestsPerSecond,
+    0,
+  );
+  return totalRequests / recentSamples.length;
 }

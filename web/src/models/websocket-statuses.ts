@@ -13,6 +13,7 @@ export type WebsocketStatus = WebsocketStatusParams & {
   pingMs: number;
   clientsCount: number;
   pendingRequests: number;
+  requestsPerSecond: number;
 };
 
 export const websocketStatuses: WebsocketStatus[] = [];
@@ -29,6 +30,7 @@ export async function createWebsocketStatus(
   const immediateElapsedMs = performanceSampleData.immediateElapsedMs;
   const clientsCount = performanceSampleData.clientsCount;
   const pendingRequests = performanceSampleData.pendingRequests;
+  const requestsPerSecond = performanceSampleData.requestsPerSecond;
 
   const newWebsocketStatus: WebsocketStatus = {
     ...params,
@@ -39,6 +41,7 @@ export async function createWebsocketStatus(
     clientsCount,
     pendingRequests,
     httpStatus: request.response!.status,
+    requestsPerSecond,
   };
   websocketStatuses.push(newWebsocketStatus);
   stateChanged();
@@ -64,6 +67,7 @@ export function lastWebsocketStatus(serverId: string): WebsocketStatus {
       httpStatus: 0,
       clientsCount: 0,
       pendingRequests: 0,
+      requestsPerSecond: 0,
     };
   }
   return samples[samples.length - 1];
@@ -121,4 +125,22 @@ export function getPingMsMovingAverage(
     0,
   );
   return totalPing / recentSamples.length;
+}
+
+export function getRequestsPerSecondMovingAverage(
+  serverId: string,
+  windowSize: number = 5,
+): number {
+  const samples = websocketStatuses.filter(
+    (sample) => sample.httpStatus === 200 && sample.serverId === serverId,
+  );
+  if (samples.length === 0) {
+    return 0;
+  }
+  const recentSamples = samples.slice(-windowSize);
+  const totalRequests = recentSamples.reduce(
+    (sum, sample) => sum + sample.requestsPerSecond,
+    0,
+  );
+  return totalRequests / recentSamples.length;
 }

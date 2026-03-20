@@ -2,8 +2,6 @@ import { Routes, Route, HashRouter, Navigate, Link } from "react-router-dom";
 import { reactRoutes } from "./routes";
 import { themes } from "./models/themes";
 import { useState, useEffect } from "react";
-import { io, Socket } from "socket.io-client";
-import { invalidateLogCache } from "./models/logs";
 import { div } from "./components/tags";
 import {
   connectWebsockets,

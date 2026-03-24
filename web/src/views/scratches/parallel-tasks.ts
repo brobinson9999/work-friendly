@@ -1,5 +1,5 @@
 import { br } from "../../components/tags";
-import { throttleParallelPromises } from "../../utils/promises";
+import { PromiseThrottle } from "../../utils/promise-throttle";
 
 export type ParallelTask = {
   name: string;
@@ -14,31 +14,26 @@ export async function runParallelTasks(
   const renderParts = () => render([...outputParts]);
 
   const append = (output: React.ReactNode) => {
-    // console.log("Appending " + output);
     const outputPartIndex = outputParts.length;
     outputParts.push(output);
     renderParts();
 
     return (replacement: React.ReactNode) => {
-      // console.log("Replacing " + output + " with " + replacement);
       outputParts[outputPartIndex] = replacement;
       renderParts();
     };
   };
 
-  const updateFunctions = tasks.map((task, index) => {
+  const throttle = new PromiseThrottle(5);
+  tasks.forEach(async (task, index) => {
     append(`${index}: ${task.name}: `);
-    const updateFunction = append("💤");
+    const updateTaskOutput = append("💤");
     append(br());
-    return updateFunction;
-  });
 
-  const tasksWithUiUpdate = tasks.map((task, index) => async () => {
-    const updateTaskOutput = updateFunctions[index];
-    updateTaskOutput("⏳");
-    await task.fn();
-    updateTaskOutput("✅");
+    await throttle.throttle(async () => {
+      updateTaskOutput("⏳");
+      await task.fn();
+      updateTaskOutput("✅");
+    });
   });
-
-  await throttleParallelPromises(tasksWithUiUpdate);
 }

@@ -14,6 +14,7 @@ import { PokemonSpeciesIndex } from "./views/pokemon-species/pokemon-species-ind
 import { TestsIndex } from "./views/tests/tests-index";
 import { ScratchesIndex } from "./views/scratches/scratches-index";
 import { WebsocketStatusesIndex } from "./views/websocket-statuses/websocket-statuses-index";
+import { ToDosIndex } from "./views/todos/todos-index";
 
 export type ReactRoute = Route & {
   element: JSX.Element;
@@ -84,6 +85,11 @@ export const reactRoutes: ReactRoute[] = [
     label: "Tests",
     href: "/tests",
     element: <TestsIndex />,
+  },
+  {
+    label: "To Dos",
+    href: "/todos",
+    element: <ToDosIndex />,
   },
   {
     label: "Websocket Statuses",

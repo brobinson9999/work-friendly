@@ -1,3 +1,4 @@
+import type { JsonValue } from "../utils/json-value";
 import { executeRequest } from "./requests";
 import { servers } from "./servers";
 import { stateChanged } from "./state-change";
@@ -35,6 +36,55 @@ export function newShellCommandExecution(
     stderr: "",
     exitCode: null,
   };
+}
+
+export async function readFile(
+  serverId: string,
+  filePath: string,
+): Promise<string> {
+  const result = await executeShellCommand(serverId, `cat ${filePath}`);
+  if (result.exitCode === 0) {
+    return result.stdout;
+  } else {
+    throw new Error(`Failed to read file: ${result.stderr}`);
+  }
+}
+
+export async function readJsonFile<T>(
+  serverId: string,
+  filePath: string,
+): Promise<T> {
+  const fileContent = await readFile(serverId, filePath);
+  try {
+    return JSON.parse(fileContent) as T;
+  } catch (e) {
+    throw new Error(
+      `Failed to parse JSON from file: ${e instanceof Error ? e.message : String(e)}`,
+    );
+  }
+}
+
+export async function writeFile(
+  serverId: string,
+  filePath: string,
+  content: string,
+): Promise<void> {
+  const result = await executeShellCommand(
+    serverId,
+    `echo ${content} > ${filePath}`,
+  );
+  if (result.exitCode !== 0) {
+    throw new Error(`Failed to write file: ${result.stderr}`);
+  }
+}
+
+export async function writeJsonFile(
+  serverId: string,
+  filePath: string,
+  data: JsonValue,
+): Promise<void> {
+  const jsonContent = JSON.stringify(data);
+  await writeFile(serverId, filePath, jsonContent);
 }
 
 export async function executeShellCommand(

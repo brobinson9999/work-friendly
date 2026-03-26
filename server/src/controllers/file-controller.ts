@@ -19,7 +19,6 @@ export function registerFileRoutes(app: Express) {
     }
 
     try {
-      console.log({ filePath });
       const content = await readFile(filePath, { encoding: 'utf-8' });
       res.status(200).send(content);
     } catch (err: unknown) {

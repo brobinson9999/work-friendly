@@ -10,6 +10,7 @@ import { registerLoginRoutes } from './controllers/logins-controller.js';
 import { registerWebsocketRoutes } from './controllers/websockets-controller.js';
 import { startPerformanceSampling } from './models/performance-samples.js';
 import { registerStatusRoutes } from './controllers/status-controller.js';
+import { registerFileRoutes } from './controllers/file-controller.js';
 // import { addItem } from './models/items.js';
 
 async function startup() {
@@ -42,6 +43,7 @@ async function startup() {
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
 
+  registerFileRoutes(app);
   registerHealthRoutes(app);
   registerLoginRoutes(app);
   registerLogsRoutes(app);

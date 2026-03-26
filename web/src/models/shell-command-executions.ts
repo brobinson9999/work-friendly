@@ -42,12 +42,17 @@ export async function readFile(
   serverId: string,
   filePath: string,
 ): Promise<string> {
-  const result = await executeShellCommand(serverId, `cat ${filePath}`);
-  if (result.exitCode === 0) {
-    return result.stdout;
-  } else {
-    throw new Error(`Failed to read file: ${result.stderr}`);
-  }
+  const result = await executeRequest(serverId, `/file/${filePath}`, {
+    method: "GET",
+  });
+
+  return await result.response!.text();
+  // const result = await executeShellCommand(serverId, `cat ${filePath}`);
+  // if (result.exitCode === 0) {
+  //   return result.stdout;
+  // } else {
+  //   throw new Error(`Failed to read file: ${result.stderr}`);
+  // }
 }
 
 export async function readJsonFile<T>(
@@ -69,13 +74,17 @@ export async function writeFile(
   filePath: string,
   content: string,
 ): Promise<void> {
-  const result = await executeShellCommand(
-    serverId,
-    `echo ${content} > ${filePath}`,
-  );
-  if (result.exitCode !== 0) {
-    throw new Error(`Failed to write file: ${result.stderr}`);
-  }
+  await executeRequest(serverId, `/file/${filePath}`, {
+    method: "POST",
+    body: content,
+  });
+  // const result = await executeShellCommand(
+  //   serverId,
+  //   `echo ${content} > ${filePath}`,
+  // );
+  // if (result.exitCode !== 0) {
+  //   throw new Error(`Failed to write file: ${result.stderr}`);
+  // }
 }
 
 export async function writeJsonFile(

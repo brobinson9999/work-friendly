@@ -7,11 +7,8 @@ import { Server as SocketIOServer, Socket as SocketIOSocket } from 'socket.io';
 import { log } from '../models/logs.js';
 import { registerInvalidateCallback } from '../models/websockets.js';
 import type { JsonObject } from '../utils/json-value.js';
-import {
-  getAverageEventLoopErrorMs,
-  getAverageImmediateElapsedMs,
-} from '../models/performance-samples.js';
 import { TimeoutMovingAverage } from '../utils/timeout-moving-average.js';
+import { getStatus } from '../services/status-service.js';
 
 const clients = new Map<string, SocketIOSocket>();
 let pendingRequests: number = 0;
@@ -65,14 +62,11 @@ export function registerWebsocketRoutes(
 
 async function getResponseData(): Promise<JsonObject> {
   const clientsCount = clients.size;
-  const eventLoopErrorMs = getAverageEventLoopErrorMs();
-  const immediateElapsedMs = getAverageImmediateElapsedMs();
   const requestsPerSecond = requestsPerMillisecond.get() * 1000;
   return {
+    ...getStatus(),
     clientsCount,
     pendingRequests,
-    eventLoopErrorMs,
-    immediateElapsedMs,
     requestsPerSecond,
   };
 }

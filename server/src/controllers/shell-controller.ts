@@ -1,5 +1,5 @@
 import { type Express } from 'express';
-import { runShellCommand } from '../models/shell.js';
+import { runShellCommand } from '../services/shell-service.js';
 
 export function registerShellRoutes(app: Express) {
   app.post('/shell', async (req, res) => {

@@ -6,7 +6,7 @@ ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 cleanup() {
     trap - INT TERM EXIT
-    kill -- 0$$ 2>/dev/null || true
+    kill -- -$$ 2>/dev/null || true
 }
 
 trap cleanup INT TERM EXIT

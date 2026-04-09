@@ -42,7 +42,7 @@ export async function readFile(
   serverId: string,
   filePath: string,
 ): Promise<string> {
-  const result = await executeRequest(serverId, `/file/${filePath}`, {
+  const result = await executeRequest(serverId, `/files/${filePath}`, {
     method: "GET",
   });
 
@@ -74,7 +74,7 @@ export async function writeFile(
   filePath: string,
   content: string,
 ): Promise<void> {
-  await executeRequest(serverId, `/file/${filePath}`, {
+  await executeRequest(serverId, `/files/${filePath}`, {
     method: "POST",
     body: content,
   });
